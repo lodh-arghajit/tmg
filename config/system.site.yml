@@ -1,0 +1,14 @@
+_core:
+  default_config_hash: VDJxTZtQR21qB4lvOq8zszJZLvLKrSPQpdn2E3T71Ww
+langcode: en
+uuid: c4de7869-f53a-4107-8339-faebd94a2541
+name: TMG
+mail: test@gmail.com
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /node
+admin_compact_mode: false
+weight_select_max: 100
+default_langcode: en
