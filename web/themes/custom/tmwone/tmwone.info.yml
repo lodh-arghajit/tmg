@@ -21,4 +21,4 @@ regions:
 
 libraries-extend:
   bootstrap/framework:
-    - THEMENAME/framework
+    - tmwone/framework
