@@ -95,3 +95,7 @@ web/**/.gitignore
 
 # Ignore .env files as they are personal
 #/.env
+
+# SQL files
+db.SQL
+db.sql.gz
