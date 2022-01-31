@@ -1,0 +1,46 @@
+uuid: 89714513-a091-4974-8c86-32b7cdeadf9a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.landing_page.field_image
+    - field.field.paragraph.landing_page.field_summary
+    - field.field.paragraph.landing_page.field_url
+    - paragraphs.paragraphs_type.landing_page
+  module:
+    - link
+id: paragraph.landing_page.default
+targetEntityType: paragraph
+bundle: landing_page
+mode: default
+content:
+  field_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_summary:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_url:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden: {  }

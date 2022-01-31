@@ -4,17 +4,17 @@
 
 # Pantheon commits a settings.php for environment-specific settings.
 # Place local settings in settings.local.php
-/web/sites/*/settings.local.php
-/web/sites/*/services*.yml
+web/sites/*/settings.local.php
+web/sites/*/services*.yml
 !/web/sites/*/services.pantheon.*.yml
 !/web/sites/*/services.yml
 
 # Ignore paths that contain user-generated content.
-/web/sites/*/files
-/web/sites/*/private
+web/sites/*/files
+web/sites/*/private
 
 # Ignore SimpleTest multi-site environment.
-/web/sites/simpletest
+web/sites/simpletest
 
 
 # Ignore custom modules managed by Composer.
@@ -55,19 +55,19 @@
 # See the "installer-paths" section in the top-level composer.json
 # file.
 # ------------------------------------------------------------------
-/drush/Commands/contrib/
-/web/core/
-/web/modules/contrib/
-/web/themes/contrib/
-/web/profiles/contrib/
-/web/libraries/
-/web/private/scripts/quicksilver
+drush/Commands/contrib/
+web/core/
+web/modules/contrib/
+web/themes/contrib/
+web/profiles/contrib/
+web/libraries/
+web/private/scripts/quicksilver
 
 
 # Generally you should only ignore the root vendor directory. It's important
 # that core/assets/vendor and any other vendor directories within contrib or
 # custom module, theme, etc., are not ignored unless you purposely do so.
-/vendor/
+vendor/
 
 # Ignore other scaffold files
 #
@@ -75,17 +75,17 @@
 # .gitignore files placed by drupal/core-composer-scaffold to avoid
 # build errors that arise if non-ignored files are scaffolded.
 # ------------------------------------------------------------------
-/.editorconfig
-/.gitattributes
+.editorconfig
+.gitattributes
 
 # The pantheon-systems/drupal-integrations project places a
 # .drush-lock-update file at the project root.
-/.drush-lock-update
+.drush-lock-update
 
 # The drupal/core-composer-scaffold component will write .gitignore
 # files to other locations where it scaffolds files that are not
 # already ignored. We must also ignore these generated files.
-/web/**/.gitignore
+web/**/.gitignore
 
 
 # Other common rules
@@ -95,3 +95,7 @@
 
 # Ignore .env files as they are personal
 #/.env
+
+# SQL files
+db.SQL
+db.sql.gz

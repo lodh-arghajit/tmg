@@ -1,0 +1,24 @@
+uuid: b6b543a4-733f-4040-8894-a0a947734723
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.landing_page_block
+    - field.field.block_content.landing_page_block.field_landing_page_items
+  module:
+    - entity_reference_revisions
+id: block_content.landing_page_block.default
+targetEntityType: block_content
+bundle: landing_page_block
+mode: default
+content:
+  field_landing_page_items:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

@@ -33,3 +33,14 @@ $settings['config_sync_directory'] = dirname(DRUPAL_ROOT) . '/config';
 if (isset($_ENV['PANTHEON_ENVIRONMENT'])) {
     $settings['trusted_host_patterns'][] = '.*';
 }
+$databases['default']['default'] = array (
+  'database' => 'lamp',
+  'username' => 'lamp',
+  'password' => 'lamp',
+  'prefix' => '',
+  'host' => 'database',
+  'port' => '3306',
+  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+  'driver' => 'mysql',
+);
+$settings['hash_salt'] = 'kO6yJeUCJTY8JK1HtGrFq142ORT659dJHhSLo9YAyCR0FmVhW-NOPIygVfuiIBw0xLtQ5ISRsg';

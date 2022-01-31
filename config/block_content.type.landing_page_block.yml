@@ -1,0 +1,8 @@
+uuid: 118331d4-bc18-47b7-9e07-320d2e7d077e
+langcode: en
+status: true
+dependencies: {  }
+id: landing_page_block
+label: 'Landing page block'
+revision: 0
+description: ''
