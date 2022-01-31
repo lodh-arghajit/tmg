@@ -21,6 +21,7 @@
         "drupal/config_ignore": "^3.0@beta",
         "drupal/core-composer-scaffold": "^9.2",
         "drupal/core-recommended": "^9.2",
+        "drupal/layout_builder_modal": "^1.1",
         "drupal/paragraphs": "^1.12",
         "drupal/we_megamenu": "^1.13",
         "drush/drush": "^10",
