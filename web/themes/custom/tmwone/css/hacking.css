@@ -1,0 +1,4 @@
+/* For rapid development and quick CSS classes */
+.menu .menu--footer .nav li a{
+    color: #ee7202 !important;
+}
