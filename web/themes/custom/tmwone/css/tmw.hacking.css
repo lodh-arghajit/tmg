@@ -1,0 +1,36 @@
+/* For rapid development and quick CSS classes */
+.menu .menu--footer .nav li a{
+    color: #ee7202 !important;
+}
+
+body, html {
+    background: white;
+    color: #6D6E71;
+    font-family: "Solitas_Light", arial, san-serif !important;
+}
+
+.field .field--name-field-url .field--type-link .field--item a{
+    color: #ee7202 !important;
+}
+.field--item a{
+    color: #ee7202 !important;
+}
+
+.menu--footer a{
+    color: #ee7202;
+    font-size: 1.143em;
+    margin-top: 0;
+    font-family: "Interface_Bold", arial, san-serif;
+}
+
+/* copyrightblock */
+#block-copyrightblock .field{
+    font-size: 1.15rem;
+    color: #9b9b9b;
+}
+/* footer items */
+.menu--footer li a{
+    display: inline;
+    float: left;
+    margin: 2rem;
+}
