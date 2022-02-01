@@ -1,7 +1,7 @@
 favicon:
   mimetype: image/vnd.microsoft.icon
   path: ''
-  url: 'https://tmg.lndo.site/themes/contrib/bootstrap/favicon.ico'
+  url: 'https://tmg.lndo.site/themes/custom/tmwone/favicon.ico'
   use_default: true
 features:
   comment_user_picture: true
@@ -9,9 +9,17 @@ features:
   favicon: true
   node_user_picture: true
 logo:
-  path: ''
+  path: 'public://logo.jpg'
   url: ''
-  use_default: true
+  use_default: false
 schemas:
   bootstrap: 8000
   tmwone: 8000
+table_responsive: '-1'
+cdn_theme: bootstrap
+cdn_cache_ttl_versions: '604800'
+cdn_cache_ttl_themes: '604800'
+cdn_cache_ttl_assets: '0'
+cdn_cache_ttl_library: '0'
+reset_http_request_cache: ''
+table: ''
