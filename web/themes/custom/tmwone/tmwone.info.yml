@@ -19,6 +19,10 @@ regions:
   page_top: 'Page top'
   page_bottom: 'Page bottom'
 
+libraries:
+  - tmwone/global-styling
+  - tmwone/global-scripts
+
 libraries-extend:
   bootstrap/framework:
     - tmwone/framework
