@@ -1,4 +1,2 @@
-This directory is used to implement various core, contrib, Bootstrap and custom
-templates.
+## All templates Added for theming purpose and theming template override, only where necessary. 
 
-Please refer to the [Templates](<!-- @url templates -->) topic for more info.
