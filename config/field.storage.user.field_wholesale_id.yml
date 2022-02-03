@@ -1,0 +1,21 @@
+uuid: 425d2ab5-bb9f-49d0-9d06-3b0810e0cf0a
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_wholesale_id
+field_name: field_wholesale_id
+entity_type: user
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

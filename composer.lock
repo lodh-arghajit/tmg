@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "422e391ff4502dd26cc4739934ae655f",
+    "content-hash": "e0fea29e20ab65df2cbb8263bd885be7",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1879,6 +1879,73 @@
             "time": "2022-01-05T02:55:30+00:00"
         },
         {
+            "name": "drupal/email_registration",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/email_registration.git",
+                "reference": "8.x-1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/email_registration-8.x-1.1.zip",
+                "reference": "8.x-1.1",
+                "shasum": "cc0eef597216a6d025d9017df104f2693b029f96"
+            },
+            "require": {
+                "drupal/core": "^8.7.7 || ^9"
+            },
+            "conflict": {
+                "drupal/commerce": "<2.12"
+            },
+            "require-dev": {
+                "drupal/commerce": "^2.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.1",
+                    "datestamp": "1592317072",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Knaddison (greggles)",
+                    "homepage": "https://www.drupal.org/u/greggles",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Andrey Postnikov (andypost)",
+                    "homepage": "https://www.drupal.org/u/andypost",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Chris Herberte",
+                    "homepage": "https://www.drupal.org/u/chris-herberte",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Moshe Weitzman (moshe weitzman)",
+                    "homepage": "https://www.drupal.org/u/moshe-weitzman",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Allows users to register with an email address as their username.",
+            "homepage": "https://www.drupal.org/project/email_registration",
+            "support": {
+                "source": "https://git.drupalcode.org/project/email_registration",
+                "issues": "http://drupal.org/project/issues/email_registration"
+            }
+        },
+        {
             "name": "drupal/entity_reference_revisions",
             "version": "1.9.0",
             "source": {
@@ -1998,6 +2065,50 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/layout_builder_modal",
                 "issues": "https://www.drupal.org/project/issues/layout_builder_modal"
+            }
+        },
+        {
+            "name": "drupal/otp",
+            "version": "1.0.0-alpha5",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/otp.git",
+                "reference": "8.x-1.0-alpha5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/otp-8.x-1.0-alpha5.zip",
+                "reference": "8.x-1.0-alpha5",
+                "shasum": "442d79027bd2a245cf513583dec593eef4f31a50"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.0-alpha5",
+                    "datestamp": "1613755154",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Alpha releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "sadashiv",
+                    "homepage": "https://www.drupal.org/user/1773304"
+                }
+            ],
+            "description": "Allows user email verification via Email",
+            "homepage": "https://www.drupal.org/project/otp",
+            "support": {
+                "source": "https://git.drupalcode.org/project/otp"
             }
         },
         {
@@ -2137,6 +2248,117 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/we_megamenu",
                 "issues": "https://www.drupal.org/project/issues/we_megamenu"
+            }
+        },
+        {
+            "name": "drupal/webform",
+            "version": "6.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/webform.git",
+                "reference": "6.1.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/webform-6.1.2.zip",
+                "reference": "6.1.2",
+                "shasum": "3afb96566f5d31474483e163b4e0138d43cffdcd"
+            },
+            "require": {
+                "drupal/core": "^8.8 || ^9"
+            },
+            "require-dev": {
+                "drupal/address": "~1.0",
+                "drupal/bootstrap": "~3.0",
+                "drupal/captcha": "~1.0",
+                "drupal/chosen": "~3.0",
+                "drupal/clientside_validation": "*",
+                "drupal/clientside_validation_jquery": "*",
+                "drupal/devel": "*",
+                "drupal/entity": "~1.0",
+                "drupal/entity_print": "*",
+                "drupal/gnode": "*",
+                "drupal/group": "*",
+                "drupal/jquery_ui": "~1.0",
+                "drupal/jquery_ui_checkboxradio": "*",
+                "drupal/jquery_ui_datepicker": "~1.0",
+                "drupal/lingotek": "~3.0",
+                "drupal/mailsystem": "~4.0",
+                "drupal/paragraphs": "~1.0",
+                "drupal/select2": "~1.0",
+                "drupal/smtp": "~1.0",
+                "drupal/styleguide": "~1.0",
+                "drupal/telephone_validation": "~2.0",
+                "drupal/token": "*",
+                "drupal/variationcache": "~1.0",
+                "drupal/webform_access": "*",
+                "drupal/webform_attachment": "*",
+                "drupal/webform_clientside_validation": "*",
+                "drupal/webform_devel": "*",
+                "drupal/webform_entity_print": "*",
+                "drupal/webform_group": "*",
+                "drupal/webform_node": "*",
+                "drupal/webform_options_limit": "*",
+                "drupal/webform_scheduled_email": "*",
+                "drupal/webform_share": "*",
+                "drupal/webform_ui": "*"
+            },
+            "suggest": {
+                "drupal/jquery_ui_checkboxradio": "Provides jQuery UI Checkboxradio library. Required by the Webform jQueryUI Buttons module. The Webform jQueryUI Buttons module is deprecated because jQueryUI is no longer maintained.",
+                "drupal/jquery_ui_datepicker": "Provides jQuery UI Datepicker library. Required to support datepickers. The Webform jQueryUI Datepicker module is deprecated because jQueryUI is no longer maintained."
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "6.1.2",
+                    "datestamp": "1638988073",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                },
+                "drush": {
+                    "services": {
+                        "drush.services.yml": "^9 || ^10"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Jacob Rockowitz (jrockowitz)",
+                    "homepage": "https://www.drupal.org/u/jrockowitz",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Alexander Trotsenko (bucefal91)",
+                    "homepage": "https://www.drupal.org/u/bucefal91",
+                    "role": "Co-maintainer"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://www.drupal.org/node/7404/committers",
+                    "role": "Contributor"
+                },
+                {
+                    "name": "quicksketch",
+                    "homepage": "https://www.drupal.org/user/35821"
+                },
+                {
+                    "name": "torotil",
+                    "homepage": "https://www.drupal.org/user/865256"
+                }
+            ],
+            "description": "Enables the creation of webforms and questionnaires.",
+            "homepage": "https://drupal.org/project/webform",
+            "support": {
+                "source": "https://git.drupalcode.org/project/webform",
+                "issues": "https://www.drupal.org/project/issues/webform?version=8.x",
+                "docs": "https://www.drupal.org/docs/8/modules/webform",
+                "forum": "https://drupal.stackexchange.com/questions/tagged/webform"
             }
         },
         {
@@ -10412,6 +10634,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "drupal/config_ignore": 10,
+        "drupal/otp": 15,
         "pantheon-upstreams/upstream-configuration": 20
     },
     "prefer-stable": true,
