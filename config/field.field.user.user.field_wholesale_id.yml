@@ -1,0 +1,20 @@
+uuid: 305d52f4-c48c-4332-965a-bd0ee7d38c72
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_wholesale_id
+  module:
+    - user
+id: user.user.field_wholesale_id
+field_name: field_wholesale_id
+entity_type: user
+bundle: user
+label: 'Wholesale ID'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

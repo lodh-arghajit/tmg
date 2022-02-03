@@ -21,9 +21,12 @@
         "drupal/config_ignore": "^3.0@beta",
         "drupal/core-composer-scaffold": "^9.2",
         "drupal/core-recommended": "^9.2",
+        "drupal/email_registration": "^1.1",
         "drupal/layout_builder_modal": "^1.1",
+        "drupal/otp": "^1.0@alpha",
         "drupal/paragraphs": "^1.12",
         "drupal/we_megamenu": "^1.13",
+        "drupal/webform": "^6.1",
         "drush/drush": "^10",
         "pantheon-systems/drupal-integrations": "^9",
         "pantheon-upstreams/upstream-configuration": "self.version"
