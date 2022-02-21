@@ -34,3 +34,31 @@ body, html {
     float: left;
     margin: 2rem;
 }
+
+img.img-responsive{
+    /* background-color: #dfdfdf; */
+    /* background-color: #a19f9f; */
+    background-color: #c9c9c9;
+}
+
+.field--name-field-landing-page-items{
+    background-color: #0e4194;
+}
+
+.field--name-field-summary{
+    font-size: 2.35rem;
+    color: #fff;
+}
+
+.field.field--name-field-url.field--type-link a{
+    text-decoration: none;
+    background-color: #e1480f;
+    color: #fff !important;
+    /* font-size: 1.75rem; */
+    font-size: 2.3rem;
+    padding: 1.45rem 2.5rem;
+    border-radius: 0.5rem;
+}
+#block-copyrightblock.field--name-field-landing-page-items{
+
+}
