@@ -1,0 +1,17 @@
+prepaypower.element.other:
+  version: VERSION
+  js:
+    js/prepaypower.element.other.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery.once
+
+prepaypower.tracking:
+  version: VERSION
+  js:
+    js/prepaypower.tracking.js: {}
+    js/prepaypower.jquery.validate.custom.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery.once
+    - core/drupal.ajax

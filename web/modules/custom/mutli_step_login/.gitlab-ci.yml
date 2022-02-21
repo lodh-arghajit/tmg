@@ -1,0 +1,33 @@
+build:
+  stage: build
+  image: tetraweb/php:7.1
+
+  before_script:
+    - apt-get update
+
+    #install additional gd extension, that is required by Drupal
+    - apt-get install libpng-dev -y
+    - docker-php-ext-install gd
+    
+    #install composer
+    - apt-get install zip unzip
+    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    - php composer-setup.php
+    - php -r "unlink('composer-setup.php');"
+    
+    #install composer package to run parallel tasks
+    - composer -n global require -n "hirak/prestissimo"
+
+  script:
+    - php composer.phar install
+
+    #remove unnecessary files
+    - rm -rf .git
+
+  artifacts:
+    name: "test_project_{CI_COMMIT_SHA}"
+    expire_in: '1 week'
+    paths:
+        -./
+  only:
+    - master
