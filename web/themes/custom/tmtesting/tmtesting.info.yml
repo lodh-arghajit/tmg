@@ -6,7 +6,6 @@ core_version_requirement: ^8 || ^9
 base theme: bootstrap_barrio
 
 libraries:
-  - tmtesting/bootstrap_cdn
   - tmtesting/global-styling
 
 regions:

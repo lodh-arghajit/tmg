@@ -1,0 +1,38 @@
+body{
+    font-family:Interface, Arial, Helvetica, sans-serif !important;
+}
+#navbar-top{
+    background-color: #fff !important;
+}
+
+.field--name-field-markup .btn{
+    background-color: #ff6600;
+    border-color: #ff6600;
+    font-size: 1.05rem;
+    text-transform: none;
+    color: #fff;
+    font-weight: 600;
+}
+
+#navbar-main{
+    display: none;
+}
+
+.we-mega-menu-ul>.we-mega-menu-li>a{
+
+}
+
+.navbar{
+    padding-bottom: 0;
+}
+
+#block-frontnavigation.nav-item{
+    color: #495057 !important;
+
+}
+a.nav-link.nav-link--tmw-website, 
+a.nav-link.nav-link--cdn-portal, 
+a.nav-link.nav-link--hsbb-lite-portal, 
+a.nav-link.nav-link--partner-portal{
+    color: #495057;
+}

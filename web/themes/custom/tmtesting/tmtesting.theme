@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\block\Entity\Block;
 
 /**
  * Implements hook_form_system_theme_settings_alter() for settings form.
@@ -32,3 +33,22 @@ function tmtesting_form_system_theme_settings_alter(&$form, FormStateInterface $
     'bg-transparent' => t('Transparent'),
   ];
 }
+
+
+/** 
+ * Implements function_preprocess_block(). 
+ * 
+ */
+function tmtesting_preprocess_block(){
+  $block = Block::load($variables['elements']['#id']);
+  // $region = $block->getRegion();
+
+  // if($region == 'footer'){
+    // $variables['attributes']['class'][] = ;
+  // }
+}
+
+/**
+ * For debugging available variables
+ */
+
