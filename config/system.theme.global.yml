@@ -11,6 +11,6 @@ features:
   favicon: true
   node_user_picture: true
 logo:
-  path: 'public://tm-one-logo.png'
+  path: ''
   url: ''
-  use_default: false
+  use_default: true

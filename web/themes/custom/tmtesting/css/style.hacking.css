@@ -36,3 +36,8 @@ a.nav-link.nav-link--hsbb-lite-portal,
 a.nav-link.nav-link--partner-portal{
     color: #495057;
 }
+
+.field--type-image img {
+    max-width: 100%;
+    max-height: 100%;
+}

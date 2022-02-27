@@ -49,6 +49,11 @@ function tmtesting_preprocess_block(){
 }
 
 /**
- * For debugging available variables
+ * See all available variables
  */
+
+
+//  function tmtesting_preprocess_page(&$variables) {
+//   dpm($variables);
+//  }
 

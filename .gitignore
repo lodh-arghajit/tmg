@@ -99,3 +99,10 @@ web/**/.gitignore
 # SQL files
 db.SQL
 db.sql.gz
+
+# The node modules folder in web/themes/custom/tmtesting
+
+web/themes/custom/tmtesting/node_modules/
+
+project-structure/
+

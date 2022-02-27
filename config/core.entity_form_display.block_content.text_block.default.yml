@@ -1,0 +1,29 @@
+uuid: aff14b8f-de92-4513-af5c-b5ec5ec2b929
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.text_block
+    - field.field.block_content.text_block.field_banner_title
+id: block_content.text_block.default
+targetEntityType: block_content
+bundle: text_block
+mode: default
+content:
+  field_banner_title:
+    type: string_textfield
+    weight: 26
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  info:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }
