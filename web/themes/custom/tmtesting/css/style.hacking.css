@@ -18,26 +18,39 @@ body{
     display: none;
 }
 
-.we-mega-menu-ul>.we-mega-menu-li>a{
-
-}
-
 .navbar{
     padding-bottom: 0;
-}
-
-#block-frontnavigation.nav-item{
-    color: #495057 !important;
-
-}
-a.nav-link.nav-link--tmw-website, 
-a.nav-link.nav-link--cdn-portal, 
-a.nav-link.nav-link--hsbb-lite-portal, 
-a.nav-link.nav-link--partner-portal{
-    color: #495057;
 }
 
 .field--type-image img {
     max-width: 100%;
     max-height: 100%;
 }
+
+.banner-title{
+    color: #5d656c;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 600;
+}
+
+.banner-description{
+    /* color: #41474d; */
+    color: #687078;
+}
+
+.front-nav-link{
+    color: #495057 !important;
+    font-weight: 600;
+    font-size: 1.15rem;
+}
+
+.front-nav-item:hover{
+
+}
+
+.front-nav-link:hover{
+    color: #ff6600 !important;
+}
+
+.menu
