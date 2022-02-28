@@ -53,4 +53,10 @@ body{
     color: #ff6600 !important;
 }
 
-.menu
+.menu--footer-navigation{
+    background-color: #c1c1c1;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
