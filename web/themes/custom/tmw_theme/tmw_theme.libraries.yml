@@ -1,0 +1,7 @@
+global-css-and-js:
+  css:
+    theme:
+      css/main.min.css: {}
+      css/screen.css: {}
+  js:
+    js/common.ui.js: {}
