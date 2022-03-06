@@ -18,6 +18,19 @@ if (defined('LANDO_INFO')) {
         'collation' => 'utf8mb4_general_ci',
     ];
 }
+else {
+  $databases['default']['default'] = [
+    // Since "mariadb" drivers are the same as "mysql", we hard-code "mysql".
+    'driver' => 'mysql',
+    'database' => $_ENV['DB_NAME'],
+    'username' => $_ENV['DB_USERNAME'],
+    'password' => $_ENV['DB_PASSWORD'],
+    'host' => $_ENV['DB_HOST'],
+    'port' => $_ENV['DB_PORT'],
+    'prefix' => '',
+    'collation' => 'utf8mb4_general_ci',
+  ];
+}
 
 // Trusted host patterns.
 $settings['trusted_host_patterns'][] = '^.*\.lndo\.site$';
