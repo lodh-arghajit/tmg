@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
+    - field.field.node.landing_page.field_landing_page_title
     - field.field.node.landing_page.layout_builder__layout
     - node.type.landing_page
   module:
@@ -19,4 +20,5 @@ content:
     weight: 100
     region: content
 hidden:
+  field_landing_page_title: true
   layout_builder__layout: true

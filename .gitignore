@@ -10,8 +10,14 @@ web/sites/*/services*.yml
 !/web/sites/*/services.yml
 
 # Ignore paths that contain user-generated content.
-web/sites/*/files
-web/sites/*/private
+web/sites/default/files/css/
+web/sites/default/files/js/*
+web/sites/default/files/php/twig
+web/sites/default/files/.htacess
+web/sites/*/files/
+
+
+# web/sites/*/private
 
 # Ignore SimpleTest multi-site environment.
 web/sites/simpletest
@@ -99,3 +105,10 @@ web/**/.gitignore
 # SQL files
 db.SQL
 db.sql.gz
+
+# The node modules folder in web/themes/custom/tmtesting
+
+web/themes/custom/tmtesting/node_modules/
+
+project-structure/
+

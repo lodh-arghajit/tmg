@@ -3,7 +3,6 @@ _core:
 module:
   admin_toolbar: 0
   automated_cron: 0
-  big_pipe: 0
   block: 0
   block_content: 0
   breakpoint: 0
@@ -16,6 +15,8 @@ module:
   contextual: 0
   datetime: 0
   dblog: 0
+  devel: 0
+  devel_kint_extras: 0
   dynamic_page_cache: 0
   editor: 0
   email_registration: 0
@@ -63,4 +64,6 @@ theme:
   seven: 0
   bootstrap: 0
   tmwone: 0
+  bootstrap_barrio: 0
+  tmtesting: 0
 profile: standard
