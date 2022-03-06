@@ -35,13 +35,17 @@
         "drush/drush": "^10",
         "kint-php/kint": "^3.3",
         "pantheon-systems/drupal-integrations": "^9",
-        "pantheon-upstreams/upstream-configuration": "self.version"
+        "pantheon-upstreams/upstream-configuration": "self.version",
+        "vlucas/phpdotenv": "^5.4"
     },
     "require-dev": {
         "drupal/core-dev": "^9.2"
     },
     "conflict": {
             "drupal/drupal": "*"
+    },
+    "autoload": {
+        "files": ["load.environment.php"]
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
