@@ -6,7 +6,7 @@ if (file_exists(dirname(DRUPAL_ROOT) . '/load.environment.php')) {
     include dirname(DRUPAL_ROOT) . '/load.environment.php';
 }
 // When using lando, use Lando settings.
-if (defined('LANDO_INFO')) {
+if (defined('LANDO_INFO') && !empty(LANDO_INFO['database']['creds']['database'])) {
     // Databases.
   $databases['default']['default'] = [
         // Since "mariadb" drivers are the same as "mysql", we hard-code "mysql".
