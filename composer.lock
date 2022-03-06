@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0f504778811040a252adc436b3082829",
+    "content-hash": "50c764efe6d545369bf81f6d5158a33a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2654,6 +2654,73 @@
             }
         },
         {
+            "name": "drupal/email_registration",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/email_registration.git",
+                "reference": "8.x-1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/email_registration-8.x-1.1.zip",
+                "reference": "8.x-1.1",
+                "shasum": "cc0eef597216a6d025d9017df104f2693b029f96"
+            },
+            "require": {
+                "drupal/core": "^8.7.7 || ^9"
+            },
+            "conflict": {
+                "drupal/commerce": "<2.12"
+            },
+            "require-dev": {
+                "drupal/commerce": "^2.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.1",
+                    "datestamp": "1592317072",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Knaddison (greggles)",
+                    "homepage": "https://www.drupal.org/u/greggles",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Andrey Postnikov (andypost)",
+                    "homepage": "https://www.drupal.org/u/andypost",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Chris Herberte",
+                    "homepage": "https://www.drupal.org/u/chris-herberte",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Moshe Weitzman (moshe weitzman)",
+                    "homepage": "https://www.drupal.org/u/moshe-weitzman",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Allows users to register with an email address as their username.",
+            "homepage": "https://www.drupal.org/project/email_registration",
+            "support": {
+                "source": "https://git.drupalcode.org/project/email_registration",
+                "issues": "http://drupal.org/project/issues/email_registration"
+            }
+        },
+        {
             "name": "drupal/entity_reference_revisions",
             "version": "1.9.0",
             "source": {
@@ -2773,6 +2840,102 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/layout_builder_modal",
                 "issues": "https://www.drupal.org/project/issues/layout_builder_modal"
+            }
+        },
+        {
+            "name": "drupal/link_target",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/link_target.git",
+                "reference": "8.x-1.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/link_target-8.x-1.3.zip",
+                "reference": "8.x-1.3",
+                "shasum": "6e887a08544f363c1a3696e44bd59ad79444e171"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.3",
+                    "datestamp": "1623098032",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "jacobfrancke@gmail.com",
+                    "homepage": "https://www.drupal.org/user/3267792"
+                },
+                {
+                    "name": "mandclu",
+                    "homepage": "https://www.drupal.org/user/52136"
+                },
+                {
+                    "name": "mturner20",
+                    "homepage": "https://www.drupal.org/user/3520303"
+                }
+            ],
+            "description": "Provide a widget for Link field type which permits to choose target.",
+            "homepage": "https://www.drupal.org/project/link_target",
+            "support": {
+                "source": "https://git.drupalcode.org/project/link_target"
+            }
+        },
+        {
+            "name": "drupal/otp",
+            "version": "1.0.0-alpha5",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/otp.git",
+                "reference": "8.x-1.0-alpha5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/otp-8.x-1.0-alpha5.zip",
+                "reference": "8.x-1.0-alpha5",
+                "shasum": "442d79027bd2a245cf513583dec593eef4f31a50"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.0-alpha5",
+                    "datestamp": "1613755154",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Alpha releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "sadashiv",
+                    "homepage": "https://www.drupal.org/user/1773304"
+                }
+            ],
+            "description": "Allows user email verification via Email",
+            "homepage": "https://www.drupal.org/project/otp",
+            "support": {
+                "source": "https://git.drupalcode.org/project/otp"
             }
         },
         {
@@ -11382,6 +11545,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "drupal/config_ignore": 10,
+        "drupal/otp": 15,
         "pantheon-upstreams/upstream-configuration": 20
     },
     "prefer-stable": true,

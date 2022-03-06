@@ -46,9 +46,10 @@
     not paragraph.isPublished() ? 'paragraph--unpublished'
   ]
 %}
+{% set target = paragraph.field_url[0].get('options').getValue().attributes.target ? paragraph.field_url[0].get('options').getValue().attributes.target : ''  %}
 {% block paragraph %}
 <li>
-  <a href="#">
+  <a target="{{ target }}" href="{{ paragraph.field_url[0].getUrl().toString() }}">
     <span class="orange-icon">
       {{content.field_svg_html}}
     </span>
