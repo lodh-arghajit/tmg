@@ -99,9 +99,11 @@ class WebformRedirectHandler extends WebformHandlerBase {
   /**
    * {@inheritdoc}
    */
-  public function postSave(WebformSubmissionInterface $webform_submission, $update = TRUE) {
+  public function submitForm(array &$form, FormStateInterface $form_state,
+                             WebformSubmissionInterface $webform_submission) {
     global $base_url, $base_path;
     $redirect_url = $this->configuration['redirect_url'];
+
     if (empty($redirect_url)) {
       return;
     }

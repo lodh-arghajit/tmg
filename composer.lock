@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ea3203f7e999f10d36e02afa0589a5b5",
+    "content-hash": "c06eb4c09c787d184163e2e597e59114",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1985,6 +1985,52 @@
             }
         },
         {
+            "name": "drupal/bootstrap4_modal",
+            "version": "2.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/bootstrap4_modal.git",
+                "reference": "2.1.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/bootstrap4_modal-2.1.3.zip",
+                "reference": "2.1.3",
+                "shasum": "6674314668b03190a1f6368cae5436632089e9e2"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.1.3",
+                    "datestamp": "1644539614",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Cristobal (vhin0210)",
+                    "homepage": "https://www.drupal.org/u/vhin0210",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Bootstrap 4 Modal",
+            "homepage": "https://www.drupal.org/project/bootstrap4_modal",
+            "support": {
+                "source": "http://cgit.drupalcode.org/bootstrap4_modal",
+                "issues": "https://drupal.org/project/issues/bootstrap4_modal"
+            }
+        },
+        {
             "name": "drupal/bootstrap5",
             "version": "1.1.3",
             "source": {
@@ -2078,6 +2124,136 @@
             "homepage": "https://www.drupal.org/project/bootstrap_barrio",
             "support": {
                 "source": "https://git.drupalcode.org/project/bootstrap_barrio"
+            }
+        },
+        {
+            "name": "drupal/captcha",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/captcha.git",
+                "reference": "8.x-1.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/captcha-8.x-1.2.zip",
+                "reference": "8.x-1.2",
+                "shasum": "e35a2ce42b652f833d140f7571d1eef0e06b0edc"
+            },
+            "require": {
+                "drupal/core": "^8.8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.2",
+                    "datestamp": "1619673374",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                },
+                "branch-alias": {
+                    "dev-8.x-1.x": "1.x-dev"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "RobLoach",
+                    "homepage": "https://www.drupal.org/user/61114"
+                },
+                {
+                    "name": "elachlan",
+                    "homepage": "https://www.drupal.org/user/1021502"
+                },
+                {
+                    "name": "japerry",
+                    "homepage": "https://www.drupal.org/user/45640"
+                },
+                {
+                    "name": "naveenvalecha",
+                    "homepage": "https://www.drupal.org/user/2665733"
+                },
+                {
+                    "name": "podarok",
+                    "homepage": "https://www.drupal.org/user/116002"
+                },
+                {
+                    "name": "soxofaan",
+                    "homepage": "https://www.drupal.org/user/41478"
+                },
+                {
+                    "name": "wundo",
+                    "homepage": "https://www.drupal.org/user/25523"
+                }
+            ],
+            "description": "The CAPTCHA module provides this feature to virtually any user facing web form on a Drupal site.",
+            "homepage": "https://www.drupal.org/project/captcha",
+            "support": {
+                "source": "https://git.drupalcode.org/project/captcha",
+                "issues": "https://www.drupal.org/project/issues/captcha"
+            }
+        },
+        {
+            "name": "drupal/clientside_validation",
+            "version": "3.0.0-rc4",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/clientside_validation.git",
+                "reference": "3.0.0-rc4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/clientside_validation-3.0.0-rc4.zip",
+                "reference": "3.0.0-rc4",
+                "shasum": "646ea754f3331bd2f6d7d29f798d033176b0474a"
+            },
+            "require": {
+                "drupal/core": "^8.7.7 || ^9",
+                "php": ">=7.2.0"
+            },
+            "require-dev": {
+                "drupal/clientside_validation_demo": "*",
+                "drupal/clientside_validation_jquery": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "3.0.0-rc4",
+                    "datestamp": "1592755000",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "RC releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Jelle_S",
+                    "homepage": "https://www.drupal.org/user/829198"
+                },
+                {
+                    "name": "attiks",
+                    "homepage": "https://www.drupal.org/user/105002"
+                },
+                {
+                    "name": "nikunjkotecha",
+                    "homepage": "https://www.drupal.org/user/694082"
+                }
+            ],
+            "description": "This module adds clientside validation",
+            "homepage": "https://www.drupal.org/project/clientside_validation",
+            "support": {
+                "source": "https://git.drupalcode.org/project/clientside_validation",
+                "issues": "https://drupal.org/project/issues/clientside_validation"
             }
         },
         {
@@ -2537,17 +2713,17 @@
         },
         {
             "name": "drupal/devel",
-            "version": "4.1.3",
+            "version": "4.1.5",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/devel.git",
-                "reference": "4.1.3"
+                "reference": "4.1.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/devel-4.1.3.zip",
-                "reference": "4.1.3",
-                "shasum": "f82261ca19a43379742e1df4c5a3795ef7a70441"
+                "url": "https://ftp.drupal.org/files/projects/devel-4.1.5.zip",
+                "reference": "4.1.5",
+                "shasum": "7d0b4397215f615a67ba80aab777e93918d497f9"
             },
             "require": {
                 "doctrine/common": "^2.7",
@@ -2566,8 +2742,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "4.1.3",
-                    "datestamp": "1639534069",
+                    "version": "4.1.5",
+                    "datestamp": "1646072825",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -2651,6 +2827,66 @@
                 "source": "http://git.drupal.org/project/devel_kint_extras.git",
                 "issues": "https://www.drupal.org/project/issues/devel_kint_extras",
                 "chat": "irc://irc.freenode.org/drupal-contribute"
+            }
+        },
+        {
+            "name": "drupal/disable_messages",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/disable_messages.git",
+                "reference": "2.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/disable_messages-2.0.0.zip",
+                "reference": "2.0.0",
+                "shasum": "2a7b9258b5908aa6ed2830d62808dcc3551f6f33"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.0",
+                    "datestamp": "1591164518",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "anoopjohn",
+                    "homepage": "https://www.drupal.org/user/188049"
+                },
+                {
+                    "name": "binnythomas",
+                    "homepage": "https://www.drupal.org/user/3123091"
+                },
+                {
+                    "name": "varunity",
+                    "homepage": "https://www.drupal.org/user/273530"
+                },
+                {
+                    "name": "vimaljoseph",
+                    "homepage": "https://www.drupal.org/user/817380"
+                },
+                {
+                    "name": "zyxware",
+                    "homepage": "https://www.drupal.org/user/222163"
+                }
+            ],
+            "description": "Add options to filter messages shown to the end users",
+            "homepage": "https://www.drupal.org/project/disable_messages",
+            "support": {
+                "source": "https://git.drupalcode.org/project/disable_messages"
             }
         },
         {
@@ -3091,6 +3327,89 @@
             }
         },
         {
+            "name": "drupal/recaptcha",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/recaptcha.git",
+                "reference": "8.x-3.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/recaptcha-8.x-3.0.zip",
+                "reference": "8.x-3.0",
+                "shasum": "5f1b179184b105ad6c121ab5505054e1e99331b9"
+            },
+            "require": {
+                "drupal/captcha": "^1.0.0-alpha1",
+                "drupal/core": "^8 || ^9",
+                "google/recaptcha": "^1.2"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-3.0",
+                    "datestamp": "1591216085",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "hass",
+                    "homepage": "https://www.drupal.org/u/hass"
+                },
+                {
+                    "name": "See other contributors",
+                    "homepage": "https://www.drupal.org/node/147903/committers"
+                },
+                {
+                    "name": "amykhailova",
+                    "homepage": "https://www.drupal.org/user/2892725"
+                },
+                {
+                    "name": "diolan",
+                    "homepage": "https://www.drupal.org/user/2336786"
+                },
+                {
+                    "name": "hass",
+                    "homepage": "https://www.drupal.org/user/85918"
+                },
+                {
+                    "name": "id.medion",
+                    "homepage": "https://www.drupal.org/user/2542592"
+                },
+                {
+                    "name": "kim.pepper",
+                    "homepage": "https://www.drupal.org/user/370574"
+                },
+                {
+                    "name": "rfay",
+                    "homepage": "https://www.drupal.org/user/30906"
+                },
+                {
+                    "name": "soxofaan",
+                    "homepage": "https://www.drupal.org/user/41478"
+                },
+                {
+                    "name": "wundo",
+                    "homepage": "https://www.drupal.org/user/25523"
+                }
+            ],
+            "description": "Protect your website from spam and abuse while letting real people pass through with ease.",
+            "homepage": "https://www.drupal.org/project/recaptcha",
+            "support": {
+                "source": "https://git.drupal.org/project/recaptcha.git",
+                "issues": "https://www.drupal.org/project/issues/recaptcha"
+            }
+        },
+        {
             "name": "drupal/we_megamenu",
             "version": "1.13.0",
             "source": {
@@ -3146,6 +3465,117 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/we_megamenu",
                 "issues": "https://www.drupal.org/project/issues/we_megamenu"
+            }
+        },
+        {
+            "name": "drupal/webform",
+            "version": "6.2.0-beta2",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/webform.git",
+                "reference": "6.2.0-beta2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/webform-6.2.0-beta2.zip",
+                "reference": "6.2.0-beta2",
+                "shasum": "d934e0e240bda58bcf1fc196207606af14199148"
+            },
+            "require": {
+                "drupal/core": "^8.8 || ^9"
+            },
+            "require-dev": {
+                "drupal/address": "~1.0",
+                "drupal/bootstrap": "~3.0",
+                "drupal/captcha": "~1.0",
+                "drupal/chosen": "~3.0",
+                "drupal/clientside_validation": "~3.0",
+                "drupal/clientside_validation_jquery": "*",
+                "drupal/devel": "~3.0",
+                "drupal/entity": "~1.0",
+                "drupal/entity_print": "~2.0",
+                "drupal/gnode": "*",
+                "drupal/group": "1.0",
+                "drupal/jquery_ui": "~1.0",
+                "drupal/jquery_ui_checkboxradio": "~1.0",
+                "drupal/jquery_ui_datepicker": "~1.0",
+                "drupal/lingotek": "~3.0",
+                "drupal/mailsystem": "~4.0",
+                "drupal/paragraphs": "~1.0",
+                "drupal/select2": "~1.0",
+                "drupal/smtp": "~1.0",
+                "drupal/styleguide": "~1.0",
+                "drupal/telephone_validation": "~2.0",
+                "drupal/token": "~1.0",
+                "drupal/variationcache": "~1.0",
+                "drupal/webform_access": "*",
+                "drupal/webform_attachment": "*",
+                "drupal/webform_clientside_validation": "*",
+                "drupal/webform_devel": "*",
+                "drupal/webform_entity_print": "*",
+                "drupal/webform_group": "*",
+                "drupal/webform_node": "*",
+                "drupal/webform_options_limit": "*",
+                "drupal/webform_scheduled_email": "*",
+                "drupal/webform_share": "*",
+                "drupal/webform_ui": "*"
+            },
+            "suggest": {
+                "drupal/jquery_ui_checkboxradio": "Provides jQuery UI Checkboxradio library. Required by the Webform jQueryUI Buttons module. The Webform jQueryUI Buttons module is deprecated because jQueryUI is no longer maintained.",
+                "drupal/jquery_ui_datepicker": "Provides jQuery UI Datepicker library. Required to support datepickers. The Webform jQueryUI Datepicker module is deprecated because jQueryUI is no longer maintained."
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "6.2.0-beta2",
+                    "datestamp": "1644940970",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Beta releases are not covered by Drupal security advisories."
+                    }
+                },
+                "drush": {
+                    "services": {
+                        "drush.services.yml": "^9 || ^10"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Jacob Rockowitz (jrockowitz)",
+                    "homepage": "https://www.drupal.org/u/jrockowitz",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Alexander Trotsenko (bucefal91)",
+                    "homepage": "https://www.drupal.org/u/bucefal91",
+                    "role": "Co-maintainer"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://www.drupal.org/node/7404/committers",
+                    "role": "Contributor"
+                },
+                {
+                    "name": "quicksketch",
+                    "homepage": "https://www.drupal.org/user/35821"
+                },
+                {
+                    "name": "torotil",
+                    "homepage": "https://www.drupal.org/user/865256"
+                }
+            ],
+            "description": "Enables the creation of webforms and questionnaires.",
+            "homepage": "https://drupal.org/project/webform",
+            "support": {
+                "source": "https://git.drupalcode.org/project/webform",
+                "issues": "https://www.drupal.org/project/issues/webform?version=8.x",
+                "docs": "https://www.drupal.org/docs/8/modules/webform",
+                "forum": "https://drupal.stackexchange.com/questions/tagged/webform"
             }
         },
         {
@@ -3426,6 +3856,58 @@
                 "source": "https://github.com/enlightn/security-checker/tree/v1.9.0"
             },
             "time": "2021-05-06T09:03:35+00:00"
+        },
+        {
+            "name": "google/recaptcha",
+            "version": "1.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/google/recaptcha.git",
+                "reference": "614f25a9038be4f3f2da7cbfd778dc5b357d2419"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/google/recaptcha/zipball/614f25a9038be4f3f2da7cbfd778dc5b357d2419",
+                "reference": "614f25a9038be4f3f2da7cbfd778dc5b357d2419",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.2.20|^2.15",
+                "php-coveralls/php-coveralls": "^2.1",
+                "phpunit/phpunit": "^4.8.36|^5.7.27|^6.59|^7.5.11"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ReCaptcha\\": "src/ReCaptcha"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Client library for reCAPTCHA, a free service that protects websites from spam and abuse.",
+            "homepage": "https://www.google.com/recaptcha/",
+            "keywords": [
+                "Abuse",
+                "captcha",
+                "recaptcha",
+                "spam"
+            ],
+            "support": {
+                "forum": "https://groups.google.com/forum/#!forum/recaptcha",
+                "issues": "https://github.com/google/recaptcha/issues",
+                "source": "https://github.com/google/recaptcha"
+            },
+            "time": "2020-03-31T17:50:54+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -11757,8 +12239,10 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "drupal/clientside_validation": 5,
         "drupal/config_ignore": 10,
         "drupal/otp": 15,
+        "drupal/webform": 10,
         "pantheon-upstreams/upstream-configuration": 20
     },
     "prefer-stable": true,

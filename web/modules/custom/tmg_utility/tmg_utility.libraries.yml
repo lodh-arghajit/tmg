@@ -1,16 +1,7 @@
-prepaypower.element.other:
+tmg.tracking:
   version: VERSION
   js:
-    js/prepaypower.element.other.js: {}
-  dependencies:
-    - core/drupal
-    - core/jquery.once
-
-prepaypower.tracking:
-  version: VERSION
-  js:
-    js/prepaypower.tracking.js: {}
-    js/prepaypower.jquery.validate.custom.js: {}
+    js/tmg.tracking.js: {}
   dependencies:
     - core/drupal
     - core/jquery.once
