@@ -29,3 +29,7 @@ jQuery('.footer-toggle').click(function(){
   jQuery(this).parent().find('.arrow').toggleClass('arrow-animate');
   jQuery(this).parent().find('.content').slideToggle(280);
 });
+
+//Login Popup
+
+
