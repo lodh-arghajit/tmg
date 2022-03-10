@@ -23,6 +23,19 @@ class VerificationForm {
   const COLLECT_CUSTOMER_INFORMATION_STEP = 'collect_customer_information';
   const CUSTOMER_PROFILE_INFORMATION_STEP = 'customer_profile_confirmation';
   const REGISTRATION_SUCCESS_STEP = 'registration_success';
+  const REGISTRATION_USER_NOT_AVAILABLE_INTO_CPC = 'user_not_available_into_cpc';
+
+  const BRN_ROC = 12;
+  const BRN_REGULAR_EXPRESSION = '/^(PS)\/\d{7}\-(A|D|H|K|M|P|T|U|V|W|X)$/';
+  const BRN_ROB_1_OR_2  = 11;
+  const BRN_ROB_1_REGULAR_EXPRESSION = '/^00\d{7}\-(A|D|H|K|M|P|T|U|V|W|X)$/';
+  const BRN_ROB_2_REGULAR_EXPRESSION = '/^(IP|AS|JM|KT|CA|MA|LA|NS|PG|RA|SA|TR)\d{7}\-(A|D|H|K|M|P|T|U|V|W|X)$/';
+  const BRN_OTHER_REGULAR_EXPRESSION = '/^[A-Z|0-9][A-Z|0-9|\/]*[A-Z|0-9]$/';
+  const WHOLESALE_ID_EXPRESSION = '/^[0-9]{5}$/';
+
+  const MOBILE_NUMBER_VALIDATION = '/^(\+60)\d{2,3}\d{7}$/';
+
+  const LANDLINE_NUMBER_VALIDATION = '/^(\+60)\d{1,2}\d{8}$/';
 
   public static function alter($form, FormStateInterface $form_state) {
     $form_step = $form_state->get('current_page') ?? static::VERIFICATION_EMAIL_STEP;
@@ -45,10 +58,31 @@ class VerificationForm {
         }
         break;
       case static::EXISTING_CUSTOMER_STEP:
+        $submit_handlers = $form['actions']['wizard_next']['#submit'];
+        $form['actions']['wizard_next']['#submit'] = [];
         $form['actions']['wizard_next']['#submit'][] = [$class, 'skipCustomer'];
+        foreach ($submit_handlers as $submit_handler) {
+          $form['actions']['wizard_next']['#submit'][] = $submit_handler;
+        }
         break;
       case static::CUSTOMER_PROFILE_INFORMATION_STEP:
+      case static::COLLECT_CUSTOMER_INFORMATION_STEP:
+        $submit_handlers = $form['actions']['wizard_next']['#submit'];
+        $form['actions']['wizard_next']['#submit'] = [];
         $form['actions']['wizard_next']['#submit'][] = [$class, 'createUser'];
+        foreach ($submit_handlers as $submit_handler) {
+            $form['actions']['wizard_next']['#submit'][] = $submit_handler;
+         }
+         $form['actions']['wizard_next']['#validate'][] = [$class, 'validateCustomer'];
+         if ($form_step == static::CUSTOMER_PROFILE_INFORMATION_STEP) {
+           $elements = &WebformFormHelper::flattenElements($form['elements']);
+           $elements['brn_confirm']['#default_value'] = $form_state->getValues()['brn'];
+           $elements['wholesale_id_confirm']['#default_value'] = $form_state->getValues()['wholesale_id'];
+           $elements['company_name_confirm']['#default_value'] = $form_state->getValues()['company_name'];
+           $elements['email_confirm']['#default_value'] = $form_state->getValues()['user_email'];
+         }
+
+
         break;
       case static::NON_EXISTING_CUSTOMER_STEP:
       case static::REGISTRATION_SUCCESS_STEP:
@@ -64,18 +98,19 @@ class VerificationForm {
   }
 
   public static function createUser(&$form, $form_state) {
+    $current_page = $form_state->get('current_page');
 
+    if ($current_page == static::COLLECT_CUSTOMER_INFORMATION_STEP) {
+      $form_state->set('current_page', static::REGISTRATION_USER_NOT_AVAILABLE_INTO_CPC);
+    }
   }
 
 
   public static function skipCustomer(&$form, $form_state) {
     $values = $form_state->getValue([]);
     $existing_customer = trim($values['tmw_customer_element']);
-
     if ($existing_customer == "yes") {
-      $form_step = static::NON_EXISTING_CUSTOMER_STEP;
-      $next_page = static::getNextStep($form_step, $form_state);
-      $form_state->set('current_page', $next_page);
+       $form_state->set('current_page', static::NON_EXISTING_CUSTOMER_STEP);
     }
   }
 
@@ -94,7 +129,10 @@ class VerificationForm {
 
   public static function validatePassword(&$form, FormStateInterface $form_state) {
     static::validateAuthentication($form, $form_state);
+  }
 
+  public static function validateCustomer(&$form, FormStateInterface $form_state) {
+    static::validateWithBackend($form, $form_state);
   }
 
   /**
@@ -116,15 +154,11 @@ class VerificationForm {
     if ($account && $account->id()) {
       // Blocked accounts cannot request a new password.
       if (!$account->isActive()) {
-        $form_step = static::VERIFICATION_EMAIL_STEP;
-        $next_page = static::getNextStep($form_step, $form_state);
-        $form_state->set('current_page', $next_page);
+        $form_state->set('current_page', static::VERIFICATION_PASSWORD_STEP);
       }
     }
     else {
-      $form_step = static::VERIFICATION_ACCOUNT_BLOCKED_STEP;
-      $next_page = static::getNextStep($form_step, $form_state);
-      $form_state->set('current_page', $next_page);
+      $form_state->set('current_page', static::VERIFICATION_ACCOUNT_BLOCKED_STEP);
 
 
     }
@@ -199,9 +233,50 @@ class VerificationForm {
     }
   }
 
-  private static function getNextStep($step, FormStateInterface $form_state) {
-    $pages = $form_state->get('pages');
-    return WebformArrayHelper::getNextKey($pages, $step);
+  private static function validateWithBackend(array &$form, FormStateInterface $form_state) {
+    $form_step = $form_state->get('current_page') ?? static::VERIFICATION_EMAIL_STEP;
+    if ($form_step == static::COLLECT_CUSTOMER_INFORMATION_STEP) {
+      $values = $form_state->getValue([]);
+      $brn_id = trim($values['brn']);
+      $wholesale_id = trim($values['wholesale_id']);
+      $company_name = trim($values['company_name']);
+      if (!empty($brn_id)) {
+        $brn_length = strlen($brn_id);
+        if ($brn_length == static::BRN_ROC && preg_match(static::BRN_REGULAR_EXPRESSION, $brn_id) ) {
+          return;
+        }
+        if ($brn_length == static::BRN_ROB_1_OR_2 && (preg_match(static::BRN_ROB_1_REGULAR_EXPRESSION, $brn_id) ||  preg_match(static::BRN_ROB_2_REGULAR_EXPRESSION, $brn_id))) {
+          return;
+        }
+        if (preg_match(static::BRN_OTHER_REGULAR_EXPRESSION, $brn_id)) {
+          return;
+        }
+        $form_state->setErrorByName('brn', 'Invalid BRN id.');
+      }
+      if (!empty($wholesale_id)) {
+        if (preg_match(static::WHOLESALE_ID_EXPRESSION, $wholesale_id)) {
+          return;
+        }
+        $form_state->setErrorByName('wholesale_id', 'Invalid Wholesale ID.');
+      }
+    }
+    if ($form_step == static::CUSTOMER_PROFILE_INFORMATION_STEP) {
+      $values = $form_state->getValue([]);
+      $hp_no = trim($values['hp_no']);
+      $office_number = trim($values['office_number']);
+      if (!empty($hp_no)) {
+        if (preg_match(static::MOBILE_NUMBER_VALIDATION, $hp_no)) {
+          return;
+        }
+        $form_state->setErrorByName('hp_no', 'Invalid HP no.');
+      }
+      if (!empty($office_number)) {
+        if (preg_match(static::LANDLINE_NUMBER_VALIDATION, $office_number)) {
+          return;
+        }
+        $form_state->setErrorByName('office_number', 'Invalid office no.');
+      }
+    }
   }
 
 }

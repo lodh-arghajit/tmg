@@ -17,7 +17,7 @@ input:-webkit-autofill{transition: all 5000s ease-in-out 0s;}
 
 ::-webkit-scrollbar {width: 5px; background:rgba(255, 255, 255, 0.3);}
 ::-webkit-scrollbar-track {border-radius: 5px;}
-::-webkit-scrollbar-thumb { border-radius: 5px; -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2); background:rgba(255, 102, 0, 0.9);} 
+::-webkit-scrollbar-thumb { border-radius: 5px; -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2); background:rgba(255, 102, 0, 0.9);}
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */color: rgba(255, 255, 255, 0.6); opacity: 1; /* Firefox */}
 :-ms-input-placeholder { /* Internet Explorer 10-11 */color:rgba(255, 255, 255, 0.6);}
@@ -235,7 +235,7 @@ input:-webkit-autofill{transition: all 5000s ease-in-out 0s;}
     top: 30px;
     margin-right: -650px;
 }
-.login-popup-form{    
+.login-popup-form{
 	background: #FF6600;
     padding: 10px 15px;
     color: #fff;
@@ -248,14 +248,19 @@ input:-webkit-autofill{transition: all 5000s ease-in-out 0s;}
 
 .user_login .webform-options-display-one-column{display: flex; flex-direction: row; justify-content: center;}
 .user_login .webform-options-display-one-column .form-type-radio{margin: 10px 20px;}
-.user_login .webform-options-display-one-column .form-type-radio .form-radio{   
+.user_login .webform-options-display-one-column .form-type-radio .form-radio{
 	 width: 24px;
     height: 24px;
     margin-left: -30px;
     margin-top: 0px;
     font-size: 18px;
 }
-
+.btn-hld {
+  text-align: center;
+}
+.login-popup-form span{
+  display: none;
+}
 
 
 
@@ -364,8 +369,8 @@ input:-webkit-autofill{transition: all 5000s ease-in-out 0s;}
 	.footer-menu .content{display:none;}
 	.footer-menu li{position: relative;}
 	.footer-menu .footer-toggle .arrow{
-		background: url(../images/arrow-right-icon.png) 100% 36% no-repeat; 
-		background-size: 20px 20px; display:block; 
+		background: url(../images/arrow-right-icon.png) 100% 36% no-repeat;
+		background-size: 20px 20px; display:block;
 		width: 24px;
 		height: 24px;
 		position: absolute;
@@ -373,8 +378,8 @@ input:-webkit-autofill{transition: all 5000s ease-in-out 0s;}
 		right: 4px;transition: 0.3s ease;
 		}
 	.footer-menu .footer-toggle .arrow-animate {transform: rotate(90deg); transition: 0.3s ease;}
-	
-	
+
+
 }
 
 
