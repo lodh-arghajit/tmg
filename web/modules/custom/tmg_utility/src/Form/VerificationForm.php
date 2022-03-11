@@ -48,6 +48,9 @@ class VerificationForm {
         // Due to security purpose, password will not be stored into db
         $form['elements']['password_step']['password'] = ['#type' => 'password',
           '#title' => 'Password',
+          "#title_display" => 'after',
+          "#description" => '<p class="text-right"><a class="btn-fp" href="#">Forgot Password ?</a></p>',
+          "#attributes" => ['placeholder' => 'Password'],
         ];
         $form['actions']['wizard_next']['#validate'][] = [$class, 'validatePassword'];
         $submit_handlers = $form['actions']['wizard_next']['#submit'];
