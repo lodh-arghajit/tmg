@@ -1,0 +1,10 @@
+tmg_utility.reset:
+  path: '/password/reset/{hash}'
+  defaults:
+    _controller: '\Drupal\tmg_utility\Controller\PrlpController::prlpResetPassLogin'
+    _title: 'Reset password'
+  requirements:
+    _access: 'TRUE'
+  options:
+    _maintenance_access: TRUE
+    no_cache: TRUE

@@ -84,7 +84,7 @@ class LoginFormPopup extends BlockBase implements ContainerFactoryPluginInterfac
    */
   public function build() {
 
-    $url = Url::fromUri('http://tmg.lndo.site/form/verification-process');
+    $url = Url::fromUri('https://tmg.lndo.site/form/verification-process');
     $options = ['dialogClass' => 'user_login', 'drupalAutoButtons' =>  FALSE];
     $link_options = [
       'attributes' => [

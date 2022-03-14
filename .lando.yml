@@ -6,6 +6,8 @@ config:
   php: 7.4
   database: mariadb
   xdebug: false
+  config:
+    php: app/php.ini
 services:
   phpmyadmin:
     type: phpmyadmin

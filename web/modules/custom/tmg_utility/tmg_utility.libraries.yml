@@ -1,4 +1,4 @@
-tmg.tracking:
+tracking:
   version: VERSION
   js:
     js/tmg.tracking.js: {}

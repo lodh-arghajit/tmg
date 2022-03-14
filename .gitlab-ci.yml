@@ -1,0 +1,89 @@
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  CONTAINER_IMAGE: harbor.dev.kubix.tm.com.my/tmw-web/tmw:${CI_COMMIT_SHORT_SHA}
+  CONTAINER_IMAGE_PROD: harbor.prod.kubix.tm.com.my/tmw-web/tmw:${CI_COMMIT_SHORT_SHA}
+  HARBOR_PASSWORD : HARBOR_PASSWORD
+
+
+build:
+  stage: build
+  script:
+    - docker login harbor.dev.kubix.tm.com.my -u 'robot$tmw-web+tmw-web' -p ${HARBOR_PASSWORD}
+    - docker build -t ${CONTAINER_IMAGE} .
+    - docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE}
+    - docker push ${CONTAINER_IMAGE}
+  tags:
+    - kubix-runner
+  only:
+    - dev
+
+deploy-dev:
+  stage: deploy
+  script:
+    - kubectl config set-cluster k8s --server="${K8_SERVER}"
+    - kubectl config set clusters.k8s.certificate-authority-data ${K8_CA}
+    - kubectl config set-credentials gitlab --token="${K8_TOKEN}"
+    - kubectl config set-context default --cluster=k8s --user=gitlab
+    - kubectl config use-context default
+    - kubectl config set-context --current --namespace="${K8_NS}"
+    - sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" k8s/trustbp_dev.yml
+    - kubectl apply -f k8s/trustbp_dev-ing.yml
+    - kubectl apply -f k8s/configmap_dev.yml
+    - kubectl apply -f k8s/trustbp_dev.yml
+    - sleep 30
+    - kubectl get all
+    - kubectl get pod | grep trustbp | awk '{print $1}'
+    - kubectl exec $(kubectl get pod | grep -m 1 trustbp | awk '{print $1}') -- /var/www/html/run.sh
+  environment:
+    name: development
+    url:  https://trustbp.trust.tribe.kubix.tm
+  tags:
+    - kubix-runner
+  only:
+    - dev
+      #when: manual
+
+build_prod:
+  stage: build
+  script:
+    - docker login harbor.prod.kubix.tm.com.my -u 'robot$trust' -p ${PRD_HARBOR_PASSWORD}
+    - docker build -t ${CONTAINER_IMAGE_PROD} .
+    - docker tag ${CONTAINER_IMAGE_PROD} ${CONTAINER_IMAGE_PROD}
+    - docker push ${CONTAINER_IMAGE_PROD}
+  tags:
+    - kubix-runner
+  only:
+    - prod
+  #when: manual
+deploy-prod:
+  stage: deploy
+  script:
+    - kubectl config set-cluster k8s --server="${PRD_K8_SERVER}"
+    - kubectl config set clusters.k8s.certificate-authority-data ${PRD_K8_CA}
+    - kubectl config set-credentials gitlab --token="${PRD_K8_TOKEN}"
+    - kubectl config set-context default --cluster=k8s --user=gitlab
+    - kubectl config use-context default
+    - kubectl config set-context --current --namespace="${PRD_K8_NS}"
+    - sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" k8s/trustbp_prd.yml
+    - kubectl apply -f k8s/trustbp_prd-ing.yml
+    - kubectl apply -f k8s/configmap_prd.yml
+    - kubectl apply -f k8s/trustbp_prd.yml
+    - sleep 30
+    - kubectl get all
+    - kubectl get pod | grep trustbp | awk '{print $1}'
+    - kubectl exec $(kubectl get pod | grep -m 1 trustbp | awk '{print $1}') -- /var/www/html/run.sh
+  environment:
+    name: production
+    url:  https://trustbp.tm.com.my
+  tags:
+    - kubix-runner
+  only:
+    - prod
+      #when: manual
+
+
+

@@ -8,12 +8,15 @@ base theme: bootstrap
 libraries:
   - tmw_theme/global-css-and-js
 
+libraries-override:
+  password_eye/pwd_eye_lib: tmw_theme/pwd_eye_lib_override
+
 regions:
   header: 'Header'
   banner: 'Banner'
   content: 'Content'
   footer: 'Footer'
-  
+
 
 
 

@@ -24,6 +24,7 @@ class VerificationForm {
   const CUSTOMER_PROFILE_INFORMATION_STEP = 'customer_profile_confirmation';
   const REGISTRATION_SUCCESS_STEP = 'registration_success';
   const REGISTRATION_USER_NOT_AVAILABLE_INTO_CPC = 'user_not_available_into_cpc';
+  const FORGET_PASSWORD_STEP = 'forget_password_step';
 
   const BRN_ROC = 12;
   const BRN_REGULAR_EXPRESSION = '/^(PS)\/\d{7}\-(A|D|H|K|M|P|T|U|V|W|X)$/';
@@ -33,12 +34,14 @@ class VerificationForm {
   const BRN_OTHER_REGULAR_EXPRESSION = '/^[A-Z|0-9][A-Z|0-9|\/]*[A-Z|0-9]$/';
   const WHOLESALE_ID_EXPRESSION = '/^[0-9]{5}$/';
 
-  const MOBILE_NUMBER_VALIDATION = '/^(\+60)\d{2,3}\d{7}$/';
+  const MOBILE_NUMBER_VALIDATION = '/^\d{2,3}\d{7}$/';
 
-  const LANDLINE_NUMBER_VALIDATION = '/^(\+60)\d{1,2}\d{8}$/';
+  const LANDLINE_NUMBER_VALIDATION = '/^\d{1,2}\d{8}$/';
 
   public static function alter($form, FormStateInterface $form_state) {
+    $form['#disable_inline_form_errors_summary'] = TRUE;
     $form_step = $form_state->get('current_page') ?? static::VERIFICATION_EMAIL_STEP;
+    $form['#attached']['library'][] = 'tmg_utility/tracking';
     $class = static::class;
     switch ($form_step) {
       case static::VERIFICATION_EMAIL_STEP:
@@ -59,6 +62,9 @@ class VerificationForm {
         foreach ($submit_handlers as $submit_handler) {
           $form['actions']['wizard_next']['#submit'][] = $submit_handler;
         }
+        $elements = &WebformFormHelper::flattenElements($form['elements']);
+        $mark_up = $elements['markup_01']['#markup'];
+        $elements['markup_01']['#markup'] = str_replace("[mail]", $form_state->getValues()['user_email'], $mark_up);
         break;
       case static::EXISTING_CUSTOMER_STEP:
         $submit_handlers = $form['actions']['wizard_next']['#submit'];
@@ -84,12 +90,11 @@ class VerificationForm {
            $elements['company_name_confirm']['#default_value'] = $form_state->getValues()['company_name'];
            $elements['email_confirm']['#default_value'] = $form_state->getValues()['user_email'];
          }
-
-
         break;
       case static::NON_EXISTING_CUSTOMER_STEP:
       case static::REGISTRATION_SUCCESS_STEP:
       case static::VERIFICATION_ACCOUNT_BLOCKED_STEP:
+      case static::FORGET_PASSWORD_STEP:
          // there will be no further step after these/'s step
          unset($form['actions']);
          break;
@@ -108,7 +113,6 @@ class VerificationForm {
     }
   }
 
-
   public static function skipCustomer(&$form, $form_state) {
     $values = $form_state->getValue([]);
     $existing_customer = trim($values['tmw_customer_element']);
@@ -118,12 +122,19 @@ class VerificationForm {
   }
 
   public static function redirectForm(&$form, FormStateInterface $form_state) {
+    $step = trim($form_state->getValue('step'));
+    if ($step === 'forget_password') {
+      $email = trim($form_state->getValue('user_email'));
+      static::resetPassword($email);
+      $form_state->set('current_page', static::REGISTRATION_SUCCESS_STEP);
+      return;
+    }
     if (empty($uid = $form_state->get('uid'))) {
       return;
     }
     $account = \Drupal::service('entity_type.manager')->getStorage('user')->load($uid);
     user_login_finalize($account);
-    $form_state->set('current_page', static::EXISTING_CUSTOMER_STEP);
+    $form_state->set('current_page', static::FORGET_PASSWORD_STEP);
   }
 
   public static function validateEmail(&$form, $form_state) {
@@ -158,12 +169,12 @@ class VerificationForm {
       // Blocked accounts cannot request a new password.
       if (!$account->isActive()) {
         $form_state->set('current_page', static::VERIFICATION_PASSWORD_STEP);
+        return;
       }
+
     }
     else {
       $form_state->set('current_page', static::VERIFICATION_ACCOUNT_BLOCKED_STEP);
-
-
     }
   }
 
@@ -173,6 +184,10 @@ class VerificationForm {
    * If successful, $form_state->get('uid') is set to the matching user ID.
    */
   private static function validateAuthentication(array &$form, FormStateInterface $form_state) {
+    $step = trim($form_state->getValue('step'));
+    if ($step === 'forget_password') {
+       return;
+    }
     $password = trim($form_state->getValue('password'));
     if (empty($password)) {
       $form_state->setErrorByName('password', 'Invalid username or password.');
@@ -280,6 +295,24 @@ class VerificationForm {
         $form_state->setErrorByName('office_number', 'Invalid office no.');
       }
     }
+  }
+
+  private static function resetPassword($email) {
+    if (!$email) {
+      throw new \UnexpectedValueException("Email can't be empty");
+    }
+    $user_storage = \Drupal::service('entity_type.manager')->getStorage('user');
+    // Try to load by email.
+    $users = $user_storage->loadByProperties(['mail' => $email]);
+    if (empty($users)) {
+      // No success, try to load by name.
+      $users = $user_storage->loadByProperties(['name' => $email]);
+    }
+    $account = reset($users);
+    if (!$account) {
+      throw new \UnexpectedValueException("Account can't be empty");
+    }
+    _user_mail_notify('password_reset', $account);
   }
 
 }
