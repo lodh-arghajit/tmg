@@ -98,7 +98,8 @@
                 "#2951547: Fix issue with layout overflow": "https://www.drupal.org/files/issues/2020-01-08/layout-builder-tray-size-2951547-42.patch",
                 "#2761273: Views exposed filter tokens": "https://www.drupal.org/files/issues/2020-03-02/exposed_filter_tokens-2761273-21.patch",
                 "#2985882: Workaround for Call to a member function getLabel() after enabling layout_builder": "https://www.drupal.org/files/issues/2020-04-08/2985882-field-85.patch",
-                "2880011: Add a #disable_inline_form_errors_summary property to disable the Inline Form Errors summary": "https://www.drupal.org/files/issues/2021-08-23/2880011-85.patch"
+                "2880011: Add a #disable_inline_form_errors_summary property to disable the Inline Form Errors summary": "https://www.drupal.org/files/issues/2021-08-23/2880011-85.patch",
+                "3109650: Refactor Xss::attributes() to allow filtering of style attribute values": "https://www.drupal.org/files/issues/2021-06-06/3109650-36.patch"
             },
             "drupal/disable_messages": {
                 "2901390#33: Non-existent service path.alias_manager": "https://www.drupal.org/files/issues/2021-01-21/3193625-5.patch"
@@ -108,6 +109,9 @@
             },
             "drupal/recaptcha": {
                 "2493183: Ajax support / Use behaviors for 2.x": "https://www.drupal.org/files/issues/2021-06-03/recaptcha-ajax-2493183-225.patch"
+            },
+            "drupal/swiftmailer": {
+                "3189973: Support HTML in email body.": "https://www.drupal.org/files/issues/2020-12-26/support_html_in_message_body-3189973.patch"
 
             }
         }
