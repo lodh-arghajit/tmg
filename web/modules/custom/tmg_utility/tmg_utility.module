@@ -1,0 +1,16 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\tmg_utility\Form\VerificationForm;
+
+/**
+ * Implements hook_form_alter().
+ */
+function tmg_utility_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  switch ($form_id) {
+    case 'webform_submission_verification_process_add_form':
+      $form = VerificationForm::alter($form, $form_state);
+      break;
+  }
+}

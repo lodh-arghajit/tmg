@@ -1,0 +1,30 @@
+{%
+  set classes = [
+    'block',
+    'block-' ~ configuration.provider|clean_class,
+    'block-' ~ plugin_id|clean_class,
+  ]
+%}
+<div{{ attributes.addClass(classes) }}>
+  {{ title_prefix }}
+  {% if label %}
+    <h2{{ title_attributes }}>{{ label }}</h2>
+  {% endif %}
+  {{ title_suffix }}
+  {% block content %}
+    <div{{ content_attributes.addClass('content') }}>
+      {{ content.field_block_image }}
+
+      <div class="mask">
+    <div class="d-flex justify-content-center align-items-center h-100">
+      <div class="text-dark">
+        <h1 class="mb-3 banner-title">{{ content.field_banner_title }}</h1>
+        <h4 class="mb-3 banner-description">{{ content.field_banner_description }}</h4>
+        {# <a class="btn btn-outline-light btn-lg" href="#!" role="button">Call to action</a> #}
+      </div>
+    </div>
+  </div>
+
+    </div>
+  {% endblock %}
+</div>

@@ -1,0 +1,8 @@
+uuid: ce520690-02f7-4194-b6a4-37f581a586ba
+langcode: en
+status: true
+dependencies: {  }
+id: home-and-personal-menu
+label: 'Home and Personal Menu'
+description: ''
+locked: false

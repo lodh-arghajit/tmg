@@ -1,0 +1,9 @@
+_core:
+  default_config_hash: UVH1aJ4b44UM-VdPVN7hNNuuVqfReJxwfVeDQH1Hvsk
+ignored_config_entities:
+  - '*site_specific__*'
+  - 'block.block.*'
+  - 'webform.webform.*'
+  - 'google_tag.container.*'
+  - core.entity_view_display.user.user.default
+  - system.site

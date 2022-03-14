@@ -1,0 +1,8 @@
+tmg.tracking:
+  version: VERSION
+  js:
+    js/tmg.tracking.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery.once
+    - core/drupal.ajax
