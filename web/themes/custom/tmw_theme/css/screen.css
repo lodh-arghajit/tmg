@@ -191,7 +191,7 @@ input:-webkit-autofill{transition: all 5000s ease-in-out 0s;}
 	-webkit-transition: all .2s; transition: all .2s;
 	color: #7E8299;
   }
-  .user_login .alert-danger{
+.user_login .alert-danger,  .reset-password-hld .alert-danger{
 	background-color: transparent;
     border: 0;
     color: #ed0000;
@@ -203,10 +203,10 @@ input:-webkit-autofill{transition: all 5000s ease-in-out 0s;}
     bottom: -20px;
     left: 0;
   }
-.user_login .has-error .form-control {
+.user_login .has-error .form-control, .reset-password-hld .has-error .form-control {
     border-color: #ed0000;
 }
-.user_login .has-error .form-control:focus {
+.user_login .has-error .form-control:focus, .reset-password-hld .has-error .form-control:focus {
     border-color: #ed0000;
     -webkit-box-shadow:none;
     box-shadow: none;
@@ -278,7 +278,76 @@ input:-webkit-autofill{transition: all 5000s ease-in-out 0s;}
 .fp-icon img{width:100px; height: 100px;}
 .form-item-email-confirm {font-family: arial;}
 
-
+/*Reset Password*/
+.reset-password-hld{
+	position: relative;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(153,153,153,.2);
+	padding: 30px;
+    border-radius: 10px;
+    outline: 0;
+	box-shadow: 0 0px 15px rgb(0 0 0 / 10%);
+	margin:100px auto;
+	max-width: 550px;
+}
+.reset-password-hld h2{
+	font-size: 26px;
+    line-height: 32px;
+    text-align: center;
+    color: #7E8299;
+    font-family: 'interfacebold';
+    margin: 0px 0 15px;
+}
+.reset-password-hld p{
+	font-size: 16px;
+    line-height: 1.2;
+    color: #3a5263;
+    text-align: center;
+    max-width: 90%;
+    margin: 0 auto 10px;
+    font-family: 'interfaceregular';
+}
+.reset-password-hld h4{
+	font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    color: #7E8299;
+    margin: 15px 0;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.password-strength__title, .password-confirm-message{
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 16px;
+	color: #7E8299;
+	padding-top: 4px;
+}
+.password-strength__meter {height: 4px;}
+.password-strength__indicator.is-strong{background-color: #26ac5d;}
+.password-strength__indicator.is-good{background-color: #ffa500;}
+.password-strength__indicator.is-weak{background-color: #ed0000;}
+.password-strength__indicator.is-fair{background-color: #ed5800;}
+.password-suggestions{font-size: 14px;color: #7E8299;}
+.password-suggestions ul {
+	list-style: none;margin-top: 5px;
+  }
+.password-suggestions ul li::before {
+	content: "\2022";
+	color: #003399;
+	font-weight: bold;
+	display: inline-block; 
+	width: 1em;
+	margin-left: -1em;
+  }
+.reset-password-hld .alert-danger{position: relative; bottom: 0; top:0; padding:5px 0;}
+.reset-password-message{text-align: center;}
+.reset-img img{width: auto; height: 200px;}
 
 
 
@@ -455,5 +524,21 @@ input:-webkit-autofill{transition: all 5000s ease-in-out 0s;}
 	.navigation{margin:0;}
 	.user_login .modal-body {
 		padding: 0;
+	}
+	.reset-password-hld{
+		margin: 60px 20px;
+    	width: auto;
+		padding: 20px;
+	}
+	.reset-password-hld p{width: 100%;}
+	.reset-password-hld h2 {
+		font-size: 22px;
+		line-height: 26px;
+		margin: 0px 0 10px;
+	}
+	.reset-password-hld h4 {
+		font-size: 16px;
+		line-height: 24px;
+		margin: 10px 0 20px;
 	}
 }
