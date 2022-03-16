@@ -1,0 +1,10 @@
+uuid: 2f5d189d-5ec6-41eb-99b1-fe392dc49f7a
+langcode: en
+status: true
+dependencies: {  }
+id: landing_page
+label: 'Landing page items'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

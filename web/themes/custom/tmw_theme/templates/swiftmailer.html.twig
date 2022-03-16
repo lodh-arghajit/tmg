@@ -1,0 +1,103 @@
+{#
+/**
+ * @file
+ * The default template file for e-mails.
+ *
+ * Available variables:
+ * - subject: The subject.
+ * - body: The message content.
+ * - is_html: True if generating HTML output, false for plain text.
+ * - message: The $message array created and used in the mail building
+ *   procedure. Its content varies between cases, but typically contains at
+ *   least the following elements:
+ *   - id: The message identifier.
+ *   - module: The module that handles the building of the message.
+ *   - key: The key of the message.
+ *   - to: The recipient email address.
+ *   - from: The email address of the sender.
+ *   - langcode: The langcode to use to compose the e-mail.
+ *   - params: The message parameters.
+ * - base_url: The site base url including scheme, without trailing slash.
+ *
+ * This template may be overriden by module and/or mail key, using any of the
+ * following template names:
+ * - swiftmailer.html.twig: global, used by default.
+ * - swiftmailer--mymodule.html.twig: only emails sent by the module "mymodule".
+ * - swiftmailer--mymodule--test.html.twig: only emails by the module
+ *   "mymodule" with key "test".
+ *
+ * @see template_preprocess()
+ * @see template_preprocess_swiftmailer()
+ *
+ * @ingroup themeable
+ */
+#}
+{% if is_html %}
+  {% set base_url = url('<front>')  %}
+  <html>
+
+  <body style="background-color:#f6f6f6;font-family: Open Sans, sans-serif;font-size:100%;font-weight:400;line-height:1.4;color:#000;">
+  <style>
+    @media only screen and (max-width:767px) {
+      .mb-block{display:block !important;
+      }
+  </style>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+  <table style="background-color:#f6f6f6; mso-table-lspace:0pt;mso-table-rspace:0pt;" width="100%" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+      <td>
+
+        <table style="max-width:800px;margin:50px auto 10px;background-color:#ffffff;padding:40px; mso-table-lspace:0pt;mso-table-rspace:0pt;">
+          <thead>
+          <tr>
+            <th style="text-align:center;" class="mb-block"><img width="120" src="http://kamtiel.com/strike/v2/images/nl/logo.png" alt="Telekom Malaysia"></th>
+          </tr>
+          </thead>
+         {{ body }}
+        </table>
+
+      </td>
+    </tr>
+    <tr>
+      <td align="center" style="padding:10px;">
+        <img style="display:block;" width="50" src="http://kamtiel.com/strike/v2/images/nl/logo.png" alt="Telekom Malaysia">
+        <p style="font-size:11px; line-height:1.5;margin:0 0 6px 0; color:#999;max-width:400px; margin-top:10px;">TM WHOLESALE, Level 54 North Wing<br>
+          Menara TM, Jalan Pantai Baharu<br>
+          50672 Kuala Lumpur, Malaysia</p>
+        <table align="center" cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td valign="top">
+              <a href="# Facebook" style="text-decoration:none;" target="_blank">
+                <img width="19" src="http://kamtiel.com/strike/v2/images/nl/0000335_icon-fb_100.jpeg" alt="Facebook" />
+              </a>
+            </td>
+            <td width="7">&nbsp;</td>
+            <td valign="top">
+              <a href="# Twitter" style="text-decoration:none;" target="_blank">
+                <img width="19" src="http://kamtiel.com/strike/v2/images/nl/0000338_icon-twitter_100.jpeg" alt="Twitter" />
+              </a>
+            </td>
+            <td width="7">&nbsp;</td>
+            <td valign="top">
+              <a href="# Linkedin" style="text-decoration:none;" target="_blank">
+                <img width="19" src="http://kamtiel.com/strike/v2/images/nl/0000337_icon-linkedin_100.jpeg" alt="Linkedin" />
+              </a>
+            </td>
+            <td width="7">&nbsp;</td>
+            <td valign="top">
+              <a href="# Instagram" style="text-decoration:none;" target="_blank">
+                <img width="19" src="http://kamtiel.com/strike/v2/images/nl/0000336_icon-instagram_100.jpeg" alt="Instagram" />
+              </a>
+            </td>
+          </tr>
+        </table>
+        <p style="font-size:11px; line-height:1.5;margin:0 0 6px 0; color:#999; margin-top:10px;">@ 2022 TM WHOLESALE. All rights reserved.</p>
+      </td>
+    </tr>
+  </table>
+  </body>
+
+  </html>
+{% else %}
+{{ body }}
+{% endif %}

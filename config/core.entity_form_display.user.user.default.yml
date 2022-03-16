@@ -1,0 +1,34 @@
+uuid: 555d5433-fc62-4322-8cd7-28aca054cef7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.user.user.field_wholesale_id
+    - field.field.user.user.user_picture
+  module:
+    - user
+_core:
+  default_config_hash: FaQ9Ptcpxpg30AtiqRDtl_8zbJArHP1LPfug_s59TOA
+id: user.user.default
+targetEntityType: user
+bundle: user
+mode: default
+content:
+  account:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_wholesale_id:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  contact: true
+  language: true
+  timezone: true
+  user_picture: true

@@ -1,0 +1,30 @@
+uuid: e0c2e88c-80ca-412e-b49e-a4d4be81f3c4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.front_page.field_sites_cards
+    - node.type.front_page
+  module:
+    - entity_reference_revisions
+    - user
+id: node.front_page.default
+targetEntityType: node
+bundle: front_page
+mode: default
+content:
+  field_sites_cards:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

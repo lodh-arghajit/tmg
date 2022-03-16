@@ -1,0 +1,21 @@
+name: tmg
+recipe: lamp
+config:
+  via: apache
+  webroot: web
+  php: 7.4
+  database: mariadb
+  xdebug: false
+  config:
+    php: app/php.ini
+services:
+  phpmyadmin:
+    type: phpmyadmin
+    hosts:
+      - d7db
+  phpmyadminfordrupal_8:
+    type: phpmyadmin
+    hosts:
+      - database
+
+

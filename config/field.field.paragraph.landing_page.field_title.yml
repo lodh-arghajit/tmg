@@ -1,0 +1,19 @@
+uuid: 8d1ede06-b50f-4410-9bbe-8c03b9c68ab2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_title
+    - paragraphs.paragraphs_type.landing_page
+id: paragraph.landing_page.field_title
+field_name: field_title
+entity_type: paragraph
+bundle: landing_page
+label: Title
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

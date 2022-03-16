@@ -1,0 +1,5 @@
+services:
+  tmg_utility.route_subscriber:
+    class: Drupal\tmg_utility\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }

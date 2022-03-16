@@ -1,0 +1,28 @@
+uuid: 6c433f39-763b-40c8-af3c-0b2d08255b0d
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.landing_page_block
+    - field.field.block_content.landing_page_block.field_landing_page_items
+  module:
+    - paragraphs
+id: block_content.landing_page_block.default
+targetEntityType: block_content
+bundle: landing_page_block
+mode: default
+content:
+  field_landing_page_items:
+    type: entity_reference_paragraphs
+    weight: 0
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+hidden:
+  info: true

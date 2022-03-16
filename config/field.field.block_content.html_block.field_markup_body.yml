@@ -1,0 +1,21 @@
+uuid: c8dfee42-acbd-42f7-9980-f4eb33a35ae7
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.html_block
+    - field.storage.block_content.field_markup_body
+  module:
+    - text
+id: block_content.html_block.field_markup_body
+field_name: field_markup_body
+entity_type: block_content
+bundle: html_block
+label: 'Markup Body'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text

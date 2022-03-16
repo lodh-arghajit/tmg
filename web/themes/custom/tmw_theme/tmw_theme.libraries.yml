@@ -1,0 +1,15 @@
+global-css-and-js:
+  css:
+    theme:
+      css/main.min.css: {}
+      css/screen.css: {}
+  js:
+    js/common.ui.js: {}
+pwd_eye_lib_override:
+  css:
+    theme:
+      css/password_eye.css: {}
+  js:
+    js/password_eye.js: {}
+  dependencies:
+    - core/jquery

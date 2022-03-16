@@ -1,0 +1,31 @@
+uuid: 25289401-8524-4d2d-85de-991f01b25a41
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.basic
+    - field.storage.block_content.field_landing_page_items
+    - paragraphs.paragraphs_type.landing_page
+  module:
+    - entity_reference_revisions
+id: block_content.basic.field_landing_page_items
+field_name: field_landing_page_items
+entity_type: block_content
+bundle: basic
+label: 'Landing page items'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      landing_page: landing_page
+    negate: 0
+    target_bundles_drag_drop:
+      landing_page:
+        weight: 2
+        enabled: true
+field_type: entity_reference_revisions

@@ -1,0 +1,8 @@
+uuid: 87a45dd0-f996-4e92-9d3b-a25cb441c3a4
+langcode: en
+status: true
+dependencies: {  }
+id: front-navigation
+label: Front-Navigation
+description: ''
+locked: false

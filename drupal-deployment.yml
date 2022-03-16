@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubc-deployment
+spec:
+  selector:
+    matchLabels:
+      app: ubc
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: ubc
+    spec:
+      containers:
+      - name: ubc
+        image: harbor.dev.kubix.tm.com.my/library/drupal:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: persistent-storage
+          mountPath: /var/www/html/sites
+          subPath: sites
+        env:
+        - name: MYSQL_DATABASE
+          value: "ubc"
+        - name: MYSQL_USER
+          value: "nipponuser"
+        - name: MYSQL_PASSWORD
+          value: "!"
+        - name: MYSQL_HOST
+          value: "database-mysql-ubc.c5ufjcyav3kr.ap-southeast-1.rds.amazonaws.com"
+        - name: MYSQL_PORT
+          value: "3306"
+        - name: MAILER_HOST
+          value: 'smtp.tm.com.my'
+        - name: 'MAILER_USERNAME'
+          value: ''
+        - name: MAILER_PASSWORD
+          value: ''
+        - name: MAILER_PORT
+          value: 587
+        - name: MAILER_NOREPLY
+          value: ''
+        - name: MAILER_NOREPLY_NAME
+          value: ''
+        - name: MAILER_INTERNAL_SUPPORT_EMAIL
+          value: ''
+      volumes:
+      - name: persistent-storage
+        persistentVolumeClaim:
+          claimName: efs-claim
