@@ -11,6 +11,10 @@ libraries:
 libraries-override:
   password_eye/pwd_eye_lib: tmw_theme/pwd_eye_lib_override
 
+  user/drupal.user:
+    js:
+      user.js: js/user.js
+
 regions:
   header: 'Header'
   banner: 'Banner'

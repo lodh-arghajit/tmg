@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Drupal\tmg_utility\Ajax\Command\AjaxRedirect;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\webform\Utility\WebformFormHelper;
+use Drupal\user\Entity\User;
 
 
 class VerificationForm {
@@ -110,6 +111,33 @@ class VerificationForm {
 
     if ($current_page == static::COLLECT_CUSTOMER_INFORMATION_STEP) {
       $form_state->set('current_page', static::REGISTRATION_USER_NOT_AVAILABLE_INTO_CPC);
+    }
+    if ($current_page == static::CUSTOMER_PROFILE_INFORMATION_STEP) {
+      $form_object = $form_state->getFormObject();
+      $web_form_submission = $form_object->getEntity();
+      $email = $web_form_submission->getElementData("user_email") ?? '';
+      $web_form = $web_form_submission->getWebform();
+      $elements = $web_form->getElementsOriginalDecoded();
+      $elements = &WebformFormHelper::flattenElements($elements);
+      $values = $form_state->getValue([]);
+      $user_data_save = [];
+      foreach ($elements as $key => $value) {
+
+        if (empty($value["#user_field_name"])) {
+          continue;
+        }
+        $submission_value = trim($values[$key]);
+
+        $user_data_save[$value["#user_field_name"]] = $submission_value;
+      }
+      if (!empty($user_data_save)) {
+        $user_data_save['status'] = 0;
+        $user_data_save['field_admin_approved'] = 0;
+        $user_data_save['name'] = $user_data_save['mail'];
+        $user = User::create($user_data_save);
+        $user->save();
+      }
+
     }
   }
 

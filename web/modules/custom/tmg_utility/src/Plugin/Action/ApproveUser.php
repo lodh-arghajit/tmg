@@ -12,7 +12,7 @@ use Drupal\views_bulk_operations\Action\ViewsBulkOperationsActionBase;
  * @Action(
  *   id = "user_approve_user_action",
  *   label = @Translation("Approve user"),
- *   type = "user"
+ *   type = "user",
  * )
  */
 class ApproveUser extends ViewsBulkOperationsActionBase {
@@ -23,7 +23,11 @@ class ApproveUser extends ViewsBulkOperationsActionBase {
   public function execute($account = NULL) {
     // Skip unblocking user if they are already unblocked.
     if ($account !== FALSE) {
-      $account->set('field_approved_by_admin', '1');
+      $account->set('field_admin_approved', '1');
+      $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+      $account->set('field_approved_by', ['target_id' => $user->id()]);
+      $request_time = \Drupal::time()->getCurrentTime();
+      $account->set('field_approved_rejected_', $request_time);
       $account->save();
     }
   }
@@ -33,10 +37,9 @@ class ApproveUser extends ViewsBulkOperationsActionBase {
    */
   public function access($object, AccountInterface $account = NULL, $return_as_object = FALSE) {
     /** @var \Drupal\user\UserInterface $object */
-    $access = $object->status->access('edit', $account, TRUE)
-      ->andIf($object->access('update', $account, TRUE));
 
-    return $return_as_object ? $access : $access->isAllowed();
+    return $account->hasPermission('TMW admin');
+
   }
 
 }

@@ -44,15 +44,39 @@ class UserPasswordResetForm {
       unset($form['actions']);
       return $form;
     }
+    $user = $form_state->getFormObject()->getEntity()->getData()['user'];
+    $email = $user ? $user->getEmail() : "";
+    $elements = &WebformFormHelper::flattenElements($form['elements']);
+    $mark_up = $elements['markup_01']['#markup'];
+    $elements['markup_01']['#markup'] = str_replace("[mail]", $email, $mark_up);
     $form['#disable_inline_form_errors_summary'] = TRUE;
     $form['account']['pass'] = [
       '#type' => 'password_confirm',
       '#size' => 25,
       '#required' => TRUE,
     ];
+
+    $form['#validate'][] = [$class, 'validateForm'];
     $form['actions']['wizard_next']['#submit'][] = [$class, 'submitForm'];
     $form['actions']['wizard_prev'] = [];
     return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function validateForm(array &$form, FormStateInterface $form_state) {
+    $user = $form_state->getFormObject()->getEntity()->getData()['user'];
+    $validationReport = \Drupal::service('password_policy.validator')->validatePassword(
+      $form_state->getValue('pass', ''),
+      $user,
+      []
+    );
+
+    if ($validationReport->isInvalid()) {
+      $form_state->setErrorByName('pass', t('The password does not satisfy the password policies.'));
+    }
+
   }
 
   /**
