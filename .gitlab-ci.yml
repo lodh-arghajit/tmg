@@ -15,5 +15,3 @@ build:
     - docker push ${CONTAINER_IMAGE}
   tags:
     - kubix-runner
-  only:
-    - dev
