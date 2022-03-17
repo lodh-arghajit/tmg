@@ -42,6 +42,7 @@
         "drupal/radix": "^4.11",
         "drupal/real_aes": "^2.4",
         "drupal/recaptcha": "^3.0",
+        "drupal/redirect_after_login": "^2.7",
         "drupal/swiftmailer": "^2.2",
         "drupal/token": "^1.10",
         "drupal/view_password": "^6.0",

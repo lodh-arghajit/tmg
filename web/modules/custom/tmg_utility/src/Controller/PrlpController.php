@@ -12,10 +12,110 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Drupal\encrypt\Entity\EncryptionProfile;
 
+
 /**
  * Controller routines for prlp routes.
  */
 class PrlpController extends UserController {
+
+
+  /**
+   * Override resetPassLogin() to redirect to the configured path.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The request.
+   * @param string $hash
+   *   Login link hash.
+   *
+   * @return RedirectResponse
+   *    Array of page elements to render.
+   */
+  public function prlpAdminAutoLogin(Request $request, $hash) {
+    try {
+      $encryption_profile = EncryptionProfile::load("site_encrypt_decrypt_profile");
+      if (!$encryption_profile) {
+        throw new AccessDeniedHttpException();
+      }
+      $user_data = \Drupal::service('encryption')->decrypt($hash, $encryption_profile);
+      $user_data = explode(":", $user_data);
+      $uid = $user_data[0];
+
+      $timestamp = (int) $user_data[1];
+      /** @var \Drupal\user\UserInterface $user */
+      $user = $this->userStorage->load($uid);
+      // Verify that the user exists and is active.
+      if ($user === NULL || !$user->isActive()) {
+        // Blocked or invalid user ID, so deny access. The parameters will be in
+        // the watchdog's URL for the administrator to check.
+        throw new AccessDeniedHttpException();
+      }
+      // validate the timestamp.
+      $timeout = $this->config('user.settings')->get('password_reset_timeout');
+      $expiration_time = $timestamp + $timeout;
+      $request_time = \Drupal::time()->getCurrentTime();
+      if ($request_time > $expiration_time) {
+        $this->messenger()->addError($this->t('You have tried to use a one-time login link that has expired. Please request a new one using the form below.'));
+        throw new AccessDeniedHttpException();
+      }
+
+
+      user_login_finalize($user);
+    }
+    catch (\Exception $exception) {
+      return new RedirectResponse('/');
+    }
+
+  }
+
+  /**
+   * Override resetPassLogin() to redirect to the configured path.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The request.
+   * @param string $hash
+   *   Login link hash.
+   *
+   * @return RedirectResponse
+   *    Array of page elements to render.
+   */
+  public function prlpEmailActivation(Request $request, $hash) {
+    try {
+      $encryption_profile = EncryptionProfile::load("site_encrypt_decrypt_profile");
+      if (!$encryption_profile) {
+        throw new AccessDeniedHttpException();
+      }
+      $user_data = \Drupal::service('encryption')->decrypt($hash, $encryption_profile);
+      $user_data = explode(":", $user_data);
+      $uid = $user_data[0];
+
+      $timestamp = (int) $user_data[1];
+      /** @var \Drupal\user\UserInterface $user */
+      $user = $this->userStorage->load($uid);
+      // Verify that the user exists and is active.
+      if ($user === NULL) {
+        // Blocked or invalid user ID, so deny access. The parameters will be in
+        // the watchdog's URL for the administrator to check.
+        throw new AccessDeniedHttpException();
+      }
+      // validate the timestamp.
+      $timeout = $this->config('user.settings')->get('password_reset_timeout');
+      $expiration_time = $timestamp + $timeout;
+      $request_time = \Drupal::time()->getCurrentTime();
+      if ($request_time > $expiration_time) {
+        $this->messenger()->addError($this->t('You have tried to use a one-time login link that has expired. Please request a new one using the form below.'));
+        throw new AccessDeniedHttpException();
+      }
+
+      $user->activate();
+      $user->save();
+      user_login_finalize($user);
+    }
+    catch (\Exception $exception) {
+      return new RedirectResponse('/');
+    }
+
+  }
+
 
   /**
    * Override resetPassLogin() to redirect to the configured path.
@@ -68,6 +168,39 @@ class PrlpController extends UserController {
     catch (\Exception $exception) {
     }
     return $web_form->getSubmissionForm($values);
+  }
+
+  /**
+   * Override resetPassLogin() to redirect to the configured path.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The request.
+   * @param string $hash
+   *   Login link hash.
+   *
+   * @return array
+   *    Array of page elements to render.
+   */
+  public function prlpLogin(Request $request) {
+    try {
+      $session = $request->getSession();
+      $uid = $session->get('login_user_id', 0);
+      if (empty($uid)) {
+        throw new AccessDeniedHttpException();
+      }
+      $user = $this->userStorage->load($uid);
+      // Verify that the user exists and is active.
+      if ($user === NULL || !$user->isActive()) {
+        // Blocked or invalid user ID, so deny access. The parameters will be in
+        // the watchdog's URL for the administrator to check.
+        throw new AccessDeniedHttpException();
+      }
+      user_login_finalize($user);
+    }
+    catch (\Exception $exception) {
+      throw new AccessDeniedHttpException();
+    }
+
   }
 
 }
