@@ -25,11 +25,28 @@ input:-webkit-autofill{transition: all 5000s ease-in-out 0s;}
 
 .header-hld{background: rgba(255, 255, 255, 0.8);box-shadow: 0px 0.75px 20px rgba(18, 38, 63, 0.05);padding: 5px 0;position: fixed; width: 100%; top: 0; left: 0; z-index:9;}
 .header-hld .container{max-width:1366px;}
-.top-menu{display:flex; margin:0; padding:0;}
-.top-menu li{display: flex;  align-items: center;margin: 0 10px;}
-.top-menu li a{padding:10px 10px; text-align:center; color:#495057; font-size:16px; display:block;}
-.top-menu li a:hover{ color:#FF6600;}
-.top-menu li a.btn-login{background: #FF6600; padding:10px 15px; color:#fff; font-family:'interfacebold'; border-radius:6px;}
+.menu--before-login{display:flex; margin:0; padding:0;}
+.menu--before-login li{display: flex;  align-items: center;margin: 0 10px;}
+.menu--before-login li a{background-color: transparent; padding:10px 10px; text-align:center; color:#495057; font-size:16px; display:block;}
+.menu--before-login li ul li a{text-align: left;width: 100%;}
+.menu--before-login li a:hover{ color:#FF6600;background-color: transparent;}
+.menu--before-login .open > a, .menu--before-login .open > a:hover, .menu--before-login .open > a:focus{background-color: transparent;}
+.menu--before-login li a.btn-login{background: #FF6600; padding:10px 15px; color:#fff; font-family:'interfacebold'; border-radius:6px;}
+.before-login-menu-hld .menu--before-login li ul{
+	width: 200px;
+    position: absolute;
+    top: 63px;
+    background: #fff;
+    display: block;
+    height: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0px 0.75px 20px rgb(18 38 63 / 5%);
+    padding: 5px 0;
+}
+.menu--before-login li ul li {border-bottom: solid 1px #e7e7e7;}
+.menu--before-login li ul li:last-child {border-bottom: solid 0px #e7e7e7;}
+
 
 .hero-banner{min-height:450px;display: flex; align-items: center; background-repeat: no-repeat; background-position: 0 100%; background-size: 100% auto;}
 .hero-txt{margin:0 auto; text-align:center;}
@@ -225,9 +242,9 @@ input:-webkit-autofill{transition: all 5000s ease-in-out 0s;}
 .block-login-form-popup{
 	width: 160px;
     position: absolute;
-    right: 50%;
+    right: 1%;
     top: 30px;
-    margin-right: -650px;
+    margin-right:0px;
 }
 .login-popup-form{
 	background: #FF6600;
@@ -239,7 +256,7 @@ input:-webkit-autofill{transition: all 5000s ease-in-out 0s;}
 }
 .login-popup-form img{display: none;}
 .login-popup-form:hover, .login-popup-form:focus, .login-popup-form:visited{color: #fff;background: #FF6600;}
-.navigation {margin-right: 160px;}
+.navigation {}
 
 .user_login .webform-options-display-one-column{display: flex; flex-direction: row; justify-content: center;}
 .user_login .webform-options-display-one-column .form-type-radio{margin: 10px 20px;}
@@ -366,6 +383,13 @@ input:-webkit-autofill{transition: all 5000s ease-in-out 0s;}
 
 .content-hld .messages__wrapper{max-width: 1000px; margin: 20px auto;}
 
+.before-login-menu-hld{margin-right: 180px;display: flex; justify-content: flex-end;}
+.before-login-menu-hld .menu--before-login{justify-content: flex-end; align-items: center; height: 100%;}
+.region-header{ display: flex;  width: 100%;}
+
+.menu--before-login li ul.dropdown-menu{display: none !important;} 
+.menu--before-login li.open ul.dropdown-menu{display: block !important;} 
+.menu--before-login li .dropdown-toggle .caret{display: none;}
 
 
 
@@ -375,18 +399,25 @@ input:-webkit-autofill{transition: all 5000s ease-in-out 0s;}
 
 @media only screen and (min-width: 992px) and (max-width: 1279px) {
 	.block-login-form-popup {
-		margin-right: -48%;
+		margin-right: 0%;
 	}
+	.menu--before-login li {margin: 0 4px;}
 }
 
 
 
 @media (max-width: 991px) {
 	.header-hld {padding: 10px 0;}
-	.top-menu {flex-direction: column;width: 100%;}
-	.top-menu li { margin: 0 0px 15px;}
-	.top-menu li a {padding: 10px 10px; text-align: left; color: #ffffff; font-size: 18px;}
-	.top-menu li a.btn-login { width: 100%;}
+	.logo-hld img{width: 70px;}
+	.before-login-menu-hld .menu--before-login {
+		justify-content: flex-start;
+		align-items: flex-start;
+		height: inherit;
+	}
+	.menu--before-login {flex-direction: column;width: 100%;}
+	.menu--before-login li {margin: 0 0px 10px;display: block;width: 100%;}
+	.menu--before-login li a {padding: 8px 10px; text-align: left; color: #ffffff; font-size: 18px;}
+	.menu--before-login li a.btn-login { width: 100%;}
 	.navigation {
 		position: fixed;
 		z-index: 9600;
@@ -413,6 +444,7 @@ input:-webkit-autofill{transition: all 5000s ease-in-out 0s;}
 	}
 	.nav-toggle {
 		position: absolute;
+		right: 5px;
 		transform: translateY(-50%);
     	top: 50%;
 		width: 36px;
@@ -496,7 +528,7 @@ input:-webkit-autofill{transition: all 5000s ease-in-out 0s;}
 	.block-login-form-popup {
 		width: 150px;
 		position: absolute;
-		right: 45px;
+		right: 1%;
 		top: 50%;
 		margin-right: 0;
 		transform: translateY(-50%);
@@ -507,6 +539,23 @@ input:-webkit-autofill{transition: all 5000s ease-in-out 0s;}
 		padding: 7px 10px;
 	}
 	.navigation{margin:0;}
+	.before-login-menu-hld {margin-right: 160px;}
+	.before-login-menu-hld li ul.dropdown-menu{
+		background: transparent;
+		left: 0;
+		position: relative;
+		top: 0;
+		transform: translateX(0);
+		padding: 0;
+		box-shadow: none;
+		width: 100%;
+		border: 0;
+		display: block !important;
+	}
+	.before-login-menu-hld .dropdown-toggle::after{display: none;}
+	.before-login-menu-hld li .dropdown-backdrop{display: none;}
+	.menu--before-login li ul li {border-bottom: solid 0px #e7e7e7;margin: 0 0 0 15px;	}
+	.menu--before-login li ul li a {padding: 7px 10px;}
 
 }
 
@@ -526,7 +575,7 @@ input:-webkit-autofill{transition: all 5000s ease-in-out 0s;}
 	.block-login-form-popup {
 		width: 150px;
 		position: absolute;
-		right: 45px;
+		right: 1%;
 		top: 50%;
 		margin-right: 0;
 		transform: translateY(-50%);
