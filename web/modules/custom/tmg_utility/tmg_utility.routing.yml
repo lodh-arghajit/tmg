@@ -8,3 +8,34 @@ tmg_utility.reset:
   options:
     _maintenance_access: TRUE
     no_cache: TRUE
+
+tmg_utility.admin_auto_login:
+  path: '/admin/approve/{hash}'
+  defaults:
+    _controller: '\Drupal\tmg_utility\Controller\PrlpController::prlpAdminAutoLogin'
+    _title: 'Admin auto login'
+  requirements:
+    _access: 'TRUE'
+  options:
+    _maintenance_access: TRUE
+    no_cache: TRUE
+tmg_utility.email_activation:
+  path: '/email/activation/{hash}'
+  defaults:
+    _controller: '\Drupal\tmg_utility\Controller\PrlpController::prlpEmailActivation'
+    _title: 'Email verification'
+  requirements:
+    _access: 'TRUE'
+  options:
+    _maintenance_access: TRUE
+    no_cache: TRUE
+tmg_utility.login:
+  path: '/login'
+  defaults:
+    _controller: '\Drupal\tmg_utility\Controller\PrlpController::prlpLogin'
+    _title: 'Email verification'
+  requirements:
+    _access: 'TRUE'
+  options:
+    _maintenance_access: TRUE
+    no_cache: TRUE

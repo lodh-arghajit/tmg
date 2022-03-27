@@ -7,6 +7,7 @@ use Drupal\tmg_utility\Form\UserPasswordResetForm;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Drupal\Core\Url;
 use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\Component\Render\PlainTextOutput;
 
 /**
  * Implements hook_form_alter().
@@ -30,6 +31,7 @@ function tmg_utility_tokens($type, $tokens, array $data, array $options, Bubblea
   $replacements = [];
   if ($type === 'user' && !empty($data['user'])) {
     $user = $data['user'];
+    $admin_user = $data['admin_user'];
     foreach ($tokens as $name => $original) {
       switch ($name) {
         case 'forget_password_url':
@@ -42,6 +44,45 @@ function tmg_utility_tokens($type, $tokens, array $data, array $options, Bubblea
           $hash  = \Drupal::service('encryption')->encrypt($data, $encryption_profile);
 
           $url = Url::fromRoute('tmg_utility.reset',
+            [
+              'hash' => $hash,
+            ],
+            [
+              'absolute' => TRUE,
+            ]
+          )->toString();
+          $replacements[$original] = $url;
+          break;
+
+        case 'admin_approve_url':
+          $request_time = \Drupal::time()->getCurrentTime();
+          $encryption_profile = EncryptionProfile::load("site_encrypt_decrypt_profile");
+          if (!$encryption_profile) {
+            throw new AccessDeniedHttpException();
+          }
+          $data = $admin_user->id() . ":" . $request_time;
+          $hash  = \Drupal::service('encryption')->encrypt($data, $encryption_profile);
+
+          $url = Url::fromRoute('tmg_utility.admin_auto_login',
+            [
+              'hash' => $hash,
+            ],
+            [
+              'absolute' => TRUE,
+            ]
+          )->toString();
+          $replacements[$original] = $url;
+          break;
+        case 'email_activation_link':
+          $request_time = \Drupal::time()->getCurrentTime();
+          $encryption_profile = EncryptionProfile::load("site_encrypt_decrypt_profile");
+          if (!$encryption_profile) {
+            throw new AccessDeniedHttpException();
+          }
+          $data = $user->id() . ":" . $request_time;
+          $hash  = \Drupal::service('encryption')->encrypt($data, $encryption_profile);
+
+          $url = Url::fromRoute('tmg_utility.email_activation',
             [
               'hash' => $hash,
             ],
@@ -66,4 +107,36 @@ function tmg_utility_token_info_alter(&$data) {
     'description' => t("Tokens related to forget password link."),
     'needs-data' => 'user',
   ];
+  $data['tokens']['user']['admin_approve_url'] = [
+    'name' => t("Admin user approve url."),
+    'description' => t("Admin user approve url."),
+    'needs-data' => 'user',
+  ];
+  $data['tokens']['user']['email_activation_link'] = [
+    'name' => t("Admin user approve url."),
+    'description' => t("Admin user approve url."),
+    'needs-data' => 'user',
+  ];
+}
+
+/**
+ * Implements hook_mail().
+ */
+function tmg_utility_mail($key, &$message, $params) {
+  $token_service = \Drupal::token();
+  $language_manager = \Drupal::languageManager();
+  $langcode = $message['langcode'];
+  $variables = ['user' => $params['account'], 'admin_user' => $params['admin_user']];
+
+  $language = $language_manager->getLanguage($langcode);
+  $original_language = $language_manager->getConfigOverrideLanguage();
+  $language_manager->setConfigOverrideLanguage($language);
+  $mail_config = \Drupal::config('user.mail');
+
+  $token_options = ['langcode' => $langcode, 'callback' => 'user_mail_tokens', 'clear' => TRUE];
+  $message['subject'] .= PlainTextOutput::renderFromHtml($token_service->replace($mail_config->get($key . '.subject'), $variables, $token_options));
+  $message['body'][] = $token_service->replace($mail_config->get($key . '.body'), $variables, $token_options);
+
+  $language_manager->setConfigOverrideLanguage($original_language);
+
 }

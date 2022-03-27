@@ -137,6 +137,20 @@ class VerificationForm {
         $user = User::create($user_data_save);
         $user->save();
       }
+      // send mail to approver users
+      $ids = \Drupal::entityQuery('user')
+        ->condition('status', 1)
+        ->condition('roles', 'approver')
+        ->execute();
+      $admin_users = User::loadMultiple($ids);
+      foreach($admin_users as $admin_user){
+        $params['account'] = $user;
+        $params['admin_user'] = $admin_user;
+
+        \Drupal::service('plugin.manager.mail')->mail('tmg_utility', 'register_pending_approval_admin', $admin_user->getEmail(), \Drupal::languageManager()->getDefaultLanguage()->getId(), $params);
+      }
+
+      // end
 
     }
   }
@@ -161,7 +175,9 @@ class VerificationForm {
       return;
     }
     $account = \Drupal::service('entity_type.manager')->getStorage('user')->load($uid);
-    user_login_finalize($account);
+    $request = \Drupal::request();
+    $session = $request->getSession();
+    $session->set('login_user_id', $account->id());
     $form_state->set('current_page', static::FORGET_PASSWORD_STEP);
   }
 
