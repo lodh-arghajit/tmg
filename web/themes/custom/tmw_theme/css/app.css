@@ -313,6 +313,9 @@ body[data-layout="horizontal"] .footer {
     width: 100%;
     margin-top: 8px;
 }
+.metismenu li .dropdown-backdrop{
+    display: none;
+}
 .metismenu li ul li{margin-top: 0;}
 .metismenu .mm-collapse {
     display: none;
@@ -376,7 +379,7 @@ body[data-layout="horizontal"] .footer {
     padding: 1rem 1.5rem;
     color: #545a6d;
     position: relative;
-    font-size: 15px;
+    font-size: 16px;
     -webkit-transition: all 0.4s;
     transition: all 0.4s;
 }
@@ -4468,4 +4471,14 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control:before {
     border-color: #003399;
 	font-size: 18px;
     padding: 10px 40px;
+}
+
+
+@media (max-width: 767px) {
+
+.footer {
+    height: auto;
+}
+
+
 }
