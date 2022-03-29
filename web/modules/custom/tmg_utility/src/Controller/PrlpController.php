@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Drupal\encrypt\Entity\EncryptionProfile;
+use Drupal\Core\Routing\TrustedRedirectResponse;
+use Drupal\Component\Utility\UrlHelper;
 
 
 /**
@@ -32,6 +34,8 @@ class PrlpController extends UserController {
    */
   public function prlpAdminAutoLogin(Request $request, $hash) {
     try {
+      // Disable page cache.
+      \Drupal::service('page_cache_kill_switch')->trigger();
       $encryption_profile = EncryptionProfile::load("site_encrypt_decrypt_profile");
       if (!$encryption_profile) {
         throw new AccessDeniedHttpException();
@@ -57,14 +61,13 @@ class PrlpController extends UserController {
         $this->messenger()->addError($this->t('You have tried to use a one-time login link that has expired. Please request a new one using the form below.'));
         throw new AccessDeniedHttpException();
       }
-
-
       user_login_finalize($user);
+      $destination = $this->getDestination($user);
     }
     catch (\Exception $exception) {
-      return new RedirectResponse('/');
+      throw new AccessDeniedHttpException();
     }
-
+    return $this->redirect($destination['route_name'], $destination['route_parameters']);
   }
 
   /**
@@ -80,6 +83,8 @@ class PrlpController extends UserController {
    */
   public function prlpEmailActivation(Request $request, $hash) {
     try {
+      // Disable page cache.
+      \Drupal::service('page_cache_kill_switch')->trigger();
       $encryption_profile = EncryptionProfile::load("site_encrypt_decrypt_profile");
       if (!$encryption_profile) {
         throw new AccessDeniedHttpException();
@@ -105,15 +110,15 @@ class PrlpController extends UserController {
         $this->messenger()->addError($this->t('You have tried to use a one-time login link that has expired. Please request a new one using the form below.'));
         throw new AccessDeniedHttpException();
       }
-
       $user->activate();
       $user->save();
       user_login_finalize($user);
+      $destination = $this->getDestination($user);
     }
     catch (\Exception $exception) {
-      return new RedirectResponse('/');
+      throw new AccessDeniedHttpException();
     }
-
+    return $this->redirect($destination['route_name'], $destination['route_parameters']);
   }
 
 
@@ -125,11 +130,13 @@ class PrlpController extends UserController {
    * @param string $hash
    *   Login link hash.
    *
-   * @return array
+   * @return RedirectResponse
    *    Array of page elements to render.
    */
   public function prlpResetPassLogin(Request $request, $hash) {
     try {
+      // Disable page cache.
+      \Drupal::service('page_cache_kill_switch')->trigger();
       $encryption_profile = EncryptionProfile::load("site_encrypt_decrypt_profile");
       if (!$encryption_profile) {
         throw new AccessDeniedHttpException();
@@ -166,6 +173,7 @@ class PrlpController extends UserController {
       $values['data']['user'] = $user;
     }
     catch (\Exception $exception) {
+      throw new AccessDeniedHttpException();
     }
     return $web_form->getSubmissionForm($values);
   }
@@ -178,11 +186,13 @@ class PrlpController extends UserController {
    * @param string $hash
    *   Login link hash.
    *
-   * @return array
+   * @return RedirectResponse
    *    Array of page elements to render.
    */
   public function prlpLogin(Request $request) {
     try {
+      // Disable page cache.
+      \Drupal::service('page_cache_kill_switch')->trigger();
       $session = $request->getSession();
       $uid = $session->get('login_user_id', 0);
       if (empty($uid)) {
@@ -196,11 +206,31 @@ class PrlpController extends UserController {
         throw new AccessDeniedHttpException();
       }
       user_login_finalize($user);
+      $destination = $this->getDestination($user);
     }
     catch (\Exception $exception) {
       throw new AccessDeniedHttpException();
     }
+    return $this->redirect($destination['route_name'], $destination['route_parameters']);
+  }
 
+  private function getDestination($account) {
+    $destination['route_name'] = "<front>";
+    $destination['route_parameters'] = [];
+    try {
+      $service = \Drupal::service('login_destination.manager');
+      $destination_object = $service->findDestination("login", $account);
+      $router = \Drupal::service('router');
+      $result = $router->match($destination_object->destination_path);
+      if ($result) {
+        $destination['route_name'] = $result['_route'];
+        $destination['route_parameters'] = $result['_raw_variables']->all();
+      }
+    }
+    catch (\Exception $exception) {
+    }
+    \Drupal::requestStack()->getCurrentRequest()->query->set('destination', '');
+    return $destination;
   }
 
 }

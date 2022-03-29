@@ -21,6 +21,48 @@ function tmg_utility_form_alter(&$form, FormStateInterface $form_state, $form_id
     case 'webform_submission_user_password_reset_add_form':
       $form = UserPasswordResetForm::alter($form, $form_state);
       break;
+    case 'feeds_feed_cpc_import_form':
+      unset($form['plugin']['parser']['no_headers']);
+      unset($form['plugin']['parser']['delimiter']);
+      unset($form['author']);
+      unset( $form['created']);
+      unset( $form['uid']);
+      unset( $form['actions']['submit']);
+      $form['actions']['import']['#value'] = "Import CPC data";
+      $form['actions']['import']['#dropbutton'] = FALSE;
+      $form['#disable_inline_form_errors_summary'] = TRUE;
+      unset($form['options']);
+      break;
+    case 'views_exposed_form':
+      $view = $form_state->get('view');
+      if ($view->id() == "cpc_data_list") {
+
+
+        $form["field_cpc_id_num_value"]['#states'] = [
+          'disabled' => array(
+            array(':input[name="field_company_name_value"]' => array('filled' => TRUE)),
+            array(':input[name="field_wholesale_id_value"]' => array('filled' => TRUE)),
+          ),
+
+        ];
+        $form["field_company_name_value"]['#states'] = [
+          'disabled' => array(
+            array(':input[name="field_cpc_id_num_value"]' => array('filled' => TRUE)),
+            array(':input[name="field_wholesale_id_value"]' => array('filled' => TRUE)),
+          ),
+
+        ];
+
+        $form["field_wholesale_id_value"]['#states'] = [
+          'disabled' => array(
+            array(':input[name="field_cpc_id_num_value"]' => array('filled' => TRUE)),
+            array(':input[name="field_company_name_value"]' => array('filled' => TRUE)),
+          ),
+
+        ];
+
+      }
+
   }
 }
 

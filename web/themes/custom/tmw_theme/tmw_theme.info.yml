@@ -3,7 +3,7 @@ description: This is TMW Theme
 type: theme
 core_version_requirement: ^8 || ^9
 package: others
-base theme: bootstrap
+base theme: bootstrap4
 
 libraries:
   - tmw_theme/global-css-and-js

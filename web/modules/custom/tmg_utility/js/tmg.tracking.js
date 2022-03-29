@@ -14,6 +14,15 @@
           $("input[name=\"step\"]").val('forget_password');
           $('.webform-button--next').trigger('click');
         });
+
+      $('.search-element', context)
+        .once('trigger_search')
+        .on('change', function() {
+          if ($(this).val() == "") {
+            return;
+          }
+          $('.webform-button--next').trigger('click');
+        });
     }
   };
   Drupal.AjaxCommands.prototype.AjaxRedirect = function (ajax, response, status) {

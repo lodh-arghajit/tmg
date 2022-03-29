@@ -6,15 +6,16 @@
     </div>
   </div>
 </header>
-
+{% if not user.hasPermission('administer nodes') %}
 <section class="al-header">
   {{page.primary_menu}}
 </section>
-
+{% endif %}
+{% if not user.hasPermission('administer nodes') %}
 <section class="leftmenu-hld">
   {{page.sidebar_first}}
 </section>
-
+{% endif %}
 <section class="banner-hld">
     {{page.banner}}
 </section>
