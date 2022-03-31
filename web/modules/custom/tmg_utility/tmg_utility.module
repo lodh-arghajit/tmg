@@ -10,6 +10,23 @@ use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Component\Render\PlainTextOutput;
 
 /**
+ * Alter local actions plugins.
+ *
+ * @param array $local_actions
+ *   The array of local action plugin definitions, keyed by plugin ID.
+ *
+ * @see \Drupal\Core\Menu\LocalActionInterface
+ * @see \Drupal\Core\Menu\LocalActionManager
+ *
+ * @ingroup menu
+ */
+function tmg_utility_menu_local_actions_alter(&$local_actions) {
+  $local_actions['entity.taxonomy_term.add_form']['class'] = "Drupal\\tmg_utility\\LocalActionDefaultOverride";
+
+}
+
+
+/**
  * Implements hook_form_alter().
  */
 function tmg_utility_form_alter(&$form, FormStateInterface $form_state, $form_id) {
@@ -32,6 +49,19 @@ function tmg_utility_form_alter(&$form, FormStateInterface $form_state, $form_id
       $form['actions']['import']['#dropbutton'] = FALSE;
       $form['#disable_inline_form_errors_summary'] = TRUE;
       unset($form['options']);
+      break;
+    case 'taxonomy_term_industry_form':
+
+      unset($form['relations']);
+
+      break;
+    case 'taxonomy_overview_terms':
+      unset($form['terms']['#tabledrag']);
+      $form['terms']['#empty'] = "";
+
+      unset($form['help']);
+
+
       break;
     case 'views_exposed_form':
       $view = $form_state->get('view');
