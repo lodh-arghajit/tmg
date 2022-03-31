@@ -50,19 +50,7 @@ function tmg_utility_form_alter(&$form, FormStateInterface $form_state, $form_id
       $form['#disable_inline_form_errors_summary'] = TRUE;
       unset($form['options']);
       break;
-    case 'taxonomy_term_industry_form':
 
-      unset($form['relations']);
-
-      break;
-    case 'taxonomy_overview_terms':
-      unset($form['terms']['#tabledrag']);
-      $form['terms']['#empty'] = "";
-
-      unset($form['help']);
-
-
-      break;
     case 'views_exposed_form':
       $view = $form_state->get('view');
       if ($view->id() == "cpc_data_list") {

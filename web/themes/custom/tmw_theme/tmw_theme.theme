@@ -1,5 +1,37 @@
 <?php
+use Drupal\Core\Routing\RouteMatch;
 
 function tmw_theme_preprocess_page(&$variables) {
 
+}
+
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function tmw_theme_theme_suggestions_region_alter(array &$suggestions, array $variables) {
+   $route = RouteMatch::createFromRequest( \Drupal::request());
+    $raw_parameters = $route->getRawParameters();
+    if (!empty($variables['elements']['#region']) && ($raw_parameters->has("taxonomy_vocabulary") || $raw_parameters->has("taxonomy_term"))) {
+      $suggestions[] = 'region__' . $variables['elements']['#region'] . '__taxonomy_vocabulary';
+    }
+  return $suggestions;
+}
+
+
+/**
+ * Implements hook_form_alter().
+ */
+function tmw_theme_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  switch ($form_id) {
+    case 'taxonomy_term_industry_form':
+    case 'taxonomy_term_product_form':
+      unset($form['relations']);
+      break;
+    case 'taxonomy_overview_terms':
+      unset($form['terms']['#tabledrag']);
+      $form['terms']['#empty'] = "";
+      unset($form['help']);
+      break;
+  }
 }
