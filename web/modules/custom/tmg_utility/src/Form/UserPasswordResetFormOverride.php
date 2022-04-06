@@ -6,7 +6,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Url;
-use Drupal\webform\Utility\WebformFormHelper;
 
 /**
  * Form controller for the user password forms.
@@ -15,10 +14,14 @@ use Drupal\webform\Utility\WebformFormHelper;
  *
  * @internal
  */
-class UserPasswordResetForm {
+class UserPasswordResetFormOverride extends FormBase {
 
-  const FORGET_PASSWORD_STEP = 'password_page';
-  const FORGET_PASSWORD_STEP_CONFIRMATION = 'password_confirmation_page';
+  /**
+   * {@inheritdoc}
+   */
+  public function getFormId() {
+    return 'user_pass_reset_override';
+  }
 
   /**
    * {@inheritdoc}
@@ -37,37 +40,24 @@ class UserPasswordResetForm {
    * @param string $hash
    *   Login link hash.
    */
-  public static function alter(array $form, FormStateInterface $form_state) {
-
-    $class = static::class;
-    $form_step = $form_state->get('current_page') ?? static::FORGET_PASSWORD_STEP;
-    if ($form_step == static::FORGET_PASSWORD_STEP_CONFIRMATION) {
-      unset($form['actions']);
-      return $form;
-    }
-    $user = $form_state->getFormObject()->getEntity()->getData()['user'];
-    $email = $user ? $user->getEmail() : "";
-    $elements = &WebformFormHelper::flattenElements($form['elements']);
-    $mark_up = $elements['markup_01']['#markup'];
-    $elements['markup_01']['#markup'] = str_replace("[mail]", $email, $mark_up);
-    $form['#disable_inline_form_errors_summary'] = TRUE;
+  public function buildForm(array $form, FormStateInterface $form_state, AccountInterface $user = NULL, $expiration_date = NULL, $timestamp = NULL, $hash = NULL) {
     $form['account']['pass'] = [
       '#type' => 'password_confirm',
       '#size' => 25,
       '#required' => TRUE,
     ];
-    $form['#validate'][] = [$class, 'validateForm'];
-    $form['actions']['wizard_next']['#submit'][] = [$class, 'submitForm'];
-    $form['actions']['wizard_prev'] = [];
-
+    $form['submit'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Save'),
+      '#submit' => ['::submitForm',],
+    ];
     return $form;
   }
-
   /**
    * {@inheritdoc}
    */
-  public static function validateForm(array &$form, FormStateInterface $form_state) {
-    $user = $form_state->getFormObject()->getEntity()->getData()['user'];
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    $user = \Drupal::entityTypeManager()->getStorage('user')->load(\Drupal::currentUser()->id());
     $validationReport = \Drupal::service('password_policy.validator')->validatePassword(
       $form_state->getValue('pass', ''),
       $user,
@@ -79,16 +69,19 @@ class UserPasswordResetForm {
     }
 
   }
-
   /**
    * {@inheritdoc}
    */
-  public static function submitForm(array &$form, FormStateInterface $form_state) {
-    $user = $form_state->getFormObject()->getEntity()->getData()['user'];
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+    // This form works by submitting the hash and timestamp to the user.reset
+    // route with a 'login' action.
+    $user = \Drupal::entityTypeManager()->getStorage('user')->load(\Drupal::currentUser()->id());
     $password_to_update = $form_state->getValues()['pass'];
     $user->setPassword($password_to_update);
     $user->save();
-
+    $form_state->setRedirect("<current>");
+    $this->messenger()
+      ->addStatus($this->t('Password has been updated successfully.'));
   }
 
 }

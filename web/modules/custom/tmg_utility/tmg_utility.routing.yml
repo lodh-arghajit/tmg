@@ -39,3 +39,28 @@ tmg_utility.login:
   options:
     _maintenance_access: TRUE
     no_cache: TRUE
+tmg_utility.my_profile:
+  path: '/myprofile'
+  defaults:
+    _entity_form: user.user_profile_edit_form
+    _title: 'My Profile'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+tmg_utility.user_profile_add:
+  path: '/add/user'
+  defaults:
+    _entity_form: user.user_profile_add_edit_form
+    _title: 'Add user'
+  requirements:
+    _permission: 'TMW admin'
+tmg_utility.user_profile_edit:
+  path: '/edit/profile/{user}'
+  defaults:
+    _entity_form: user.user_profile_add_edit_form
+    _title: 'Edit user'
+  options:
+    parameters:
+      user:
+        type: 'entity:user'
+  requirements:
+    _permission: 'TMW admin'

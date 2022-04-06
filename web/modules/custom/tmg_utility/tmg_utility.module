@@ -4,10 +4,12 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\encrypt\Entity\EncryptionProfile;
 use Drupal\tmg_utility\Form\VerificationForm;
 use Drupal\tmg_utility\Form\UserPasswordResetForm;
+use Drupal\tmg_utility\Form\UserProfileEditForm;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Drupal\Core\Url;
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Component\Render\PlainTextOutput;
+use Drupal\Core\Access\AccessResult;
 
 /**
  * Alter local actions plugins.
@@ -31,12 +33,20 @@ function tmg_utility_menu_local_actions_alter(&$local_actions) {
  */
 function tmg_utility_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
+  if (str_contains($form_id, 'webform_submission_user_password_reset_') ) {
+
+    $form =  UserPasswordResetForm::alter($form, $form_state);
+    return;
+  }
   switch ($form_id) {
     case 'webform_submission_verification_process_add_form':
       $form = VerificationForm::alter($form, $form_state);
       break;
     case 'webform_submission_user_password_reset_add_form':
       $form = UserPasswordResetForm::alter($form, $form_state);
+      break;
+    case 'user_user_profile_edit_form_form':
+      $form = UserProfileEditForm::alter($form, $form_state);
       break;
     case 'feeds_feed_cpc_import_form':
       unset($form['plugin']['parser']['no_headers']);
@@ -200,3 +210,18 @@ function tmg_utility_mail($key, &$message, $params) {
   $language_manager->setConfigOverrideLanguage($original_language);
 
 }
+/**
+ * Implements hook_entity_type_build().
+ */
+function tmg_utility_entity_type_build(array &$entity_types) {
+  $form_modes = ['user_profile_edit_form', 'user_profile_add_edit_form'];
+
+  foreach ($form_modes as $mode) {
+    $entity_types['user']->setFormClass($mode, 'Drupal\tmg_utility\Form\AccountFormExtended');
+  }
+}
+
+function tmg_utility_entity_type_alter(array &$entity_types) {
+  $entity_types['user']->setAccessClass('Drupal\tmg_utility\access\UserAccessControlHandler');
+}
+
