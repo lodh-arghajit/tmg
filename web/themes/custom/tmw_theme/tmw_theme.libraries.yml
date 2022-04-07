@@ -8,6 +8,7 @@ global-css-and-js:
   js:
     js/simplebar.min.js: {}
     js/metisMenu.min.js: {}
+    js/owl.carousel.min.js: {}
     js/common.ui.js: {}
 
 pwd_eye_lib_override:
