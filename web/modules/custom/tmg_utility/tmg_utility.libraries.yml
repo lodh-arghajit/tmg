@@ -6,3 +6,11 @@ tracking:
     - core/drupal
     - core/jquery.once
     - core/drupal.ajax
+auto_submit_form:
+  version: VERSION
+  js:
+    js/form_submission.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal

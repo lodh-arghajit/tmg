@@ -5,11 +5,14 @@ use Drupal\encrypt\Entity\EncryptionProfile;
 use Drupal\tmg_utility\Form\VerificationForm;
 use Drupal\tmg_utility\Form\UserPasswordResetForm;
 use Drupal\tmg_utility\Form\UserProfileEditForm;
+use Drupal\webform\Utility\WebformFormHelper;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Drupal\Core\Url;
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Component\Render\PlainTextOutput;
 use Drupal\Core\Access\AccessResult;
+use Drupal\tmg_utility\PhoneToCountryConverter;
+
 
 /**
  * Alter local actions plugins.
@@ -27,6 +30,16 @@ function tmg_utility_menu_local_actions_alter(&$local_actions) {
 
 }
 
+/**
+ * Implements hook_theme().
+ */
+function tmg_utility_theme($existing, $type, $theme, $path) {
+  return [
+    'sales_force_submission' => [
+      'variables' => ['hidden' => [], 'url' => ''],
+    ],
+  ];
+}
 
 /**
  * Implements hook_form_alter().
@@ -99,6 +112,7 @@ function tmg_utility_form_alter(&$form, FormStateInterface $form_state, $form_id
  */
 function tmg_utility_tokens($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
   $replacements = [];
+  $token_service = \Drupal::token();
   if ($type === 'user' && !empty($data['user'])) {
     $user = $data['user'];
     $admin_user = $data['admin_user'];
@@ -165,6 +179,26 @@ function tmg_utility_tokens($type, $tokens, array $data, array $options, Bubblea
       }
     }
   }
+  if ($type === 'webform_submission' && !empty($data['webform_submission'])) {
+    $webform_submission = $data['webform_submission'];
+    /* Dynamic tokens for country value. */
+    if ($value_tokens = $token_service->findWithPrefix($tokens, 'country')) {
+
+      foreach ($value_tokens as $value_token => $original) {
+        $web_form = $webform_submission->getWebform();
+        $elements = $web_form->getElementsOriginalDecoded();
+        $elements = WebformFormHelper::flattenElements($elements);
+        $replacements[$original] = '';
+        if ($elements[$value_token]["#type"] == "tel" && isset($elements[$value_token]["#telephone_validation_format"])) {
+          $mobile_number = $webform_submission->getElementData($value_token);
+          $phone_number_validator = \Drupal::service("telephone_validation.validator");
+          if ($phone_number_validator->isValid($mobile_number, $elements[$value_token]["#telephone_validation_format"])) {
+            $replacements[$original] = PhoneToCountryConverter::getCountryNameFromPhone($mobile_number, "en");
+          }
+        }
+      }
+    }
+  }
   return $replacements;
 }
 
@@ -186,6 +220,12 @@ function tmg_utility_token_info_alter(&$data) {
     'name' => t("Admin user approve url."),
     'description' => t("Admin user approve url."),
     'needs-data' => 'user',
+  ];
+  $data['tokens']['webform_submission']['country'] = [
+    'name' => t("Country"),
+    'description' => t("Token to fetch country from phone number."),
+    'dynamic' => TRUE,
+    'needs-data' => 'webform_submission',
   ];
 }
 
@@ -224,4 +264,5 @@ function tmg_utility_entity_type_build(array &$entity_types) {
 function tmg_utility_entity_type_alter(array &$entity_types) {
   $entity_types['user']->setAccessClass('Drupal\tmg_utility\access\UserAccessControlHandler');
 }
+
 
