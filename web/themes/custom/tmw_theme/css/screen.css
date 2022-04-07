@@ -766,6 +766,13 @@ label.error {color: #ed0000;font-size: 14px; font-weight: 400;}
 .user-user-profile-edit-form-form .form-actions.form-group { text-align: left;}
 .user-pass-reset-override .btn-success{margin-top: 20px;}
 
+.enquiry-form-custom-hld ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */color: rgba(0, 0, 0, 0.6); opacity: 1; /* Firefox */}
+.enquiry-form-custom-hld :-ms-input-placeholder { /* Internet Explorer 10-11 */color:rgba(0, 0, 0, 0.6);}
+.enquiry-form-custom-hld ::-ms-input-placeholder { /* Microsoft Edge */ color:rgba(0, 0, 0, 0.6);}
+.enquiry-form-custom-hld .iti.iti--allow-dropdown{display: block; width: 100%;}
+.custom-pages .enquiry-form-custom-hld .form-inline .form-control {max-width: inherit; width: 100%;}
+.custom-pages .enquiry-form-custom-hld .form-inline {margin: 0px 0 25px;}
+.custom-pages .enquiry-form-custom-hld .form-inline .control-label {margin-right: 10px; margin-bottom: 0.5rem;}
 
 
 
