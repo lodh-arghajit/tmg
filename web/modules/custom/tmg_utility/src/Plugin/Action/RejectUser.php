@@ -33,6 +33,7 @@ class RejectUser extends ViewsBulkOperationsActionBase {
       $account->set('field_approved_rejected_', $request_time);
       $account->block();
       $account->save();
+      _user_mail_notify('status_canceled', $account);
     }
   }
 

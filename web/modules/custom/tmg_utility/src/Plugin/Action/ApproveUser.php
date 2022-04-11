@@ -29,6 +29,7 @@ class ApproveUser extends ViewsBulkOperationsActionBase {
       $request_time = \Drupal::time()->getCurrentTime();
       $account->set('field_approved_rejected_', $request_time);
       $account->save();
+      _user_mail_notify('status_activated', $account);
     }
   }
 

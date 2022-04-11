@@ -40,6 +40,7 @@ class VerificationForm {
   const LANDLINE_NUMBER_VALIDATION = '/^\d{1,2}\d{8}$/';
 
   public static function alter($form, FormStateInterface $form_state) {
+
     $form['#disable_inline_form_errors_summary'] = TRUE;
     $form_step = $form_state->get('current_page') ?? static::VERIFICATION_EMAIL_STEP;
     $form['#attached']['library'][] = 'tmg_utility/tracking';
@@ -84,11 +85,27 @@ class VerificationForm {
             $form['actions']['wizard_next']['#submit'][] = $submit_handler;
          }
          $form['actions']['wizard_next']['#validate'][] = [$class, 'validateCustomer'];
+         if ($form_step == static::COLLECT_CUSTOMER_INFORMATION_STEP) {
+           $elements = &WebformFormHelper::flattenElements($form['elements']);
+           $elements['brn']['#attributes']['class'][] = 'search-element';
+           $elements['wholesale_id']['#attributes']['class'][] = 'search-element';
+           $elements['company_name']['#attributes']['class'][] = 'search-element';
+           $options = [];
+           $storage = $form_state->getStorage();
+           if ($cpc_nodes = $storage['cpc_nodes']) {
+             $options = $cpc_nodes;
+           }
+           $elements['select_company']['#options'] = $options;
+         }
          if ($form_step == static::CUSTOMER_PROFILE_INFORMATION_STEP) {
            $elements = &WebformFormHelper::flattenElements($form['elements']);
-           $elements['brn_confirm']['#default_value'] = $form_state->getValues()['brn'];
-           $elements['wholesale_id_confirm']['#default_value'] = $form_state->getValues()['wholesale_id'];
-           $elements['company_name_confirm']['#default_value'] = $form_state->getValues()['company_name'];
+           $values = $form_state->getValue([]);
+
+           $company_internal_id = $values['select_company'];
+           $node = \Drupal::entityTypeManager()->getStorage('node')->load($company_internal_id);
+           $elements['brn_confirm']['#default_value'] = $node->get('field_cpc_id_num')->getString();
+           $elements['wholesale_id_confirm']['#default_value'] = $node->get('field_wholesale_id')->getString();
+           $elements['company_name_confirm']['#default_value'] = $node->get('field_company_name')->getString();
            $elements['email_confirm']['#default_value'] = $form_state->getValues()['user_email'];
          }
         break;
@@ -96,6 +113,7 @@ class VerificationForm {
       case static::REGISTRATION_SUCCESS_STEP:
       case static::VERIFICATION_ACCOUNT_BLOCKED_STEP:
       case static::FORGET_PASSWORD_STEP:
+      case static::REGISTRATION_USER_NOT_AVAILABLE_INTO_CPC:
          // there will be no further step after these/'s step
          unset($form['actions']);
          break;
@@ -110,7 +128,17 @@ class VerificationForm {
     $current_page = $form_state->get('current_page');
 
     if ($current_page == static::COLLECT_CUSTOMER_INFORMATION_STEP) {
-      $form_state->set('current_page', static::REGISTRATION_USER_NOT_AVAILABLE_INTO_CPC);
+      $values = $form_state->getValue([]);
+      $storage = $form_state->getStorage();
+      $cpc_nodes = $storage['cpc_nodes'];
+      $select_company = $values['select_company'];
+      if (!empty($cpc_nodes) ) {
+        if (empty($select_company)) {
+          $form_state->set('current_page', static::NON_EXISTING_CUSTOMER_STEP);
+          return;
+        }
+        $form_state->set('current_page', static::REGISTRATION_USER_NOT_AVAILABLE_INTO_CPC);
+      }
     }
     if ($current_page == static::CUSTOMER_PROFILE_INFORMATION_STEP) {
       $form_object = $form_state->getFormObject();
@@ -122,13 +150,18 @@ class VerificationForm {
       $values = $form_state->getValue([]);
       $user_data_save = [];
       foreach ($elements as $key => $value) {
-
         if (empty($value["#user_field_name"])) {
           continue;
         }
         $submission_value = trim($values[$key]);
+        if (str_contains($value["#user_field_name"], ":") === TRUE) {
+          $fields = explode(":", $value["#user_field_name"]);
+          $user_data_save[$fields[0]] = [$fields[1] => $submission_value];
+        }
+        else {
+          $user_data_save[$value["#user_field_name"]] = $submission_value;
+        }
 
-        $user_data_save[$value["#user_field_name"]] = $submission_value;
       }
       if (!empty($user_data_save)) {
         $user_data_save['status'] = 0;
@@ -137,7 +170,18 @@ class VerificationForm {
         $user = User::create($user_data_save);
         $user->save();
       }
-
+      // send mail to approver users
+      $ids = \Drupal::entityQuery('user')
+        ->condition('status', 1)
+        ->condition('roles', 'approver')
+        ->execute();
+      $admin_users = User::loadMultiple($ids);
+      foreach($admin_users as $admin_user){
+        $params['account'] = $user;
+        $params['admin_user'] = $admin_user;
+        \Drupal::service('plugin.manager.mail')->mail('tmg_utility', 'register_pending_approval_admin', $admin_user->getEmail(), \Drupal::languageManager()->getDefaultLanguage()->getId(), $params);
+      }
+      // end
     }
   }
 
@@ -161,7 +205,9 @@ class VerificationForm {
       return;
     }
     $account = \Drupal::service('entity_type.manager')->getStorage('user')->load($uid);
-    user_login_finalize($account);
+    $request = \Drupal::request();
+    $session = $request->getSession();
+    $session->set('login_user_id', $account->id());
     $form_state->set('current_page', static::FORGET_PASSWORD_STEP);
   }
 
@@ -283,27 +329,76 @@ class VerificationForm {
     $form_step = $form_state->get('current_page') ?? static::VERIFICATION_EMAIL_STEP;
     if ($form_step == static::COLLECT_CUSTOMER_INFORMATION_STEP) {
       $values = $form_state->getValue([]);
+
+
       $brn_id = trim($values['brn']);
       $wholesale_id = trim($values['wholesale_id']);
       $company_name = trim($values['company_name']);
+      $select_company = trim($values['select_company']);
+      $storage = $form_state->getStorage();
+
+
       if (!empty($brn_id)) {
         $brn_length = strlen($brn_id);
+        $brn_id_entered = $storage['brn_id_entered'];
+        if (!empty($brn_id_entered) && $brn_id_entered == $brn_id && empty($select_company)) {
+
+          $form_state->setErrorByName('select_company', 'Please select valid company.');
+        }
+
+        $data_load = FALSE;
         if ($brn_length == static::BRN_ROC && preg_match(static::BRN_REGULAR_EXPRESSION, $brn_id) ) {
-          return;
+          $data_load = TRUE;
         }
         if ($brn_length == static::BRN_ROB_1_OR_2 && (preg_match(static::BRN_ROB_1_REGULAR_EXPRESSION, $brn_id) ||  preg_match(static::BRN_ROB_2_REGULAR_EXPRESSION, $brn_id))) {
-          return;
+          $data_load = TRUE;
         }
         if (preg_match(static::BRN_OTHER_REGULAR_EXPRESSION, $brn_id)) {
+          $data_load = TRUE;
+        }
+        if ($data_load) {
+          $cpc_nodes = static::searchCPCData($brn_id, 'field_cpc_id_num');
+
+          $storage["brn_id_entered"] = $brn_id;
+          $storage["cpc_nodes"] = $cpc_nodes;
+          $form_state->setStorage($storage);
+
           return;
         }
         $form_state->setErrorByName('brn', 'Invalid BRN id.');
       }
       if (!empty($wholesale_id)) {
+
+
+        $wholesale_id_entered = $storage['wholesale_id_entered'];
+        if (!empty($wholesale_id_entered) && $wholesale_id_entered == $wholesale_id && empty($select_company)) {
+
+          $form_state->setErrorByName('select_company', 'Please select valid company.');
+        }
+
+
         if (preg_match(static::WHOLESALE_ID_EXPRESSION, $wholesale_id)) {
+          $cpc_nodes = static::searchCPCData($wholesale_id, 'field_wholesale_id');
+
+          $storage["wholesale_id_entered"] = $brn_id;
+          $storage["cpc_nodes"] = $cpc_nodes;
+          $form_state->setStorage($storage);
           return;
         }
         $form_state->setErrorByName('wholesale_id', 'Invalid Wholesale ID.');
+      }
+      if (!empty($company_name)) {
+
+        $company_name_entered = $storage['company_name_entered'];
+        if (!empty($company_name_entered) && $company_name_entered == $company_name && empty($select_company)) {
+
+          $form_state->setErrorByName('select_company', 'Please select valid company.');
+        }
+        $cpc_nodes = static::searchCPCData("%$company_name%", 'field_company_name', "LIKE");
+
+        $storage["company_name_entered"] = $company_name;
+        $storage["cpc_nodes"] = $cpc_nodes;
+        $form_state->setStorage($storage);
       }
     }
     if ($form_step == static::CUSTOMER_PROFILE_INFORMATION_STEP) {
@@ -322,6 +417,7 @@ class VerificationForm {
         }
         $form_state->setErrorByName('office_number', 'Invalid office no.');
       }
+
     }
   }
 
@@ -342,5 +438,30 @@ class VerificationForm {
     }
     _user_mail_notify('password_reset', $account);
   }
+  public static function searchCPC(array &$form, FormStateInterface $form_state) {
+    $elements = &WebformFormHelper::flattenElements($form['elements']);
+    return $elements['select_company'];
+  }
+
+  private static function searchCPCData($value, $property_to_search, $match_operator = "=") {
+    $query = \Drupal::entityTypeManager()->getStorage('node')
+      ->getQuery()
+      ->condition('status', '1')
+      ->condition('field_customer_status', TRUE)
+      ->condition('type', 'cpc_data')
+      ->condition($property_to_search, $value, $match_operator);
+    $entity_ids = $query->execute();
+    $company_data = [];
+    if (!empty($entity_ids)) {
+      $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($entity_ids);
+      foreach ($nodes as $node) {
+        $company_data[$node->id()] = $node->get('field_company_name')->getString() . " (" . $node->get('field_wholesale_id')->getString() . " )";
+      }
+    }
+    return $company_data;
+
+  }
+
+
 
 }

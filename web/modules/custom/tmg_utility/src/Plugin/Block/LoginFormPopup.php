@@ -84,22 +84,40 @@ class LoginFormPopup extends BlockBase implements ContainerFactoryPluginInterfac
    */
   public function build() {
 
-    $url = Url::fromUri('https://tmg.lndo.site/form/verification-process');
-    $options = ['dialogClass' => 'user_login', 'drupalAutoButtons' =>  FALSE];
-    $link_options = [
-      'attributes' => [
-        'class' => [
-          'use-ajax',
-          'login-popup-form',
-        ],
-        'data-dialog-type' => 'bootstrap4_modal',
-        'data-dialog-options' => json_encode($options),
-      ]
-    ];
-    $url->setOptions($link_options);
-    $link = Link::fromTextAndUrl($this->t('Log in / Register'), $url)->toString();
+
+    $host = \Drupal::request()->getSchemeAndHttpHost();
+
     $build = [];
     if ($this->currentUser->isAnonymous()) {
+      $url = Url::fromUri("$host/form/verification-process");
+      $options = ['dialogClass' => 'user_login', 'drupalAutoButtons' =>  FALSE];
+      $link_options = [
+        'attributes' => [
+          'class' => [
+            'use-ajax',
+            'login-popup-form',
+          ],
+          'data-dialog-type' => 'bootstrap4_modal',
+          'data-dialog-options' => json_encode($options),
+        ]
+      ];
+      $url->setOptions($link_options);
+      $link = Link::fromTextAndUrl($this->t('Log in / Register'), $url)->toString();
+      $build['login_popup_block']['#markup'] = '<div class="Login-popup-link">' . $link . '</div>';
+    }
+    else {
+      $url = Url::fromUri("$host/user/logout");
+      $options = ['dialogClass' => 'user_login', 'drupalAutoButtons' =>  FALSE];
+      $link_options = [
+        'attributes' => [
+          'class' => [
+            'login-popup-form',
+          ],
+
+        ]
+      ];
+      $url->setOptions($link_options);
+      $link = Link::fromTextAndUrl($this->t('Logout'), $url)->toString();
       $build['login_popup_block']['#markup'] = '<div class="Login-popup-link">' . $link . '</div>';
     }
     $build['login_popup_block']['#attached']['library'][] = 'core/drupal.dialog.ajax';

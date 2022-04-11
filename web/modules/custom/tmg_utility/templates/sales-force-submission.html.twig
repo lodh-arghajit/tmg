@@ -1,0 +1,7 @@
+<div class="auto_submit_form_container">
+  {% if url %}
+     <form autocomplete="off" class="auto_submit_form" action="{{ url }}" method="post">
+       {{ hidden }}
+     </form>
+  {% endif %}
+</div>

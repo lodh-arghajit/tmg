@@ -9,18 +9,27 @@
             "url": "https://packages.drupal.org/8"
         },
         {
-            "type": "path",
-            "url": "upstream-configuration"
+            "type": "package",
+            "package": {
+                "name": "furf/jquery-ui-touch-punch",
+                "version": "2.0",
+                "minimum-stability": "stable",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://github.com/furf/jquery-ui-touch-punch/archive/master.zip",
+                    "type": "zip"
+                }
+            }
         }
     ],
     "require": {
         "composer/installers": "^1.9",
         "cweagans/composer-patches": "^1.7",
         "drupal/admin_toolbar": "^3.1",
+        "drupal/better_exposed_filters": "^5.0",
+        "drupal/block_visibility_groups": "^1.4",
         "drupal/bootstrap": "^3.23",
         "drupal/bootstrap4_modal": "^2.1",
-        "drupal/bootstrap5": "^1.1",
-        "drupal/bootstrap_barrio": "^5.5",
         "drupal/clientside_validation": "^3.0@RC",
         "drupal/config_ignore": "^3.0@beta",
         "drupal/core-composer-scaffold": "^9.2",
@@ -30,28 +39,46 @@
         "drupal/disable_messages": "^2.0",
         "drupal/email_registration": "^1.1",
         "drupal/encrypt": "^3.0",
+        "drupal/entity_redirect": "^2.0",
+        "drupal/entityform_block": "^1.0@alpha",
+        "drupal/feeds": "^3.0@alpha",
+        "drupal/feeds_tamper": "^2.0@beta",
+        "drupal/field_permissions": "^1.1",
+        "drupal/form_mode_control": "^2.0",
+        "drupal/ief_table_view_mode": "^2.2",
+        "drupal/inline_entity_form": "^1.0@RC",
         "drupal/inline_formatter_field": "^2.1",
         "drupal/layout_builder_modal": "^1.1",
         "drupal/link_target": "^1.3",
+        "drupal/login_destination": "^2.0@beta",
+        "drupal/menu_export": "^1.3",
+        "drupal/menu_link_attributes": "^1.2",
+        "drupal/menu_per_role": "^1.4",
+        "drupal/menus_attribute": "^1.2",
         "drupal/modules_weight": "^1.9",
         "drupal/otp": "^1.0@alpha",
         "drupal/paragraphs": "^1.12",
         "drupal/password_eye": "^2.0",
         "drupal/password_policy": "^3.1",
         "drupal/phpmailer_smtp": "^2.0",
-        "drupal/radix": "^4.11",
         "drupal/real_aes": "^2.4",
         "drupal/recaptcha": "^3.0",
+        "drupal/redirect_after_login": "^2.7",
         "drupal/swiftmailer": "^2.2",
+        "drupal/tamper": "^1.0@alpha",
+        "drupal/telephone_validation": "^2.3",
         "drupal/token": "^1.10",
         "drupal/view_password": "^6.0",
+        "drupal/views_autocomplete_filters": "^1.3",
         "drupal/views_bulk_operations": "^4.1",
+        "drupal/views_data_export": "^1.1",
+        "drupal/views_entity_form_field": "^1.0@beta",
         "drupal/we_megamenu": "^1.13",
         "drupal/webform": "^6.2@beta",
+        "drupal/webform_views": "^5.0@beta",
         "drush/drush": "^10",
+        "furf/jquery-ui-touch-punch": "^2.0",
         "kint-php/kint": "^3.3",
-        "pantheon-systems/drupal-integrations": "^9",
-        "pantheon-upstreams/upstream-configuration": "self.version",
         "vlucas/phpdotenv": "^5.4"
     },
     "require-dev": {
@@ -103,6 +130,7 @@
                 "#2985882: Workaround for Call to a member function getLabel() after enabling layout_builder": "https://www.drupal.org/files/issues/2020-04-08/2985882-field-85.patch",
                 "2880011: Add a #disable_inline_form_errors_summary property to disable the Inline Form Errors summary": "https://www.drupal.org/files/issues/2021-08-23/2880011-85.patch",
                 "3109650: Refactor Xss::attributes() to allow filtering of style attribute values": "https://www.drupal.org/files/issues/2021-06-06/3109650-36.patch"
+
             },
             "drupal/disable_messages": {
                 "2901390#33: Non-existent service path.alias_manager": "https://www.drupal.org/files/issues/2021-01-21/3193625-5.patch"

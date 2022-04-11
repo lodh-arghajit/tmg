@@ -8,3 +8,59 @@ tmg_utility.reset:
   options:
     _maintenance_access: TRUE
     no_cache: TRUE
+
+tmg_utility.admin_auto_login:
+  path: '/admin/approve/{hash}'
+  defaults:
+    _controller: '\Drupal\tmg_utility\Controller\PrlpController::prlpAdminAutoLogin'
+    _title: 'Admin auto login'
+  requirements:
+    _access: 'TRUE'
+  options:
+    _maintenance_access: TRUE
+    no_cache: TRUE
+tmg_utility.email_activation:
+  path: '/email/activation/{hash}'
+  defaults:
+    _controller: '\Drupal\tmg_utility\Controller\PrlpController::prlpEmailActivation'
+    _title: 'Email verification'
+  requirements:
+    _access: 'TRUE'
+  options:
+    _maintenance_access: TRUE
+    no_cache: TRUE
+tmg_utility.login:
+  path: '/login'
+  defaults:
+    _controller: '\Drupal\tmg_utility\Controller\PrlpController::prlpLogin'
+    _title: 'Email verification'
+  requirements:
+    _access: 'TRUE'
+  options:
+    _maintenance_access: TRUE
+    no_cache: TRUE
+tmg_utility.my_profile:
+  path: '/myprofile'
+  defaults:
+    _entity_form: user.user_profile_edit_form
+    _title: 'My Profile'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+tmg_utility.user_profile_add:
+  path: '/add/user'
+  defaults:
+    _entity_form: user.user_profile_add_edit_form
+    _title: 'Add user'
+  requirements:
+    _permission: 'TMW admin'
+tmg_utility.user_profile_edit:
+  path: '/edit/profile/{user}'
+  defaults:
+    _entity_form: user.user_profile_add_edit_form
+    _title: 'Edit user'
+  options:
+    parameters:
+      user:
+        type: 'entity:user'
+  requirements:
+    _permission: 'TMW admin'

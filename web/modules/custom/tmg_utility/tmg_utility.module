@@ -4,15 +4,53 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\encrypt\Entity\EncryptionProfile;
 use Drupal\tmg_utility\Form\VerificationForm;
 use Drupal\tmg_utility\Form\UserPasswordResetForm;
+use Drupal\tmg_utility\Form\UserProfileEditForm;
+use Drupal\webform\Utility\WebformFormHelper;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Drupal\Core\Url;
 use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\Component\Render\PlainTextOutput;
+use Drupal\Core\Access\AccessResult;
+use Drupal\tmg_utility\PhoneToCountryConverter;
+
+
+/**
+ * Alter local actions plugins.
+ *
+ * @param array $local_actions
+ *   The array of local action plugin definitions, keyed by plugin ID.
+ *
+ * @see \Drupal\Core\Menu\LocalActionInterface
+ * @see \Drupal\Core\Menu\LocalActionManager
+ *
+ * @ingroup menu
+ */
+function tmg_utility_menu_local_actions_alter(&$local_actions) {
+  $local_actions['entity.taxonomy_term.add_form']['class'] = "Drupal\\tmg_utility\\LocalActionDefaultOverride";
+
+}
+
+/**
+ * Implements hook_theme().
+ */
+function tmg_utility_theme($existing, $type, $theme, $path) {
+  return [
+    'sales_force_submission' => [
+      'variables' => ['hidden' => [], 'url' => ''],
+    ],
+  ];
+}
 
 /**
  * Implements hook_form_alter().
  */
 function tmg_utility_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
+  if (str_contains($form_id, 'webform_submission_user_password_reset_') ) {
+
+    $form =  UserPasswordResetForm::alter($form, $form_state);
+    return;
+  }
   switch ($form_id) {
     case 'webform_submission_verification_process_add_form':
       $form = VerificationForm::alter($form, $form_state);
@@ -20,6 +58,52 @@ function tmg_utility_form_alter(&$form, FormStateInterface $form_state, $form_id
     case 'webform_submission_user_password_reset_add_form':
       $form = UserPasswordResetForm::alter($form, $form_state);
       break;
+    case 'user_user_profile_edit_form_form':
+      $form = UserProfileEditForm::alter($form, $form_state);
+      break;
+    case 'feeds_feed_cpc_import_form':
+      unset($form['plugin']['parser']['no_headers']);
+      unset($form['plugin']['parser']['delimiter']);
+      unset($form['author']);
+      unset( $form['created']);
+      unset( $form['uid']);
+      unset( $form['actions']['submit']);
+      $form['actions']['import']['#value'] = "Import CPC data";
+      $form['actions']['import']['#dropbutton'] = FALSE;
+      $form['#disable_inline_form_errors_summary'] = TRUE;
+      unset($form['options']);
+      break;
+
+    case 'views_exposed_form':
+      $view = $form_state->get('view');
+      if ($view->id() == "cpc_data_list") {
+
+
+        $form["field_cpc_id_num_value"]['#states'] = [
+          'disabled' => array(
+            array(':input[name="field_company_name_value"]' => array('filled' => TRUE)),
+            array(':input[name="field_wholesale_id_value"]' => array('filled' => TRUE)),
+          ),
+
+        ];
+        $form["field_company_name_value"]['#states'] = [
+          'disabled' => array(
+            array(':input[name="field_cpc_id_num_value"]' => array('filled' => TRUE)),
+            array(':input[name="field_wholesale_id_value"]' => array('filled' => TRUE)),
+          ),
+
+        ];
+
+        $form["field_wholesale_id_value"]['#states'] = [
+          'disabled' => array(
+            array(':input[name="field_cpc_id_num_value"]' => array('filled' => TRUE)),
+            array(':input[name="field_company_name_value"]' => array('filled' => TRUE)),
+          ),
+
+        ];
+
+      }
+
   }
 }
 
@@ -28,8 +112,10 @@ function tmg_utility_form_alter(&$form, FormStateInterface $form_state, $form_id
  */
 function tmg_utility_tokens($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
   $replacements = [];
+  $token_service = \Drupal::token();
   if ($type === 'user' && !empty($data['user'])) {
     $user = $data['user'];
+    $admin_user = $data['admin_user'];
     foreach ($tokens as $name => $original) {
       switch ($name) {
         case 'forget_password_url':
@@ -51,6 +137,65 @@ function tmg_utility_tokens($type, $tokens, array $data, array $options, Bubblea
           )->toString();
           $replacements[$original] = $url;
           break;
+
+        case 'admin_approve_url':
+          $request_time = \Drupal::time()->getCurrentTime();
+          $encryption_profile = EncryptionProfile::load("site_encrypt_decrypt_profile");
+          if (!$encryption_profile) {
+            throw new AccessDeniedHttpException();
+          }
+          $data = $admin_user->id() . ":" . $request_time;
+          $hash  = \Drupal::service('encryption')->encrypt($data, $encryption_profile);
+
+          $url = Url::fromRoute('tmg_utility.admin_auto_login',
+            [
+              'hash' => $hash,
+            ],
+            [
+              'absolute' => TRUE,
+            ]
+          )->toString();
+          $replacements[$original] = $url;
+          break;
+        case 'email_activation_link':
+          $request_time = \Drupal::time()->getCurrentTime();
+          $encryption_profile = EncryptionProfile::load("site_encrypt_decrypt_profile");
+          if (!$encryption_profile) {
+            throw new AccessDeniedHttpException();
+          }
+          $data = $user->id() . ":" . $request_time;
+          $hash  = \Drupal::service('encryption')->encrypt($data, $encryption_profile);
+
+          $url = Url::fromRoute('tmg_utility.email_activation',
+            [
+              'hash' => $hash,
+            ],
+            [
+              'absolute' => TRUE,
+            ]
+          )->toString();
+          $replacements[$original] = $url;
+          break;
+      }
+    }
+  }
+  if ($type === 'webform_submission' && !empty($data['webform_submission'])) {
+    $webform_submission = $data['webform_submission'];
+    /* Dynamic tokens for country value. */
+    if ($value_tokens = $token_service->findWithPrefix($tokens, 'country')) {
+
+      foreach ($value_tokens as $value_token => $original) {
+        $web_form = $webform_submission->getWebform();
+        $elements = $web_form->getElementsOriginalDecoded();
+        $elements = WebformFormHelper::flattenElements($elements);
+        $replacements[$original] = '';
+        if ($elements[$value_token]["#type"] == "tel" && isset($elements[$value_token]["#telephone_validation_format"])) {
+          $mobile_number = $webform_submission->getElementData($value_token);
+          $phone_number_validator = \Drupal::service("telephone_validation.validator");
+          if ($phone_number_validator->isValid($mobile_number, $elements[$value_token]["#telephone_validation_format"])) {
+            $replacements[$original] = PhoneToCountryConverter::getCountryNameFromPhone($mobile_number, "en");
+          }
+        }
       }
     }
   }
@@ -66,4 +211,58 @@ function tmg_utility_token_info_alter(&$data) {
     'description' => t("Tokens related to forget password link."),
     'needs-data' => 'user',
   ];
+  $data['tokens']['user']['admin_approve_url'] = [
+    'name' => t("Admin user approve url."),
+    'description' => t("Admin user approve url."),
+    'needs-data' => 'user',
+  ];
+  $data['tokens']['user']['email_activation_link'] = [
+    'name' => t("Admin user approve url."),
+    'description' => t("Admin user approve url."),
+    'needs-data' => 'user',
+  ];
+  $data['tokens']['webform_submission']['country'] = [
+    'name' => t("Country"),
+    'description' => t("Token to fetch country from phone number."),
+    'dynamic' => TRUE,
+    'needs-data' => 'webform_submission',
+  ];
 }
+
+/**
+ * Implements hook_mail().
+ */
+function tmg_utility_mail($key, &$message, $params) {
+  $token_service = \Drupal::token();
+  $language_manager = \Drupal::languageManager();
+  $langcode = $message['langcode'];
+  $variables = ['user' => $params['account'], 'admin_user' => $params['admin_user']];
+
+  $language = $language_manager->getLanguage($langcode);
+  $original_language = $language_manager->getConfigOverrideLanguage();
+  $language_manager->setConfigOverrideLanguage($language);
+  $mail_config = \Drupal::config('user.mail');
+
+  $token_options = ['langcode' => $langcode, 'callback' => 'user_mail_tokens', 'clear' => TRUE];
+  $message['subject'] .= PlainTextOutput::renderFromHtml($token_service->replace($mail_config->get($key . '.subject'), $variables, $token_options));
+  $message['body'][] = $token_service->replace($mail_config->get($key . '.body'), $variables, $token_options);
+
+  $language_manager->setConfigOverrideLanguage($original_language);
+
+}
+/**
+ * Implements hook_entity_type_build().
+ */
+function tmg_utility_entity_type_build(array &$entity_types) {
+  $form_modes = ['user_profile_edit_form', 'user_profile_add_edit_form'];
+
+  foreach ($form_modes as $mode) {
+    $entity_types['user']->setFormClass($mode, 'Drupal\tmg_utility\Form\AccountFormExtended');
+  }
+}
+
+function tmg_utility_entity_type_alter(array &$entity_types) {
+  $entity_types['user']->setAccessClass('Drupal\tmg_utility\access\UserAccessControlHandler');
+}
+
+

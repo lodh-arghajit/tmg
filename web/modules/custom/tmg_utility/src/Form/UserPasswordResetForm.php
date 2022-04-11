@@ -38,8 +38,9 @@ class UserPasswordResetForm {
    *   Login link hash.
    */
   public static function alter(array $form, FormStateInterface $form_state) {
+
     $class = static::class;
-    $form_step = $form_state->get('current_page') ?? static::VERIFICATION_EMAIL_STEP;
+    $form_step = $form_state->get('current_page') ?? static::FORGET_PASSWORD_STEP;
     if ($form_step == static::FORGET_PASSWORD_STEP_CONFIRMATION) {
       unset($form['actions']);
       return $form;
@@ -55,10 +56,10 @@ class UserPasswordResetForm {
       '#size' => 25,
       '#required' => TRUE,
     ];
-
     $form['#validate'][] = [$class, 'validateForm'];
     $form['actions']['wizard_next']['#submit'][] = [$class, 'submitForm'];
     $form['actions']['wizard_prev'] = [];
+
     return $form;
   }
 
@@ -84,9 +85,7 @@ class UserPasswordResetForm {
    */
   public static function submitForm(array &$form, FormStateInterface $form_state) {
     $user = $form_state->getFormObject()->getEntity()->getData()['user'];
-
     $password_to_update = $form_state->getValues()['pass'];
-
     $user->setPassword($password_to_update);
     $user->save();
 

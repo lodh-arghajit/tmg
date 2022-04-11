@@ -2,9 +2,15 @@ global-css-and-js:
   css:
     theme:
       css/main.min.css: {}
+      css/icons.css: {}
+      css/app.css: {}
       css/screen.css: {}
   js:
+    js/simplebar.min.js: {}
+    js/metisMenu.min.js: {}
+    js/owl.carousel.min.js: {}
     js/common.ui.js: {}
+
 pwd_eye_lib_override:
   css:
     theme:
