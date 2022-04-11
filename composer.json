@@ -9,10 +9,6 @@
             "url": "https://packages.drupal.org/8"
         },
         {
-            "type": "path",
-            "url": "upstream-configuration"
-        },
-        {
             "type": "package",
             "package": {
                 "name": "furf/jquery-ui-touch-punch",
@@ -83,8 +79,6 @@
         "drush/drush": "^10",
         "furf/jquery-ui-touch-punch": "^2.0",
         "kint-php/kint": "^3.3",
-        "pantheon-systems/drupal-integrations": "^9",
-        "pantheon-upstreams/upstream-configuration": "self.version",
         "vlucas/phpdotenv": "^5.4"
     },
     "require-dev": {
@@ -146,10 +140,6 @@
             },
             "drupal/recaptcha": {
                 "2493183: Ajax support / Use behaviors for 2.x": "https://www.drupal.org/files/issues/2021-06-03/recaptcha-ajax-2493183-225.patch"
-            },
-            "drupal/swiftmailer": {
-                "3189973: Support HTML in email body.": "https://www.drupal.org/files/issues/2020-12-26/support_html_in_message_body-3189973.patch"
-
             },
             "drupal/swiftmailer": {
                 "3189973: Support HTML in email body.": "https://www.drupal.org/files/issues/2020-12-26/support_html_in_message_body-3189973.patch"
