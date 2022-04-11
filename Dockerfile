@@ -24,6 +24,7 @@ COPY composer.lock /var/www/html
 WORKDIR /var/www/html
 COPY web/modules/custom /var/www/html/web/modules/custom
 COPY web/themes/custom /var/www/html/web/themes/custom
-RUN curl -sS https://getcomposer.org/installer |php
-RUN mv composer.phar /usr/local/bin/composer
+RUN composer --version
+#RUN curl -sS https://getcomposer.org/installer |php
+#RUN mv composer.phar /usr/local/bin/composer
 #RUN composer install
