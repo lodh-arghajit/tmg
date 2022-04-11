@@ -14,8 +14,9 @@ RUN docker-php-ext-install zip
 RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-configure gd --with-jpeg=/usr/include/ &&\
     docker-php-ext-install gd
-RUN curl -sS https://getcomposer.org/installer |php
-RUN mv composer.phar /usr/local/bin/composer
+RUN composer --version
+#RUN curl -sS https://getcomposer.org/installer |php
+#RUN mv composer.phar /usr/local/bin/composer
 RUN composer require cweagans/composer-patches
 
 COPY composer.json /var/www/html
@@ -24,7 +25,6 @@ COPY composer.lock /var/www/html
 WORKDIR /var/www/html
 COPY web/modules/custom /var/www/html/web/modules/custom
 COPY web/themes/custom /var/www/html/web/themes/custom
-RUN composer --version
 #RUN curl -sS https://getcomposer.org/installer |php
 #RUN mv composer.phar /usr/local/bin/composer
 #RUN composer install
