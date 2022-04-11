@@ -23,16 +23,8 @@ COPY composer.json /var/www/html
 COPY composer.lock /var/www/html
 
 WORKDIR /var/www/html
-COPY composer-setup.php /var/www/html
-#### Install Composer ####
-
-RUN php composer-setup.php --quiet
-RUN RESULT=$?
-RUN rm composer-setup.php
 RUN mv composer.phar /usr/local/bin/composer
-RUN exit $RESULT
-### End Composer install ###
-
+RUN composer --version
 #RUN composer require cweagans/composer-patches
 COPY web/modules/custom /var/www/html/web/modules/custom
 COPY web/themes/custom /var/www/html/web/themes/custom
