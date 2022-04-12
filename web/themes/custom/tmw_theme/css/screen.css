@@ -766,14 +766,41 @@ label.error {color: #ed0000;font-size: 14px; font-weight: 400;}
 .user-user-profile-edit-form-form .form-actions.form-group { text-align: left;}
 .user-pass-reset-override .btn-success{margin-top: 20px;}
 
-.enquiry-form-custom-hld ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */color: rgba(0, 0, 0, 0.6); opacity: 1; /* Firefox */}
-.enquiry-form-custom-hld :-ms-input-placeholder { /* Internet Explorer 10-11 */color:rgba(0, 0, 0, 0.6);}
-.enquiry-form-custom-hld ::-ms-input-placeholder { /* Microsoft Edge */ color:rgba(0, 0, 0, 0.6);}
+.enquiry-form-custom-hld ::placeholder, .telephone-hld ::placeholder  { /* Chrome, Firefox, Opera, Safari 10.1+ */color: rgba(0, 0, 0, 0.6); opacity: 1; /* Firefox */}
+.enquiry-form-custom-hld :-ms-input-placeholder, .telephone-hld :-ms-input-placeholder  { /* Internet Explorer 10-11 */color:rgba(0, 0, 0, 0.6);}
+.enquiry-form-custom-hld ::-ms-input-placeholder, .telephone-hld ::-ms-input-placeholder  { /* Microsoft Edge */ color:rgba(0, 0, 0, 0.6);}
 .enquiry-form-custom-hld .iti.iti--allow-dropdown{display: block; width: 100%;}
 .custom-pages .enquiry-form-custom-hld .form-inline .form-control {max-width: inherit; width: 100%;}
 .custom-pages .enquiry-form-custom-hld .form-inline {margin: 0px 0 25px;}
 .custom-pages .enquiry-form-custom-hld .form-inline .control-label {margin-right: 10px; margin-bottom: 0.5rem;}
 
+.telephone-hld .iti.iti--allow-dropdown{display: block; width: 100%;}
+.telephone-hld{margin-right: 10px; margin-bottom: 0.5rem;}
+.telephone-hld.form-inline .form-control { max-width: inherit;  width: 100%;}
+.date-time-hld .form-inline .form-control{max-width: inherit;  width: 100%;}
+.date-time-hld .form-type-webform-time{width: 48%;margin: 0; margin-left: 2%;}
+.date-time-hld .form-type-date{width: 48%; margin: 0; margin-right: 2%;}
+.date-time-hld.form-item.form-type-datetime .container-inline{width: 100%; display: flex; margin-top: 3px;}
+.date-time-hld .control-label{width:100%;}
+
+.add-service-id .table thead{display: none;}
+.add-service-id .table tr{background-color: #fff; width: 220px; display: inline-block;  margin-bottom: 10px; padding: 0;}
+.add-service-id .table-striped tbody tr:nth-of-type(odd) td, .custom-pages .add-service-id .table-responsive .table tr:nth-child(even) td{background-color: #fff;}
+.custom-pages .add-service-id .table-responsive .table td{border: 0; padding:0 5px;}
+.add-service-id .table tr:first-child{width:174px;}
+.add-service-id .table tr:first-child .btn.btn-danger{display: none;}
+.add-service-id .table tr:first-child td:last-child{display: none;}
+.add-service-id .control-label{display: block;}
+.add-service-id .webform-multiple-table {float: left; display: inline-block;}
+.add-service-id .webform-multiple-add{width: auto; float: left; margin-left: 15px;}
+
+
+.add-service-id .btn.btn-danger{background-color: #CC0033; font-size: 0; line-height: 0; padding: 10px 10px;}
+.add-service-id .btn.btn-danger .glyphicon{font-size: 16px; margin: 0; padding: 0;}
+
+.custom-pages .select-wrapper:after{top:28px;}
+.enquiry-form-custom-hld  .form-inline .iti.iti--allow-dropdown label, .telephone-hld  .form-inline .iti.iti--allow-dropdown label{justify-content: flex-start;}
+.iti__selected-flag { height: 48px;}
 
 
 
@@ -1037,6 +1064,40 @@ label.error {color: #ed0000;font-size: 14px; font-weight: 400;}
 		margin-bottom: 20px;
 	}
 	.taxonomy-term-product-form .btn, .taxonomy-term-industry-form .btn{width: 100%;margin-bottom: 15px;}
+
+
+	.add-service-id .webform-multiple-table {
+		float: none;
+		display: block;
+	}
+	.add-service-id .webform-multiple-add {
+		width: auto;
+		float: none;
+		margin-left: 0;
+	}
+	.add-service-id .table tr:first-child {
+		width: 100%;background: #fff;
+	}
+	.add-service-id .table tr td:first-child {
+		width:80%;
+	}
+	.add-service-id .table tr td:last-child {
+		width:20%; text-align: right;
+	}
+	.custom-pages .add-service-id .table-responsive{border: 0; overflow-x: hidden;}
+	.add-service-id .table tr {width: auto;	}
+	.date-time-hld .form-type-date {
+		width: 100%;
+		margin-right: 0%;
+	}
+	.date-time-hld .form-type-webform-time {
+		width: 100%;
+		margin: 0;
+		margin-left: 0%;
+		margin-top: 20px;
+	}
+	.mobile-mt-4{margin-top: 15px;}
+	.mobile-mb-4{margin-bottom: 15px !important;}
 
 
 
