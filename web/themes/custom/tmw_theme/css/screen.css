@@ -806,6 +806,15 @@ label.error {color: #ed0000;font-size: 14px; font-weight: 400;}
 .thanks-hld h2{font-weight: 600;font-size: 30px;}
 .thanks-hld .thanks-subheading{font-weight: 400; font-size: 16px; margin-bottom: 10px;}
 
+@media (min-width: 768px) {
+	.support-flexbox .webform-flex--container > .form-item {margin: 0 0.5em;}
+	.support-flexbox .webform-flex--container {margin: 0;}
+	.support-flexbox .webform-flex--0 {flex: inherit;}
+
+	.ctp-hld{display: block;}
+	.ctp-hld .webform-flex--0{width: 50%; float: left;}
+	}
+
 
 
 
@@ -1103,6 +1112,8 @@ label.error {color: #ed0000;font-size: 14px; font-weight: 400;}
 	.mobile-mt-4{margin-top: 15px;}
 	.mobile-mb-4{margin-bottom: 15px !important;}
 
+	
+	.ctp-hld .webform-flex--0{width: 100%; float: none;}
 
 
 
