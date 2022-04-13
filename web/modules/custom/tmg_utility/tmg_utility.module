@@ -31,6 +31,15 @@ function tmg_utility_menu_local_actions_alter(&$local_actions) {
 }
 
 /**
+ * Implements hook_page_attachments().
+ */
+function tmg_utility_page_attachments(array &$attachments) {
+  // Unconditionally attach an asset to the page.
+  $attachments['#attached']['library'][] = 'tmg_utility/auto_submit_form';
+}
+
+
+/**
  * Implements hook_theme().
  */
 function tmg_utility_theme($existing, $type, $theme, $path) {

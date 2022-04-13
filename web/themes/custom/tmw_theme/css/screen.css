@@ -361,7 +361,7 @@ input:-webkit-autofill{transition: all 5000s ease-in-out 0s;}
 	content: "\2022";
 	color: #003399;
 	font-weight: bold;
-	display: inline-block; 
+	display: inline-block;
 	width: 1em;
 	margin-left: -1em;
   }
@@ -390,8 +390,8 @@ input:-webkit-autofill{transition: all 5000s ease-in-out 0s;}
 .before-login-menu-hld .menu--before-login{justify-content: flex-end; align-items: center; height: 100%;}
 .region-header{ display: flex;  width: 100%;  position: relative;}
 
-.menu--before-login li ul.dropdown-menu{display: none !important;} 
-.menu--before-login li.open ul.dropdown-menu{display: block !important;} 
+.menu--before-login li ul.dropdown-menu{display: none !important;}
+.menu--before-login li.open ul.dropdown-menu{display: block !important;}
 .menu--before-login li .dropdown-toggle .caret{display: none;}
 
 /*After Login*/
@@ -540,7 +540,7 @@ label.error {color: #ed0000;font-size: 14px; font-weight: 400;}
 .taxonomy-overview-terms .select-wrapper:after{color: #b9b9b9;font-size: 14px;}
 .taxonomy-overview-terms .select-wrapper{max-width: 120px;}
 .taxonomy-overview-terms .btn{font-size: 16px;}
-.taxonomy-overview-terms .btn.btn-xs{    
+.taxonomy-overview-terms .btn.btn-xs{
 	padding: 8px 15px;
     height: 36px;
     font-size: 16px;
@@ -550,7 +550,7 @@ label.error {color: #ed0000;font-size: 14px; font-weight: 400;}
     border: solid 1px #b9b9b9;
 }
 
-.taxonomy-overview-terms .btn.dropdown-toggle{    
+.taxonomy-overview-terms .btn.dropdown-toggle{
 	height: 36px;
     background: #fff;
     border: solid 1px #b9b9b9;
@@ -585,7 +585,7 @@ label.error {color: #ed0000;font-size: 14px; font-weight: 400;}
   }
 .custom-pages .taxonomy-overview-terms .table tr:nth-child(even) td{background: #E6E8EB;  }
 .custom-pages .taxonomy-overview-terms .table tr:hover {background-color: #ddd;}
-.taxonomy-overview-terms .btn.btn-danger{    
+.taxonomy-overview-terms .btn.btn-danger{
 	background: #CC0033;
 }
 .taxonomy-overview-terms .dropdown-menu > li > a{
@@ -801,6 +801,10 @@ label.error {color: #ed0000;font-size: 14px; font-weight: 400;}
 .custom-pages .select-wrapper:after{top:28px;}
 .enquiry-form-custom-hld  .form-inline .iti.iti--allow-dropdown label, .telephone-hld  .form-inline .iti.iti--allow-dropdown label{justify-content: flex-start;}
 .iti__selected-flag { height: 48px;}
+.thanks-hld{text-align: center;}
+.thanks-hld .thanks-img svg{width:120px; height:120px;}
+.thanks-hld h2{font-weight: 600;font-size: 30px;}
+.thanks-hld .thanks-subheading{font-weight: 400; font-size: 16px; margin-bottom: 10px;}
 
 
 
@@ -967,7 +971,7 @@ label.error {color: #ed0000;font-size: 14px; font-weight: 400;}
 	.before-login-menu-hld li .dropdown-backdrop{display: none;}
 	.menu--before-login li ul li {border-bottom: solid 0px #e7e7e7;margin: 0 0 0 15px;	}
 	.menu--before-login li ul li a {padding: 7px 10px;}
-	
+
 	.ssc-result-list li {margin: 0 10px 20px;max-width: 250px;width: 30%;}
 	.ssc-text p {font-size: 14px;}
 
@@ -1101,5 +1105,5 @@ label.error {color: #ed0000;font-size: 14px; font-weight: 400;}
 
 
 
-	
+
 }
