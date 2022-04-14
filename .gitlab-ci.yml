@@ -29,12 +29,11 @@ deploy-dev:
     - kubectl config use-context default
     - kubectl config set-context --current --namespace="${K8_NS}"
     - kubectl get all
-    - sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" k8s/myphp.yml
-    - kubectl apply -f k8s/myphp.yml
-    - kubectl apply -f k8s/myphp-ing.yml
+    #- sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" k8s/myphp.yml
+    #- kubectl apply -f k8s/myphp.yml
+    #- kubectl apply -f k8s/myphp-ing.yml
   environment:
     name: development
-    url: https://gitlab26.poc-dev.kubix.tm/
   tags:
     - kubix-runner
   only:
