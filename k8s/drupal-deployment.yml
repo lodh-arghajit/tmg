@@ -18,7 +18,7 @@ spec:
         tier: frontend
     spec:
       initContainers:
-      - image: harbor.dev.kubix.tm.com.my/library/drupal-tmwweb:latest
+      - image: harbor.dev.kubix.tm.com.my/tmw-web/tmw:${CI_COMMIT_SHORT_SHA}
         name: init-sites
         resources:
           limits:
@@ -34,7 +34,7 @@ spec:
          - mountPath: /data
            name: web
       containers:
-      - image: harbor.dev.kubix.tm.com.my/library/drupal-tmwweb:latest
+      - image: harbor.dev.kubix.tm.com.my/tmw-web/tmw:${CI_COMMIT_SHORT_SHA}
         name: drupal
         resources:
           limits:
@@ -75,4 +75,4 @@ spec:
         - name: web
           nfs:
            server: 172.20.94.11
-           path: /VOL_BF7DEV_NFS_TMW/drupal
+           path: /VOL_BF7DEV_NFS_TMW/
