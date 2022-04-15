@@ -4,15 +4,15 @@ stages:
 
 variables:
   GIT_STRATEGY: clone
-  CONTAINER_IMAGE: harbor.dev.kubix.tm.com.my/tmw-web/tmw:${CI_COMMIT_SHORT_SHA}
-  CONTAINER_IMAGE_PROD: harbor.prod.kubix.tm.com.my/tmw-web/tmw:${CI_COMMIT_SHORT_SHA}
+  CONTAINER_IMAGE: harbor.dev.kubix.tm.com.my/tmw-web/tmw:latest
+  CONTAINER_IMAGE_PROD: harbor.prod.kubix.tm.com.my/tmw-web/tmw:latest
   HARBOR_PASSWORD : QE7vRX7LktiNgzE2u3BNUap8eek7j94d
 
 build:
   stage: build
   script:
     - docker login harbor.dev.kubix.tm.com.my -u 'robot$tmw-web+tmw-web' -p ${HARBOR_PASSWORD}
-    - docker build -t ${CONTAINER_IMAGE} .
+    - docker build -t ${CONTAINER_IMAGE}
     - docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE}
     - docker push ${CONTAINER_IMAGE}
   tags:
