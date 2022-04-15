@@ -23,3 +23,5 @@ RUN php composer.phar --version
 COPY web/modules/custom /var/www/html/web/modules/custom
 COPY web/themes/custom /var/www/html/web/themes/custom
 RUN php composer.phar install
+COPY web/sites/default/settings.php /var/www/html/web/sites/default
+COPY web/sites/default/settings.local.php /var/www/html/web/sites/default

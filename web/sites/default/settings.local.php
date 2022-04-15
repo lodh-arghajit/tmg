@@ -5,6 +5,7 @@ define('LANDO_INFO', json_decode($_ENV['LANDO_INFO'], TRUE));
 if (file_exists(dirname(DRUPAL_ROOT) . '/load.environment.php')) {
     include dirname(DRUPAL_ROOT) . '/load.environment.php';
 }
+$settings['hash_salt'] = 'kO6yJeUCJTY8JK1HtGrFq142ORT659dJHhSLo9YAyCR0FmVhW-NOPIygVfuiIBw0xLtQ5ISRsg';
 // When using lando, use Lando settings.
 if (defined('LANDO_INFO') && !empty(LANDO_INFO['database']['creds']['database'])) {
     // Databases.
@@ -19,9 +20,9 @@ if (defined('LANDO_INFO') && !empty(LANDO_INFO['database']['creds']['database'])
         'prefix' => '',
         'collation' => 'utf8mb4_general_ci',
     ];
+  $settings['trusted_host_patterns'][] = '^.*\.lndo\.site$';
 }
-// When using xampp, use .env settings.
-else {
+elseif (!empty($_ENV['DB_NAME'])) {
   $databases['default']['default'] = [
     // Since "mariadb" drivers are the same as "mysql", we hard-code "mysql".
     'driver' => 'mysql',
@@ -34,7 +35,20 @@ else {
     'collation' => 'utf8mb4_general_ci',
   ];
 }
+// When using xampp, use .env settings.
+else {
+  $databases['default']['default'] = array (
+    'database' => 'lamp',
+    'username' => 'root',
+    'password' => '',
+    'prefix' => '',
+    'host' => 'localhost',
+    'port' => '3306',
+    'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+    'driver' => 'mysql',
+  );
 
+}
 // Trusted host patterns.
-$settings['trusted_host_patterns'][] = '^.*\.lndo\.site$';
-$settings['hash_salt'] = 'kO6yJeUCJTY8JK1HtGrFq142ORT659dJHhSLo9YAyCR0FmVhW-NOPIygVfuiIBw0xLtQ5ISRsg';
+
+
