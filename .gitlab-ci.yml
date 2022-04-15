@@ -1,5 +1,6 @@
 stages:
   - build
+  - deploy
 
 variables:
   GIT_STRATEGY: clone
@@ -16,3 +17,25 @@ build:
     - docker push ${CONTAINER_IMAGE}
   tags:
     - kubix-runner
+
+
+deploy-dev:
+  stage: deploy
+  script:
+    - kubectl config set-cluster k8s --server="${K8_IP}"
+    - kubectl config set clusters.k8s.certificate-authority-data ${K8_CA}
+    - kubectl config set-credentials gitlab --token="${K8_TOKEN}"
+    - kubectl config set-context default --cluster=k8s --user=gitlab
+    - kubectl config use-context default
+    - kubectl config set-context --current --namespace="${K8_NS}"
+    - kubectl get all
+    #- sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" k8s/myphp.yml
+    #- kubectl apply -f k8s/myphp.yml
+    #- kubectl apply -f k8s/myphp-ing.yml
+  environment:
+    name: development
+  tags:
+    - kubix-runner
+  only:
+    - tmgdev
+  # when: manual

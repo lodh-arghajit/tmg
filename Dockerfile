@@ -14,10 +14,6 @@ RUN docker-php-ext-install zip
 RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-configure gd --with-jpeg=/usr/include/ &&\
     docker-php-ext-install gd
-#RUN composer --version
-#RUN curl -sS https://getcomposer.org/installer |php
-#RUN mv composer.phar /usr/local/bin/composer
-
 
 COPY composer.json /var/www/html
 COPY composer.lock /var/www/html
