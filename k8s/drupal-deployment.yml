@@ -54,7 +54,7 @@ spec:
         - name: MYSQL_DB_NAME
           value: tmw_dev
         - name: MYSQL_DB_PORT
-          value: 3306
+          value: "3306"
         ports:
         - containerPort: 80
           name: drupal
