@@ -18,7 +18,7 @@ spec:
         tier: frontend
     spec:
       initContainers:
-      - image: harbor.dev.kubix.tm.com.my/library/drupal-tmw2:latest
+      - image: harbor.dev.kubix.tm.com.my/library/drupal-tmwweb:latest
         name: init-sites
         resources:
           limits:
@@ -34,7 +34,7 @@ spec:
          - mountPath: /data
            name: web
       containers:
-      - image: harbor.dev.kubix.tm.com.my/library/drupal-tmw2:latest
+      - image: harbor.dev.kubix.tm.com.my/library/drupal-tmwweb:latest
         name: drupal
         resources:
           limits:
@@ -46,11 +46,15 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
         - name: MYSQL_DATABASE_HOST
-          value: mysql
+          value: vbcvwhomardb300
         - name: MYSQL_PASSWORD
-          value: password
+          value: Pswd2019
         - name: MYSQL_USER
-          value: root
+          value: tmw_app
+        - name: MYSQL_DB_NAME
+          value: tmw_dev
+        - name: MYSQL_DB_PORT
+          value: 3306
         ports:
         - containerPort: 80
           name: drupal
@@ -71,4 +75,4 @@ spec:
         - name: web
           nfs:
            server: 172.20.94.11
-           path: /VOL_BF7_NFS_DEV_TMWWEB/drupal
+           path: /VOL_BF7DEV_NFS_TMW/drupal
