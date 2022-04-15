@@ -22,20 +22,19 @@ if (defined('LANDO_INFO') && !empty(LANDO_INFO['database']['creds']['database'])
     ];
   $settings['trusted_host_patterns'][] = '^.*\.lndo\.site$';
 }
-elseif (!empty($_ENV['DB_NAME'])) {
+elseif (!empty($_ENV['MYSQL_DATABASE_HOST'])) {
   $databases['default']['default'] = [
     // Since "mariadb" drivers are the same as "mysql", we hard-code "mysql".
     'driver' => 'mysql',
-    'database' => $_ENV['DB_NAME'],
-    'username' => $_ENV['DB_USERNAME'],
-    'password' => $_ENV['DB_PASSWORD'],
-    'host' => $_ENV['DB_HOST'],
-    'port' => $_ENV['DB_PORT'],
+    'database' => $_ENV['MYSQL_DB_NAME'],
+    'username' => $_ENV['MYSQL_USER'],
+    'password' => $_ENV['MYSQL_PASSWORD'],
+    'host' => $_ENV['MYSQL_DATABASE_HOST'],
+    'port' => $_ENV['MYSQL_DB_PORT'],
     'prefix' => '',
     'collation' => 'utf8mb4_general_ci',
   ];
 }
-// When using xampp, use .env settings.
 else {
   $databases['default']['default'] = array (
     'database' => 'lamp',
