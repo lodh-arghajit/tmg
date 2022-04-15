@@ -75,4 +75,4 @@ spec:
         - name: web
           nfs:
            server: 172.20.94.11
-           path: /VOL_BF7DEV_NFS_TMW/
+           path: /VOL_BF7DEV_NFS_TMW
