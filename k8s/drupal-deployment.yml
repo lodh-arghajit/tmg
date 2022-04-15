@@ -1,0 +1,74 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: drupal
+  labels:
+    app: drupal
+spec:
+  selector:
+    matchLabels:
+      app: drupal
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: drupal
+        tier: frontend
+    spec:
+      initContainers:
+      - image: harbor.dev.kubix.tm.com.my/library/drupal-tmw2:latest
+        name: init-sites
+        resources:
+          limits:
+            memory: "2000Mi"
+            cpu: "800m"
+          requests:
+            memory: "600Mi"
+            cpu: "300m"
+        command: ['/bin/bash', '-c']
+       # args: ['cp -r /var/www/html/sites/ /data/; chown www-data:www-data /data/ -R']
+        args: ['cp -r /var/www/html/ /data/;chown www-data:www-data /data/ -R; cp -r /usr/local/etc/php/conf.d/ /phpini/']
+        volumeMounts:
+         - mountPath: /data
+           name: web
+      containers:
+      - image: harbor.dev.kubix.tm.com.my/library/drupal-tmw2:latest
+        name: drupal
+        resources:
+          limits:
+            memory: "3000Mi"
+            cpu: "800m"
+          requests:
+            memory: "600Mi"
+            cpu: "300m"
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: MYSQL_DATABASE_HOST
+          value: mysql
+        - name: MYSQL_PASSWORD
+          value: password
+        - name: MYSQL_USER
+          value: root
+        ports:
+        - containerPort: 80
+          name: drupal
+        volumeMounts:
+        #- mountPath: /var/www/html/modules
+         # name: web
+          #subPath: modules
+        #- mountPath: /var/www/html/profiles
+         # name: web
+          #subPath: profiles
+        - mountPath: /var/www/html
+          name: web
+          subPath: html
+        #- mountPath: /var/www/html/themes
+         # name: web
+          #subPath: themes
+      volumes:
+        - name: web
+          nfs:
+           server: 172.20.94.11
+           path: /VOL_BF7_NFS_DEV_TMWWEB/drupal
