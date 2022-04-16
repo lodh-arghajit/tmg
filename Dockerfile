@@ -19,6 +19,7 @@ COPY composer.json /var/www/html
 COPY composer.lock /var/www/html
 COPY vendor /var/www/html/vendor
 COPY web /var/www/html/web
+COPY load.environment.php /var/www/html
 
 
 WORKDIR /var/www/html
