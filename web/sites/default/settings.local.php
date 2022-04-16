@@ -6,8 +6,7 @@ if (file_exists(dirname(DRUPAL_ROOT) . '/load.environment.php')) {
     include dirname(DRUPAL_ROOT) . '/load.environment.php';
 }
 $settings['hash_salt'] = 'kO6yJeUCJTY8JK1HtGrFq142ORT659dJHhSLo9YAyCR0FmVhW-NOPIygVfuiIBw0xLtQ5ISRsg';
-var_dump($_ENV);
-exit();
+
 // When using lando, use Lando settings.
 if (defined('LANDO_INFO') && !empty(LANDO_INFO['database']['creds']['database'])) {
     // Databases.
