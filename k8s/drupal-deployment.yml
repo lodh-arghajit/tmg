@@ -46,7 +46,7 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
         - name: MYSQL_DATABASE_HOST
-          value: "172.20.21.70"
+          value: vbcvwhomardb300
         - name: MYSQL_PASSWORD
           value: Pswd2019
         - name: MYSQL_USER
