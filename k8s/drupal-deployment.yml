@@ -18,7 +18,7 @@ spec:
         tier: frontend
     spec:
       initContainers:
-      - image: harbor.dev.kubix.tm.com.my/tmw-web/tmw:ba2222b
+      - image: harbor.dev.kubix.tm.com.my/tmw-web/tmw:ba2222c
         name: init-sites
         resources:
           limits:
@@ -34,7 +34,7 @@ spec:
          - mountPath: /data
            name: web
       containers:
-      - image: harbor.dev.kubix.tm.com.my/tmw-web/tmw:ba2222b
+      - image: harbor.dev.kubix.tm.com.my/tmw-web/tmw:ba2222c
         name: drupal
         resources:
           limits:
@@ -46,7 +46,7 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
         - name: MYSQL_DATABASE_HOST
-          value: vbcvwhomardb300
+          value: "172.20.21.70"
         - name: MYSQL_PASSWORD
           value: Pswd2019
         - name: MYSQL_USER
