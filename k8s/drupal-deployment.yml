@@ -18,7 +18,7 @@ spec:
         tier: frontend
     spec:
       initContainers:
-      - image: harbor.dev.kubix.tm.com.my/tmw-web/tmw:ba2222a
+      - image: harbor.dev.kubix.tm.com.my/tmw-web/tmw:ba2222b
         name: init-sites
         resources:
           limits:
@@ -34,7 +34,7 @@ spec:
          - mountPath: /data
            name: web
       containers:
-      - image: harbor.dev.kubix.tm.com.my/tmw-web/tmw:ba2222a
+      - image: harbor.dev.kubix.tm.com.my/tmw-web/tmw:ba2222b
         name: drupal
         resources:
           limits:

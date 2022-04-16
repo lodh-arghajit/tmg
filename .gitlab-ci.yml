@@ -4,8 +4,8 @@ stages:
 
 variables:
   GIT_STRATEGY: clone
-  CONTAINER_IMAGE: harbor.dev.kubix.tm.com.my/tmw-web/tmw:ba2222a
-  CONTAINER_IMAGE_PROD: harbor.prod.kubix.tm.com.my/tmw-web/tmw:ba2222a
+  CONTAINER_IMAGE: harbor.dev.kubix.tm.com.my/tmw-web/tmw:ba2222b
+  CONTAINER_IMAGE_PROD: harbor.prod.kubix.tm.com.my/tmw-web/tmw:ba2222b
   HARBOR_PASSWORD : QE7vRX7LktiNgzE2u3BNUap8eek7j94d
 
 build:
