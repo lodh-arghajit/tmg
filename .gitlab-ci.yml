@@ -4,8 +4,8 @@ stages:
 
 variables:
   GIT_STRATEGY: clone
-  CONTAINER_IMAGE: harbor.dev.kubix.tm.com.my/tmw-web/tmw:ba2222c
-  CONTAINER_IMAGE_PROD: harbor.prod.kubix.tm.com.my/tmw-web/tmw:ba2222c
+  CONTAINER_IMAGE: harbor.dev.kubix.tm.com.my/tmw-web/tmw:${CI_COMMIT_SHORT_SHA}
+  CONTAINER_IMAGE_PROD: harbor.prod.kubix.tm.com.my/tmw-web/tmw:${CI_COMMIT_SHORT_SHA}
   HARBOR_PASSWORD : QE7vRX7LktiNgzE2u3BNUap8eek7j94d
 
 build:
@@ -29,7 +29,8 @@ deploy-dev:
     - kubectl config use-context default
     - kubectl config set-context --current --namespace="${K8_NS}"
     - kubectl get all
-    - cat k8s/drupal-deployment.yml | sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" | kubectl apply -f -
+    - envsubst < k8s/drupal-deployment.yml > k8s/drupal-deployment.yml
+    - kubectl apply -f k8s/drupal-deployment.yml
     - kubectl apply -f k8s/drupal_ingress.yml
   environment:
     name: development
