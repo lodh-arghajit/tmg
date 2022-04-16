@@ -1,0 +1,188 @@
+<?php
+/**
+ * @file
+ * Module file for OTP Module.
+ */
+
+/**
+ * Implements hook_form_id_alter().
+ */
+function otp_form_user_register_form_alter(&$form, \Drupal\Core\Form\FormStateInterface &$form_state, $form_id) {
+  if (!$form['administer_users']['#value']) {
+    $form['account']['status']['#default_value'] = FALSE;
+   // $form['#submit'][] = 'otp_user_register_submit';
+    $form['actions']['submit']['#submit'][] = 'otp_user_register_submit';
+    $form['actions']['submit']['#value'] = t('Next');
+
+    if (isset($_GET['destination'])) {
+      $form['destination'] = array(
+        '#type' => 'hidden',
+        '#value' => $_GET['destination']
+      );
+      unset($_GET['destination']);
+    }
+  }
+  // We remove save function call and handle it internally.
+  if (($key = array_search('::save', $form['actions']['submit']['#submit'])) !== false) {
+    unset($form['actions']['submit']['#submit'][$key]);
+  }
+}
+
+/**
+ * Implements hook_form_id_alter().
+ */
+function otp_form_user_admin_settings_alter(&$form, \Drupal\Core\Form\FormStateInterface &$form_state) {
+  $form['registration_cancellation']['user_email_verification']['#description'] = t('Require e-mail verification is enabled in form of OTP as you have enabled OTP module. New user can set password on registration but the account will be created only on entering the OTP received.');
+  $form['registration_cancellation']['user_email_verification']['#disabled'] = TRUE;
+}
+
+/**
+ * Register form submit handler.
+ */
+function otp_user_register_submit(&$form, \Drupal\Core\Form\FormStateInterface &$form_state) {
+  $account = $form['language']['preferred_langcode']['#pre_render']['user_langcode'][0]->buildEntity($form, $form_state);
+  // This part is from Drupal\user\RegisterForm save function
+  $pass = $account->getPassword();
+
+  // Save has no return value so this cannot be tested.
+  // Assume save has gone through correctly.
+  $account->save();
+
+  $form_state->set('user', $account);
+  $form_state->setValue('uid', $account->id());
+
+  \Drupal::logger('user')->notice('New user: %name %email.', ['%name' => $form_state->getValue('name'), '%email' => '<' . $form_state->getValue('mail') . '>', 'type' => $account->toLink(t('Edit'), 'edit-form')->toString()]);
+
+  // Add plain text password into user account to generate mail tokens.
+  $account->password = $pass;
+
+  // Our custom part starts here.
+  $values = $form_state->getValues();
+  $otp_send = _otp_generate_otp($values['uid'], TRUE);
+  if ($otp_send) {
+    \Drupal::messenger()->addMessage(t("A new verification code has been sent to %email", ['%email' => $values['mail']]));
+    if ($form_state->getValue('destination')) {
+      $form_state->setRedirectUrl(new \Drupal\Core\Url('otp.user_register_otp', ['query' => ['destination' => $form_state->getValue('destination')]]));
+    }
+    else {
+      $form_state->setRedirectUrl(new \Drupal\Core\Url('otp.user_register_otp'));
+    }
+  }
+  else {
+    \Drupal::messenger()->addError(t("You've reached the maximum number of attempts. Please retry after few hours or contact support."));
+  }
+}
+
+/**
+ * Implements hook_drupal_goto_alter().
+ */
+/*
+function otp_drupal_goto_alter(&$path, &$options, &$http_response_code) {
+  if (isset($_SESSION['otp_user_register_uid']) && isset($_GET['destination'])) {
+    $path = 'user/register/otp';
+  }
+}
+*/
+
+/**
+ * Implements hook_mail().
+ */
+function otp_mail($key, &$message, $params) {
+  if ($key == 'send_otp') {
+    $language = $message['language'];
+    $message['subject'] = _otp_mail_text('subject', $params, $language);
+    $message['body'][] = _otp_mail_text('body', $params, $language);
+  }
+}
+
+/**
+ * OTP Mail text replace function
+ */
+function _otp_mail_text($type, $otp, $language) {
+  if ($type == 'subject') {
+    $text = \Drupal::config('otp.settings')->get('otp_otp_mail_subject');
+    if (!$text) {
+      $text = 'Your Requested One Time Password';
+    }
+  }
+  elseif ($type == 'body') {
+    $text = \Drupal::config('otp.settings')->get('otp_otp_mail_body');
+    if (!$text) {
+      $text = _otp_otp_email();
+    }
+  }
+
+  return Drupal::token()->replace($text, $otp, ['language' => $language, 'callback' => 'otp_mail_tokens', 'sanitize' => FALSE, 'clear' => TRUE]);
+}
+
+/**
+ * Implements hook_mail_tokens().
+ */
+function otp_mail_tokens(&$replacements, $data, $options) {
+  if (isset($data['otp'])) {
+    $replacements['[user:otp]'] = $data['otp'];
+  }
+  if (isset($data['uuid'])) {
+    $replacements['[user:otp_form_url]'] = \Drupal::urlGenerator()->generate('otp.user_register_otp', ['query' => ['u' => $data['uuid']], 'absolute' => TRUE]);
+  }
+}
+
+/**
+ * Generates random otp and returns raw or stores md5 value in session.
+ * @param \Drupal\user\UserInterface|int $account
+ * @param bool $send_email
+ * @param bool $return_otp
+ * @return array|false|false[]
+ * @throws Exception
+ */
+function _otp_generate_otp($account = NULL, $send_email = FALSE, $return_otp = FALSE) {
+  if ($account == NULL)
+    $account = Drupal::currentUser();
+  elseif (is_array($account)) {
+    $account = \Drupal::entityTypeManager()->getStorage('user')->load($account['uid']);
+  }
+  elseif (is_numeric($account)) {
+    $account = \Drupal::entityTypeManager()->getStorage('user')->load($account);
+  }
+  $config = \Drupal::config('otp.settings');
+  if (!Drupal::flood()->isAllowed('user_otp', $config->get('user_otp_generate_threshold'), 60*60*$config->get('user_otp_generate_time_window'), $account->getEmail())) {
+    return FALSE;
+  }
+  Drupal::flood()->register('user_otp', 60*60*$config->get('user_otp_generate_time_window'), $account->getEmail());
+  $no_of_digits = Drupal::config('otp.settings')->get('otp_no_of_digits');
+  if (!$no_of_digits) {
+    $no_of_digits = 6;
+  }
+  $min = pow(10, $no_of_digits-1);
+  $max = pow(10, $no_of_digits) -1;
+  $otp = random_int($min, $max);
+  $email_send = FALSE;
+  if ($send_email) {
+    $email_send = \Drupal::service('plugin.manager.mail')->mail('otp', 'send_otp', $account->getEmail(), \Drupal\Core\Language\Language::LANGCODE_DEFAULT, ['user' => $account, 'otp' => $otp, 'uuid' => $account->uuid()]);
+  }
+
+  $userData = \Drupal::service('user.data');
+  $userData->set('otp', $account->id(), 'otp_user_register_random_otp', md5($otp));
+  $userData->set('otp', $account->id(), 'otp_user_register_random_otp_time', time());
+  $_SESSION['otp_user_register_uid'] = $account->id();
+  if ($return_otp) {
+    return ['email_send' => $email_send, 'otp' => $otp];
+  }
+  else {
+    return ['email_send' => $email_send];
+  }
+}
+
+/**
+ * Default OTP Email text.
+ */
+function _otp_otp_email() {
+  return 'Dear [user:name],
+
+Your One Time Password for completing your transaction Drupal OTP Verification is: [user:otp]
+
+Please use this Password to complete your transaction. Do not share this Password with anyone.
+
+Thank you,
+[site:name] team';
+}

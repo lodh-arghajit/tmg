@@ -1,0 +1,236 @@
+<?php
+
+/**
+ * @file
+ * Defines a view mode to set up the columns of the table for the IEF widget.
+ */
+
+use Drupal\Core\Entity\EntityStorageException;
+use Drupal\Core\Render\Element;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Entity\Entity\EntityViewMode;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\FieldConfigInterface;
+use Drupal\ief_table_view_mode\Form\EntityInlineTableViewModeForm;
+use Drupal\field_ui\Form\EntityDisplayFormBase;
+
+/**
+ * Implements hook_entity_type_build().
+ */
+function ief_table_view_mode_entity_type_build(array &$entity_types) {
+  foreach ($entity_types as &$entity_type) {
+    if (!$entity_type->getHandlerClass('inline_form_table_view_mode')) {
+      $entity_type->setHandlerClass('inline_form_table_view_mode', '\Drupal\ief_table_view_mode\Form\EntityInlineTableViewModeForm');
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for entity_view_display_edit_form() form.
+ */
+function ief_table_view_mode_form_entity_view_display_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $string_translation = \Drupal::translation();
+
+  /** @var \Drupal\field_ui\Form\EntityDisplayFormBase $formObject */
+  $formObject = $form_state->getFormObject();
+  $entity = $formObject->getEntity();
+
+  if ($entity->getMode() != EntityInlineTableViewModeForm::IEF_TABLE_VIEW_MODE_NAME) {
+    return;
+  }
+
+  // It proceeds to hide a choice label.
+  foreach (Element::children($form['fields']) as $field_name) {
+    $field_row = &$form['fields'][$field_name];
+    if ($field_row['#row_type'] == 'field') {
+      $field_row['label'] = [
+        '#prefix' => $string_translation->translate('- Hidden -'),
+        '#type' => 'hidden',
+        '#value' => 'hidden',
+      ];
+    }
+  }
+
+  $entityTypeManager = \Drupal::service('entity_type.manager');
+  $found_ief_fields = FALSE;
+  $entity_type = $form['#entity_type'];
+  $bundle = $form['#bundle'];
+
+  $inlineHandler = $entityTypeManager->getHandler($entity_type, 'inline_form');
+  $table_fields = $inlineHandler->getTableFields([$bundle]);
+
+  foreach ($table_fields as $name => $table_field) {
+    if (!in_array($name, $form['#fields']) || !in_array($name, $form['#extra'])) {
+      $found_ief_fields = TRUE;
+      $form['#extra'][] = $name;
+
+      $display = [
+        'weight' => $table_field['weight'],
+        'visible' => TRUE,
+      ];
+
+      _ief_table_view_mode_add_extra_field($form['fields'], $name, $table_field, $display, $entity, $formObject);
+    }
+  }
+
+  if ($found_ief_fields) {
+    $form['ief_table_view_mode_info'] = [
+      '#markup' => '* ' . $string_translation->translate('These fields come from the original definition of IEF.'),
+    ];
+  }
+}
+
+/**
+ * The callback function use from table field.
+ */
+function ief_table_view_mode_table_field_extra_field_callback(EntityInterface $entity, $variables, $field_name) {
+  /** @var \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager */
+  $entityTypeManager = \Drupal::service('entity_type.manager');
+
+  /** @var \Drupal\Core\Entity\EntityViewBuilderInterface $render_controller */
+  $render_controller = $entityTypeManager->getViewBuilder($entity->getEntityTypeId());
+
+  $view = $render_controller->view($entity, EntityInlineTableViewModeForm::IEF_TABLE_VIEW_MODE_NAME);
+
+  $render = $render_controller->build($view);
+
+  return isset($render[$field_name]) ? $render[$field_name] : [];
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_access() for entity_view_mode.
+ */
+function ief_table_view_mode_entity_view_mode_access(EntityInterface $entity, $operation, AccountInterface $account) {
+  if ($entity->getTargetType() . '.' . EntityInlineTableViewModeForm::IEF_TABLE_VIEW_MODE_NAME == $entity->id()) {
+    if ($operation == 'delete') {
+
+      return AccessResult::forbidden();
+    }
+  }
+
+  return AccessResult::neutral();
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function ief_table_view_mode_entity_update(EntityInterface $entity) {
+  if ($entity->getEntityTypeId() == 'entity_form_display') {
+    foreach ($entity->getComponents() as $component_name => $component) {
+      if (isset($component['type']) && $component['type'] == 'inline_entity_form_complex_table_view_mode') {
+        /** @var \Drupal\field\Entity\FieldConfigInterface $field_config */
+        $field_config = FieldConfig::load($entity->getTargetEntityTypeId() . '.' . $entity->getTargetBundle() . '.' . $component_name);
+        if ($field_config) {
+          try {
+            _ief_table_view_mode_create_ief_table_view_mode($field_config);
+          }
+          catch (EntityStorageException $e) {
+
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Check and create the view mode ief_table for the target entity type.
+ *
+ * @param \Drupal\field\FieldConfigInterface $fieldConfig
+ *   The field configuration.
+ *
+ * @throws \Drupal\Core\Entity\EntityStorageException
+ */
+function _ief_table_view_mode_create_ief_table_view_mode(FieldConfigInterface $fieldConfig) {
+  $target_entity_type = $fieldConfig->getSetting('target_type');
+  $ief_view_mode = $target_entity_type . '.' . EntityInlineTableViewModeForm::IEF_TABLE_VIEW_MODE_NAME;
+  // Create the view mode ief_table if not exists.
+  if (!EntityViewMode::load($ief_view_mode)) {
+    $view_mode = EntityViewMode::create([
+      'id' => $ief_view_mode,
+      'label' => 'Inline Entity Form Table',
+      'targetEntityType' => $target_entity_type,
+    ]);
+    $view_mode->save();
+  }
+}
+
+/**
+ * Add a new extra field in the table of the UI.
+ *
+ * @param array $element
+ *   The element with all fields.
+ * @param string $field_id
+ *   The machine name of the extra field.
+ * @param array $extra_field
+ *   The definition of the field from ief.
+ * @param array $display
+ *   The view setting of the field.
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   The entity display.
+ * @param \Drupal\field_ui\Form\EntityDisplayFormBase $formObject
+ *   The form object display form.
+ */
+function _ief_table_view_mode_add_extra_field(array &$element, $field_id, array $extra_field, array $display, EntityInterface $entity, EntityDisplayFormBase $formObject) {
+  $string_translation = \Drupal::translation();
+
+  $display_options = $entity->getComponent($field_id);
+  $regions = array_keys($formObject->getRegions());
+  $regions_options = $formObject->getRegionOptions();
+  $label = is_string($extra_field['label']) ? $extra_field['label'] : $extra_field['label']->render();
+  $element[$field_id] = [
+    '#attributes' => ['class' => ['draggable', 'tabledrag-leaf']],
+    '#row_type' => 'extra_field',
+    '#region_callback' => [$formObject, 'getRowRegion'],
+    '#js_settings' => ['rowHandler' => 'field'],
+    'human_name' => [
+      '#markup' => $label . '*',
+    ],
+    'weight' => [
+      '#type' => 'textfield',
+      '#title' => $string_translation->translate('Weight for @title', ['@title' => $label]),
+      '#title_display' => 'invisible',
+      '#default_value' => $display_options ? $display_options['weight'] : 0,
+      '#size' => 3,
+      '#attributes' => ['class' => ['field-weight']],
+    ],
+    'parent_wrapper' => [
+      'parent' => [
+        '#type' => 'select',
+        '#title' => $string_translation->translate('Parents for @title', ['@title' => $label]),
+        '#title_display' => 'invisible',
+        '#options' => array_combine($regions, $regions),
+        '#empty_value' => '',
+        '#attributes' => ['class' => ['js-field-parent', 'field-parent']],
+        '#parents' => ['fields', $field_id, 'parent'],
+      ],
+      'hidden_name' => [
+        '#type' => 'hidden',
+        '#default_value' => $field_id,
+        '#attributes' => ['class' => ['field-name']],
+      ],
+    ],
+    'region' => [
+      '#type' => 'select',
+      '#title' => $string_translation->translate('Region for @title', ['@title' => $label]),
+      '#title_display' => 'invisible',
+      '#options' => $regions_options,
+      '#default_value' => $display_options ? $display_options['region'] : 'hidden',
+      '#attributes' => ['class' => ['field-region']],
+    ],
+    'plugin' => [
+      'type' => [
+        '#type' => 'hidden',
+        '#value' => $display_options ? 'visible' : 'hidden',
+        '#parents' => ['fields', $field_id, 'type'],
+        '#attributes' => ['class' => ['field-plugin-type']],
+      ],
+    ],
+    'settings_summary' => [],
+    'settings_edit' => [],
+  ];
+
+}

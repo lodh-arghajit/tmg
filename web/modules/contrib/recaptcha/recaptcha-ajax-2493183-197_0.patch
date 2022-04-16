@@ -1,0 +1,741 @@
+diff --git a/js/recaptcha.js b/js/recaptcha.js
+new file mode 100644
+index 0000000..a9a5912
+--- /dev/null
++++ b/js/recaptcha.js
+@@ -0,0 +1,34 @@
++/**
++ * @file
++ * Contains the definition of the behaviour recaptcha.
++ */
++
++(function ($, Drupal) {
++  Drupal.behaviors.recaptcha = {
++    attach: function (context) {
++      $('.g-recaptcha', context).each(function () {
++        if (typeof grecaptcha === 'undefined' || typeof grecaptcha.render !== 'function') {
++          return;
++        }
++        if ($(this).closest('body').length > 0) {
++          if ($(this).hasClass('recaptcha-processed')) {
++            grecaptcha.reset();
++          }
++          else {
++            grecaptcha.render(this, $(this).data());
++            $(this).addClass('recaptcha-processed');
++          }
++        }
++      });
++    }
++  };
++
++  window.drupalRecaptchaOnload = function () {
++    $('.g-recaptcha').each(function () {
++      if (!$(this).hasClass('recaptcha-processed')) {
++        grecaptcha.render(this, $(this).data());
++        $(this).addClass('recaptcha-processed');
++      }
++    });
++  };
++})(jQuery, Drupal);
+diff --git a/recaptcha.libraries.yml b/recaptcha.libraries.yml
+new file mode 100644
+index 0000000..7471b37
+--- /dev/null
++++ b/recaptcha.libraries.yml
+@@ -0,0 +1,6 @@
++recaptcha:
++  js:
++    js/recaptcha.js: {}
++  dependencies:
++    - core/drupal
++    - core/jquery
+diff --git a/recaptcha.module b/recaptcha.module
+index 2b4b2a3..4e606a8 100644
+--- a/recaptcha.module
++++ b/recaptcha.module
+@@ -89,16 +89,14 @@ function recaptcha_captcha($op, $captcha_type = '') {
+           // captcha type can be displayed on cached pages.
+           $captcha['cacheable'] = TRUE;
+
+-          // Check if reCAPTCHA use globally is enabled.
+-          $recaptcha_src = 'https://www.google.com/recaptcha/api.js';
+-          $recaptcha_src_fallback = 'https://www.google.com/recaptcha/api/fallback';
+-          if ($recaptcha_use_globally) {
+-            $recaptcha_src = 'https://www.recaptcha.net/recaptcha/api.js';
+-            $recaptcha_src_fallback = 'https://www.recaptcha.net/recaptcha/api/fallback';
+-          }
+-
+           $noscript = '';
+           if ($config->get('widget.noscript')) {
++            // Check if reCAPTCHA use globally is enabled.
++            $recaptcha_src_fallback = 'https://www.google.com/recaptcha/api/fallback';
++            if ($recaptcha_use_globally) {
++              $recaptcha_src_fallback = 'https://www.recaptcha.net/recaptcha/api/fallback';
++            }
++
+             $recaptcha_widget_noscript = [
+               '#theme' => 'recaptcha_widget_noscript',
+               '#widget' => [
+@@ -118,6 +116,7 @@ function recaptcha_captcha($op, $captcha_type = '') {
+             'data-size' => $config->get('widget.size'),
+             'data-tabindex' => $config->get('widget.tabindex'),
+           ];
++
+           // Filter out empty tabindex/size.
+           $attributes = array_filter($attributes);
+
+@@ -125,20 +124,15 @@ function recaptcha_captcha($op, $captcha_type = '') {
+             '#markup' => '<div' . new Attribute($attributes) . '></div>',
+             '#suffix' => $noscript,
+             '#attached' => [
+-              'html_head' => [
+-                [
+-                  [
+-                    '#tag' => 'script',
+-                    '#attributes' => [
+-                      'src' => Url::fromUri($recaptcha_src, ['query' => ['hl' => \Drupal::service('language_manager')->getCurrentLanguage()->getId()], 'absolute' => TRUE])->toString(),
+-                      'async' => TRUE,
+-                      'defer' => TRUE,
+-                    ],
+-                  ],
+-                  'recaptcha_api',
+-                ],
++              'library' => [
++                'recaptcha/recaptcha',
++                'recaptcha/google.recaptcha_' . \Drupal::service('language_manager')->getCurrentLanguage()->getId(),
+               ],
+             ],
++            '#cache' => [
++              'tags' => [ 'library_info' ],
++              'contexts' => [ 'languages' ],
++            ],
+           ];
+         }
+         else {
+@@ -153,6 +147,46 @@ function recaptcha_captcha($op, $captcha_type = '') {
+   }
+ }
+
++/**
++ * Implements hook_library_info_build().
++ */
++function recaptcha_library_info_build() {
++    $libraries = [];
++    $languages = \Drupal::service('language_manager')->getLanguages();
++    $config = \Drupal::config('recaptcha.settings');
++    $use_globally = $config->get('use_globally');
++    $default_src = $recaptcha_src = 'https://www.google.com/recaptcha/api.js';
++    if ($use_globally) {
++      $recaptcha_src = 'https://www.recaptcha.net/recaptcha/api.js';
++    }
++
++    foreach ($languages as $lang => $language) {
++        $url = Url::fromUri($recaptcha_src, [
++            'query' => [
++                'hl' => $lang,
++                'render' => 'explicit',
++                'onload' => 'drupalRecaptchaOnload',
++              ],
++            'absolute' => TRUE,
++          ])->toString();
++        $libraries["google.recaptcha_$lang"] = [
++            'version' => '1.x',
++            'header' => TRUE,
++            'js' => [
++                $url => [
++                    'type' => 'external',
++                    'minified' => TRUE,
++                    'attributes' => [
++                        'async' => TRUE,
++                        'defer' => TRUE,
++                      ],
++                  ],
++              ],
++          ];
++      }
++  return $libraries;
++ }
++
+ /**
+  * CAPTCHA Callback; Validates the reCAPTCHA code.
+  */
+@@ -226,5 +260,11 @@ function recaptcha_captcha_validation($solution, $response, $element, $form_stat
+ function template_preprocess_recaptcha_widget_noscript(&$variables) {
+   $variables['sitekey'] = $variables['widget']['sitekey'];
+   $variables['language'] = $variables['widget']['language'];
+-  $variables['url'] = Url::fromUri($variables['widget']['recaptcha_src_fallback'], ['query' => ['k' => $variables['widget']['sitekey'], 'hl' => $variables['widget']['language']], 'absolute' => TRUE])->toString();
++  $variables['url'] = Url::fromUri($variables['widget']['recaptcha_src_fallback'], [
++    'query' => [
++      'k' => $variables['widget']['sitekey'],
++      'hl' => $variables['widget']['language'],
++    ],
++    'absolute' => TRUE,
++  ])->toString();
+ }
+diff --git a/recaptcha.services.yml b/recaptcha.services.yml
+new file mode 100644
+index 0000000..93819ed
+--- /dev/null
++++ b/recaptcha.services.yml
+@@ -0,0 +1,6 @@
++services:
++  recaptcha.config_subscriber:
++    class: Drupal\recaptcha\EventSubscriber\RecaptchaSettingsConfigSubscriber
++    arguments: ['@cache_tags.invalidator']
++    tags:
++      - { name: event_subscriber }
+diff --git a/src/EventSubscriber/RecaptchaSettingsConfigSubscriber.php b/src/EventSubscriber/RecaptchaSettingsConfigSubscriber.php
+new file mode 100644
+index 0000000..ae216a7
+--- /dev/null
++++ b/src/EventSubscriber/RecaptchaSettingsConfigSubscriber.php
+@@ -0,0 +1,56 @@
++<?php
++
++namespace Drupal\recaptcha\EventSubscriber;
++
++use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
++use Drupal\Core\Config\ConfigCrudEvent;
++use Drupal\Core\Config\ConfigEvents;
++use Symfony\Component\EventDispatcher\EventSubscriberInterface;
++
++/**
++ * A subscriber rebuilding the library info when the use_globally setting is
++ * updated.
++ */
++class RecaptchaSettingsConfigSubscriber implements EventSubscriberInterface {
++
++  /**
++   * The cache tags invalidator.
++   *
++   * @var \Drupal\Core\Cache\CacheTagsInvalidatorInterface
++   */
++  protected $cacheTagsInvalidator;
++
++  /**
++   * Constructs a RecaptchaSettingsConfigSubscriber object.
++   *
++   * @param \Drupal\Core\Cache\CacheTagsInvalidatorInterface $cache_tags_invalidator
++   *   The cache tags invalidator.
++   */
++  public function __construct(CacheTagsInvalidatorInterface $cache_tags_invalidator) {
++    $this->cacheTagsInvalidator = $cache_tags_invalidator;
++  }
++
++  /**
++   * Invalidate the library_info tag when the value of
++   * recaptcha.settings use_globally is changed.
++   *
++   * @param \Drupal\Core\Config\ConfigCrudEvent $event
++   *   The Event to process.
++   */
++  public function onSave(ConfigCrudEvent $event) {
++    if ($event->getConfig()->getName() === 'recaptcha.settings') {
++      if ($event->isChanged('use_globally')) {
++        $this->cacheTagsInvalidator->invalidateTags(['library_info']);
++      }
++    }
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public static function getSubscribedEvents() {
++    $events[ConfigEvents::SAVE][] = ['onSave'];
++    return $events;
++  }
++
++}
+diff --git a/tests/modules/recaptcha_test/config/install/captcha.captcha_point.recaptcha_test_ajax_form.yml b/tests/modules/recaptcha_test/config/install/captcha.captcha_point.recaptcha_test_ajax_form.yml
+new file mode 100644
+index 0000000..c630a71
+--- /dev/null
++++ b/tests/modules/recaptcha_test/config/install/captcha.captcha_point.recaptcha_test_ajax_form.yml
+@@ -0,0 +1,10 @@
++langcode: en
++status: true
++dependencies: {  }
++formId: recaptcha_test_ajax_form
++captchaType: recaptcha/reCAPTCHA
++label: recaptcha_test_ajax_form
++dependencies:
++  enforced:
++    module:
++      - recaptcha_test
+diff --git a/tests/modules/recaptcha_test/recaptcha_test.info.yml b/tests/modules/recaptcha_test/recaptcha_test.info.yml
+new file mode 100644
+index 0000000..48b9a75
+--- /dev/null
++++ b/tests/modules/recaptcha_test/recaptcha_test.info.yml
+@@ -0,0 +1,7 @@
++name: 'reCAPTCHA Test'
++type: module
++description: 'Test module for the recaptcha module.'
++package: Testing
++core: 8.x
++dependencies:
++  - recaptcha
+diff --git a/tests/modules/recaptcha_test/recaptcha_test.routing.yml b/tests/modules/recaptcha_test/recaptcha_test.routing.yml
+new file mode 100644
+index 0000000..9461ff3
+--- /dev/null
++++ b/tests/modules/recaptcha_test/recaptcha_test.routing.yml
+@@ -0,0 +1,23 @@
++recaptcha_test.page:
++  path: '/recaptcha-test'
++  defaults:
++    _controller: '\Drupal\recaptcha_test\Controller\RecaptchaTestAjaxFormController::button'
++    _title: 'reCAPTCHA Test Ajax Page'
++  requirements:
++    _access: 'TRUE'
++
++recaptcha_test.ajax:
++  path: '/recaptcha-test/ajax'
++  defaults:
++    _controller: '\Drupal\recaptcha_test\Controller\RecaptchaTestAjaxFormController::ajaxForm'
++    _title: 'reCAPTCHA Test Ajax Controller'
++  requirements:
++    _access: 'TRUE'
++
++recaptcha_test.form:
++  path: '/recaptcha-test/form'
++  defaults:
++    _form: '\Drupal\recaptcha_test\Form\RecaptchaTestAjaxForm'
++    _title: 'reCAPTCHA Test Ajax Form'
++  requirements:
++    _access: 'TRUE'
+diff --git a/tests/modules/recaptcha_test/src/Controller/RecaptchaTestAjaxFormController.php b/tests/modules/recaptcha_test/src/Controller/RecaptchaTestAjaxFormController.php
+new file mode 100644
+index 0000000..6109024
+--- /dev/null
++++ b/tests/modules/recaptcha_test/src/Controller/RecaptchaTestAjaxFormController.php
+@@ -0,0 +1,66 @@
++<?php
++
++namespace Drupal\recaptcha_test\Controller;
++
++use Drupal\Core\Ajax\AjaxResponse;
++use Drupal\Core\Ajax\ReplaceCommand;
++use Drupal\Core\Controller\ControllerBase;
++use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
++use Drupal\Core\Form\FormBuilderInterface;
++use Drupal\Core\Url;
++use Symfony\Component\DependencyInjection\ContainerInterface;
++
++class RecaptchaTestAjaxFormController extends ControllerBase implements ContainerInjectionInterface {
++
++  public function __construct(FormBuilderInterface $form_builder) {
++    $this->formBuilder = $form_builder;
++  }
++
++  public static function create(ContainerInterface $container){
++    return new static(
++      $container->get('form_builder')
++    );
++  }
++
++  public function button() {
++    $output = [];
++
++    $output['container'] = [
++      '#type' => 'container',
++      '#attributes' => [
++        'id' => 'recaptcha-test-container',
++      ]
++    ];
++
++    $url = Url::fromRoute('recaptcha_test.ajax', []);
++
++    $output['container']['ajax_link'] = [
++      '#id' => 'load-ajax-form',
++      '#type' => 'link',
++      '#title' => $this->t('Load Ajax Form'),
++      '#url' => $url,
++      '#attributes' => [
++        'class' => ['use-ajax', 'button', 'secondary', 'btn', 'btn-secondary'],
++      ],
++    ];
++
++    $output['#attached']['library'][] = 'core/drupal.ajax';
++
++    // @see https://api.drupal.org/api/drupal/core%21core.api.php/group/ajax/8.2.x
++    return $output;
++  }
++
++  /**
++   * Ajax callback returning a form.
++   *
++   * @return AjaxResponse
++   */
++  public function ajaxForm() {
++    $form = $this->formBuilder->getForm('Drupal\recaptcha_test\Form\RecaptchaTestAjaxForm');
++
++    $ajax = new AjaxResponse();
++    $ajax->addCommand(new ReplaceCommand('#recaptcha-test-container', $form));
++    return $ajax;
++  }
++
++}
+diff --git a/tests/modules/recaptcha_test/src/Form/RecaptchaTestAjaxForm.php b/tests/modules/recaptcha_test/src/Form/RecaptchaTestAjaxForm.php
+new file mode 100644
+index 0000000..70044b2
+--- /dev/null
++++ b/tests/modules/recaptcha_test/src/Form/RecaptchaTestAjaxForm.php
+@@ -0,0 +1,68 @@
++<?php
++
++namespace Drupal\recaptcha_test\Form;
++
++use Drupal\Core\Form\FormBase;
++use Drupal\Core\Form\FormStateInterface;
++use Drupal\Core\StringTranslation\StringTranslationTrait;
++
++class RecaptchaTestAjaxForm extends FormBase {
++
++  use StringTranslationTrait;
++
++  /**
++   * {@inheritdoc}
++   */
++  public function getFormId() {
++    return 'recaptcha_test_ajax_form';
++  }
++
++  public function buildForm(array $form, FormStateInterface $form_state) {
++    $form = [];
++
++    $form['messages'] = [
++      '#type' => 'status_messages',
++    ];
++
++    $form['email'] = [
++      '#type' => 'email',
++      '#title' => $this->t('Email'),
++      '#required' => TRUE,
++    ];
++
++    $form['submit'] = [
++      '#type' => 'submit',
++      '#value' => $this->t('Submit'),
++      '#validate' => ['::validateForm'],
++      '#ajax' => [
++        'callback' => '::ajaxCallback',
++        'wrapper' => 'recaptcha-test-ajax-form-wrapper',
++      ],
++    ];
++
++    $form['#prefix'] = '<div id="recaptcha-test-ajax-form-wrapper">';
++    $form['#suffix'] = '</div>';
++    return $form;
++  }
++
++  public function ajaxCallback(array &$form, FormStateInterface $form_state) {
++    return $form;
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function validateForm(array &$form, FormStateInterface $form_state) {
++    $email = $form_state->getValue('email');
++    if ($email == 'invalid@example.com') {
++      $form_state->setError($form['email'], 'Invalid email');
++    }
++
++  }
++
++  public function submitForm(array &$form, FormStateInterface $form_state) {
++    $this->messenger()->addStatus('Form submit successful.');
++  }
++
++
++}
+diff --git a/tests/src/Functional/ReCaptchaBasicTest.php b/tests/src/Functional/ReCaptchaBasicTest.php
+index daf01cc..7222aa5 100644
+--- a/tests/src/Functional/ReCaptchaBasicTest.php
++++ b/tests/src/Functional/ReCaptchaBasicTest.php
+@@ -87,19 +87,19 @@ class ReCaptchaBasicTest extends BrowserTestBase {
+     $edit['recaptcha_secret_key'] = '';
+     $this->drupalPostForm('admin/config/people/captcha/recaptcha', $edit, $this->t('Save configuration'));
+
+-    $this->assertSession()->responseContains($this->t('Site key field is required.'), '[testReCaptchaConfiguration]: Empty site key detected.');
+-    $this->assertSession()->responseContains($this->t('Secret key field is required.'), '[testReCaptchaConfiguration]: Empty secret key detected.');
++    $this->assertSession()->responseContains('Site key field is required.', '[testReCaptchaConfiguration]: Empty site key detected.');
++    $this->assertSession()->responseContains('Secret key field is required.', '[testReCaptchaConfiguration]: Empty secret key detected.');
+
+     // Save form with valid values.
+     $edit['recaptcha_site_key'] = $site_key;
+     $edit['recaptcha_secret_key'] = $secret_key;
+     $edit['recaptcha_tabindex'] = 0;
+     $this->drupalPostForm('admin/config/people/captcha/recaptcha', $edit, $this->t('Save configuration'));
+-    $this->assertSession()->responseContains($this->t('The configuration options have been saved.'), '[testReCaptchaConfiguration]: The configuration options have been saved.');
++    $this->assertSession()->responseContains('The configuration options have been saved.', '[testReCaptchaConfiguration]: The configuration options have been saved.');
+
+-    $this->assertSession()->responseNotContains($this->t('Site key field is required.'), '[testReCaptchaConfiguration]: Site key was not empty.');
+-    $this->assertSession()->responseNotContains($this->t('Secret key field is required.'), '[testReCaptchaConfiguration]: Secret key was not empty.');
+-    $this->assertSession()->responseNotContains($this->t('The tabindex must be an integer.'), '[testReCaptchaConfiguration]: Tab index had a valid input.');
++    $this->assertSession()->responseNotContains('Site key field is required.', '[testReCaptchaConfiguration]: Site key was not empty.');
++    $this->assertSession()->responseNotContains('Secret key field is required.', '[testReCaptchaConfiguration]: Secret key was not empty.');
++    $this->assertSession()->responseNotContains('The tabindex must be an integer.', '[testReCaptchaConfiguration]: Tab index had a valid input.');
+
+     $this->drupalLogout();
+   }
+@@ -110,20 +110,22 @@ class ReCaptchaBasicTest extends BrowserTestBase {
+   public function testReCaptchaOnLoginForm() {
+     $site_key = $this->randomMachineName(40);
+     $secret_key = $this->randomMachineName(40);
+-    $grecaptcha = '<div class="g-recaptcha" data-sitekey="' . $site_key . '" data-theme="light" data-type="image"></div>';
++    $grecaptchaSelector = "div.g-recaptcha[data-sitekey=$site_key][data-theme=light][data-type=image]";
+
+     // Test if login works.
+     $this->drupalLogin($this->normalUser);
+     $this->drupalLogout();
+
+     $this->drupalGet('user/login');
+-    $this->assertSession()->responseNotContains($grecaptcha, '[testReCaptchaOnLoginForm]: reCAPTCHA is not shown on form.');
++    // reCAPTCHA is not shown on form.
++    $this->assertSession()->elementNotExists('css', $grecaptchaSelector);
+
+     // Enable 'captcha/Math' CAPTCHA on login form.
+     captcha_set_form_id_setting('user_login_form', 'captcha/Math');
+
+     $this->drupalGet('user/login');
+-    $this->assertSession()->responseNotContains($grecaptcha, '[testReCaptchaOnLoginForm]: reCAPTCHA is not shown on form.');
++    // reCAPTCHA is not shown on form.
++    $this->assertSession()->elementNotExists('css', $grecaptchaSelector);
+
+     // Enable 'recaptcha/reCAPTCHA' on login form.
+     captcha_set_form_id_setting('user_login_form', 'recaptcha/reCAPTCHA');
+@@ -135,7 +137,7 @@ class ReCaptchaBasicTest extends BrowserTestBase {
+     // and security key have not yet configured for reCAPTCHA. The module need
+     // to fall back to math captcha.
+     $this->drupalGet('user/login');
+-    $this->assertSession()->responseContains($this->t('Math question'), '[testReCaptchaOnLoginForm]: Math CAPTCHA is shown on form.');
++    $this->assertSession()->responseContains('Math question', '[testReCaptchaOnLoginForm]: Math CAPTCHA is shown on form.');
+
+     // Configure site key and security key to show reCAPTCHA and no fall back.
+     $this->config('recaptcha.settings')->set('site_key', $site_key)->save();
+@@ -143,15 +145,26 @@ class ReCaptchaBasicTest extends BrowserTestBase {
+
+     // Check if there is a reCAPTCHA on the login form.
+     $this->drupalGet('user/login');
+-    $this->assertSession()->responseContains($grecaptcha, '[testReCaptchaOnLoginForm]: reCAPTCHA is shown on form.');
+-    $this->assertSession()->responseContains('<script src="' . Url::fromUri('https://www.google.com/recaptcha/api.js', ['query' => ['hl' => \Drupal::service('language_manager')->getCurrentLanguage()->getId()], 'absolute' => TRUE])->toString() . '" async defer></script>', '[testReCaptchaOnLoginForm]: reCAPTCHA is shown on form.');
+-    $this->assertSession()->responseNotContains($grecaptcha . '<noscript>', '[testReCaptchaOnLoginForm]: NoScript code is not enabled for the reCAPTCHA.');
++    // reCAPTCHA is shown on form.
++    $this->assertSession()->elementExists('css', $grecaptchaSelector);
++    $options = [
++      'query' => [
++        'hl' => \Drupal::service('language_manager')->getCurrentLanguage()->getId(),
++        'render' => 'explicit',
++        'onload' => 'drupalRecaptchaOnload',
++      ],
++      'absolute' => TRUE,
++    ];
++    $this->assertSession()->responseContains(Html::escape(Url::fromUri('https://www.google.com/recaptcha/api.js', $options)->toString()), '[testReCaptchaOnLoginForm]: reCAPTCHA is shown on form.');
++    // NoScript code is not enabled for the reCAPTCHA.
++    $this->assertSession()->elementNotExists('css', "$grecaptchaSelector + noscript");
+
+     // Test if the fall back url is properly build and noscript code added.
+     $this->config('recaptcha.settings')->set('widget.noscript', 1)->save();
+
+     $this->drupalGet('user/login');
+-    $this->assertSession()->responseContains($grecaptcha . "\n" . '<noscript>', '[testReCaptchaOnLoginForm]: NoScript for reCAPTCHA is shown on form.');
++    // NoScript for reCAPTCHA is shown on form.
++    $this->assertSession()->elementExists('css', "$grecaptchaSelector + noscript");
+     $options = [
+       'query' => [
+         'k' => $site_key,
+@@ -164,10 +177,25 @@ class ReCaptchaBasicTest extends BrowserTestBase {
+     // Check if there is a reCAPTCHA with global url on the login form.
+     $this->config('recaptcha.settings')->set('use_globally', TRUE)->save();
+     $this->drupalGet('user/login');
+-    $this->assertSession()->responseContains('<script src="' . Url::fromUri('https://www.recaptcha.net/recaptcha/api.js', ['query' => ['hl' => \Drupal::service('language_manager')->getCurrentLanguage()->getId()], 'absolute' => TRUE])->toString() . '" async defer></script>', '[testReCaptchaOnLoginForm]: Global reCAPTCHA is shown on form.');
++    $options = [
++      'query' => [
++        'hl' => \Drupal::service('language_manager')->getCurrentLanguage()->getId(),
++        'render' => 'explicit',
++        'onload' => 'drupalRecaptchaOnload',
++      ],
++      'absolute' => TRUE,
++    ];
++    $this->assertSession()->responseContains(Html::escape(Url::fromUri('https://www.recaptcha.net/recaptcha/api.js', $options)->toString()), '[testReCaptchaOnLoginForm]: Global reCAPTCHA is shown on form.');
++    $options = [
++      'query' => [
++        'k' => $site_key,
++        'hl' => \Drupal::service('language_manager')->getCurrentLanguage()->getId(),
++      ],
++      'absolute' => TRUE,
++    ];
+     $this->assertSession()->responseContains(Html::escape(Url::fromUri('https://www.recaptcha.net/recaptcha/api/fallback', $options)->toString()), '[testReCaptchaOnLoginForm]: Global fallback URL with IFRAME has been found.');
+
+-    // Check that data-size attribute does not exists.
++    // Check that data-size attribute does not exist.
+     $this->config('recaptcha.settings')->set('widget.size', '')->save();
+     $this->drupalGet('user/login');
+     $element = $this->xpath('//div[@class=:class and @data-size=:size]', [':class' => 'g-recaptcha', ':size' => 'small']);
+@@ -201,7 +229,7 @@ class ReCaptchaBasicTest extends BrowserTestBase {
+
+     $this->drupalPostForm('user/login', $edit, $this->t('Log in'));
+     // Check for error message.
+-    $this->assertSession()->pageTextContains($this->t('The answer you entered for the CAPTCHA was not correct.'), 'CAPTCHA should block user login form', 'reCAPTCHA');
++    $this->assertSession()->pageTextContains('The answer you entered for the CAPTCHA was not correct.', 'CAPTCHA should block user login form', 'reCAPTCHA');
+
+     // And make sure that user is not logged in: check for name and password
+     // fields on "?q=user".
+diff --git a/tests/src/Functional/RecaptchaJavascriptTest.php b/tests/src/Functional/RecaptchaJavascriptTest.php
+new file mode 100644
+index 0000000..4203ecb
+--- /dev/null
++++ b/tests/src/Functional/RecaptchaJavascriptTest.php
+@@ -0,0 +1,149 @@
++<?php
++
++namespace Drupal\Tests\recaptcha\Functional;
++
++use Drupal\Core\Url;
++use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
++
++/**
++ * Test the recaptcha module using JavaScript.
++ *
++ * @see https://developers.google.com/recaptcha/docs/faq#id-like-to-run-automated-tests-with-recaptcha-what-should-i-do
++ *
++ * @group reCAPTCHA
++ *
++ * @dependencies recaptcha
++ */
++class RecaptchaJavascriptTest extends WebDriverTestBase {
++
++  /**
++   * Modules to enable.
++   *
++   * @var array
++   */
++  public static $modules = ['recaptcha_test'];
++
++  // These are test keys that will always validate.
++  protected const SITE_KEY = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
++  protected const SECRET_KEY = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe';
++
++  /**
++   * {@inheritdoc}
++   */
++  protected function setUp() {
++    parent::setUp();
++
++    $this->config('recaptcha.settings')
++      ->set('site_key', self::SITE_KEY)
++      ->set('secret_key', self::SECRET_KEY)
++      ->save();
++  }
++
++  /**
++   * Test the recaptcha on a form loaded via ajax that also submits via ajax.
++   */
++  public function testRecaptchaOnAJAXForm() {
++    // Load the /recaptcha-test page with the AJAX button.
++    $path = Url::fromRoute('recaptcha_test.page')->toString();
++    $this->drupalGet($path);
++
++    // No recaptcha JS on the page.
++    $this->assertSession()->responseNotContains('https://www.google.com/recaptcha/api.js', 'reCAPTCHA js is not present before the form is loaded via AJAX.');
++
++    // Click the button.
++    $this->click('a#load-ajax-form');
++
++    // Once the form is loaded
++    $this->getSession()->wait(2000, '(jQuery("form[data-drupal-selector^=recaptcha-test-ajax-form]").length > 0)');
++    $this->assertJsCondition('Drupal.behaviors.recaptcha', 100, 'recaptcha Drupal behaviors found.');
++
++    // The recaptcha should be on the page.
++    $this->assertSession()->responseContains('https://www.google.com/recaptcha/api.js', 'reCAPTCHA js has been added.');
++    $grecaptcha = $this->getSession()->getPage()->find('css', 'form .g-recaptcha');
++    $this->assertJsCondition('window.grecaptcha !== undefined', 1000, 'The Google recaptcha library is loaded.');
++    $this->assertNotEmpty($grecaptcha, 'g-recaptcha element is found.');
++
++    // Test form submission.
++    // First, try a submission that will trigger the validation error handler.
++    $this->submitForm([
++      'email' => 'invalid@example.com',
++    ], t('Submit'));
++    $messages = $this->getMessages();
++    $this->assertNotEmpty($messages);
++    $this->assertContains('Invalid email', $messages);
++    $this->assertContains('The answer you entered for the CAPTCHA was not correct.', $messages);
++    $this->assertNotContains('Form submit successful.', $messages);
++
++    // Now submit again with a valid email.
++    $this->submitForm([
++      'email' => 'valid@example.com',
++    ], t('Submit'));
++    $messages = $this->getMessages();
++    $this->assertContains('The answer you entered for the CAPTCHA was not correct.', $messages);
++    $this->assertNotContains('Form submit successful.', $messages);
++
++    // We need to re-validate the captcha;
++    // So click it,
++    $this->clickRecaptcha();
++    // and submit for the last time.
++    $this->submitForm([
++      'email' => 'valid@email.com',
++    ], t('Submit'));
++    $messages = $this->getMessages();
++    $this->assertNotContains('The answer you entered for the CAPTCHA was not correct.', $messages);
++    $this->assertContains('Form submit successful.', $messages);
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  protected function submitForm(array $edit, $submit, $form_html_id = NULL) {
++    parent::submitForm($edit, $submit, $form_html_id);
++
++    // Because we're submitting the form via AJAX give it 500ms before we test
++    // anything else with the response.
++    $this->getSession()->wait(500);
++  }
++
++  /**
++   * Click the captcha checkbox element and wait for it to be validated.
++   *
++   * @param int $timeout
++   * @throws \Behat\Mink\Exception\DriverException
++   * @throws \Behat\Mink\Exception\UnsupportedDriverActionException
++   */
++  protected function clickRecaptcha($timeout = 2000) {
++    $driver = $this->getSession()->getDriver();
++    $recaptchaIFrame = $this->getSession()->getPage()->find('css', 'form .g-recaptcha iframe');
++    $driver->switchToIFrame($recaptchaIFrame->getAttribute('name'));
++    $recaptchaCheckbox = $driver->find('//span[@id="recaptcha-anchor"]');
++    if (!empty($recaptchaCheckbox)) {
++      $recaptchaCheckbox[0]->click();
++      $this->getSession()->wait($timeout, 'document.getElementById("recaptcha-anchor").attributes["aria-checked"].value === true;');
++    } else {
++      $this->fail('Unable to find recaptcha checkbox.');
++    }
++    $driver->switchToWindow();
++    $this->assertJsCondition('grecaptcha.getResponse() !== ""', $timeout, 'grecaptcha has response.');
++  }
++
++  /**
++   * Search for messages in the last html page response.
++   *
++   * @return string
++   */
++  public function getMessages($timeout = 2000) {
++    $this->getSession()->wait($timeout, '(jQuery("div.messages").length > 0)');
++    $page = $this->getSession()->getPage();
++    $messages = $page->findAll('css', 'div.messages');
++    $text = '';
++    if (isset($messages)) {
++      foreach ($messages as $message) {
++        $text .= $message->getText();
++      }
++    }
++
++    return $text;
++  }
++
++}

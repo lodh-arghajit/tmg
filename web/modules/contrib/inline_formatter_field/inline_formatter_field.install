@@ -1,0 +1,272 @@
+<?php
+
+/**
+ * @file
+ * Install file for Inline Formatter Field module.
+ */
+
+/**
+ * Update inline formatter field setting configuration.
+ */
+function inline_formatter_field_update_8001() {
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable('inline_formatter_field.settings');
+  if ($config->get('ace_source') === 'cdn') {
+    $config->set('ace_source', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/ace.js');
+  }
+  else {
+    $config->set('ace_source', '/libraries/ace/ace.js');
+  }
+  if ($config->get('fa_source') === 'cdn') {
+    $config->set('fa_source', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+  }
+  else {
+    $config->set('fa_source', '/libraries/fontawesome/css/all.min.css');
+  }
+  if (!empty($config->get('ace_wrap'))) {
+    $options = [];
+    if ($config->get('ace_wrap')) {
+      $options['wrap'] = 'true';
+    }
+    else {
+      $options['wrap'] = 'false';
+    }
+    if ($config->get('ace_print_margin')) {
+      $options['showPrintMargin'] = 'true';
+    }
+    else {
+      $options['showPrintMargin'] = 'false';
+    }
+    $config->clear('ace_wrap');
+    $config->clear('ace_print_margin');
+    $config->set('extra_options', $options);
+  }
+
+  $config->set('available_themes', [
+    'ace/theme/ambiance' => 'Ambiance',
+    'ace/theme/chaos' => 'Chaos',
+    'ace/theme/chrome' => 'Chrome',
+    'ace/theme/clouds_midnight' => 'Clouds Midnight',
+    'ace/theme/clouds' => 'Clouds',
+    'ace/theme/cobalt' => 'Cobalt',
+    'ace/theme/crimson_editor' => 'Crimson Editor',
+    'ace/theme/dawn' => 'Dawn',
+    'ace/theme/dracula' => 'Dracula',
+    'ace/theme/dreamweaver' => 'Dreamweaver',
+    'ace/theme/eclipse' => 'Eclipse',
+    'ace/theme/github' => 'GitHub',
+    'ace/theme/gob' => 'Gob',
+    'ace/theme/gruvbox' => 'Gruvbox',
+    'ace/theme/idle_fingers' => 'Idle Fingers',
+    'ace/theme/iplastic' => 'IPlastic',
+    'ace/theme/katzenmilch' => 'Katzenmilch',
+    'ace/theme/kr_theme' => 'krTheme',
+    'ace/theme/kuroir' => 'Kuroir',
+    'ace/theme/merbivore_soft' => 'Merbivore Soft',
+    'ace/theme/merbivore' => 'Merbivore',
+    'ace/theme/mono_industrial' => 'Mono Industrial',
+    'ace/theme/monokai' => 'Monokai',
+    'ace/theme/pastel_on_dark' => 'Pastel on Dark',
+    'ace/theme/solarized_dark' => 'Solarized Dark',
+    'ace/theme/solarized_light' => 'Solarized Light',
+    'ace/theme/sqlserver' => 'SQL Server',
+    'ace/theme/terminal' => 'Terminal',
+    'ace/theme/textmate' => 'TextMate',
+    'ace/theme/tomorrow_night_blue' => 'Tomorrow Night Blue',
+    'ace/theme/tomorrow_night_bright' => 'Tomorrow Night Bright',
+    'ace/theme/tomorrow_night_eighties' => 'Tomorrow Night Eighties',
+    'ace/theme/tomorrow_night' => 'Tomorrow Night',
+    'ace/theme/tomorrow' => 'Tomorrow',
+    'ace/theme/twilight' => 'Twilight',
+    'ace/theme/vibrant_ink' => 'Vibrant Ink',
+    'ace/theme/xcode' => 'XCode',
+  ]);
+  $config->set('available_modes', [
+    'ace/mode/abap' => 'ABAP',
+    'ace/mode/abc' => 'ABC',
+    'ace/mode/actionscript' => 'ActionScript',
+    'ace/mode/ada' => 'ADA',
+    'ace/mode/apache_conf' => 'Apache Conf',
+    'ace/mode/asciidoc' => 'AsciiDoc',
+    'ace/mode/asl' => 'ASL',
+    'ace/mode/assembly_x86' => 'Assembly x86',
+    'ace/mode/autohotkey' => 'AutoHotkey / AutoIt',
+    'ace/mode/apex' => 'Apex',
+    'ace/mode/batchfile' => 'BatchFile',
+    'ace/mode/bro' => 'Bro',
+    'ace/mode/c_cpp' => 'C and C++',
+    'ace/mode/c9search' => 'C9Search',
+    'ace/mode/cirru' => 'Cirru',
+    'ace/mode/clojure' => 'Clojure',
+    'ace/mode/cobol' => 'Cobol',
+    'ace/mode/coffee' => 'CoffeeScript',
+    'ace/mode/coldfusion' => 'ColdFusion',
+    'ace/mode/csharp' => 'C#',
+    'ace/mode/csound_document' => 'Csound Document',
+    'ace/mode/csound_orchestra' => 'Csound',
+    'ace/mode/csound_score' => 'Csound Score',
+    'ace/mode/css' => 'CSS',
+    'ace/mode/curly' => 'Curly',
+    'ace/mode/d' => 'D',
+    'ace/mode/dart' => 'Dart',
+    'ace/mode/diff' => 'Diff',
+    'ace/mode/dockerfile' => 'Dockerfile',
+    'ace/mode/dot' => 'Dot',
+    'ace/mode/drools' => 'Drools',
+    'ace/mode/edifact' => 'Edifact',
+    'ace/mode/eiffel' => 'Eiffel',
+    'ace/mode/ejs' => 'EJS',
+    'ace/mode/elixir' => 'Elixir',
+    'ace/mode/elm' => 'Elm',
+    'ace/mode/erlang' => 'Erlang',
+    'ace/mode/forth' => 'Forth',
+    'ace/mode/fortran' => 'Fortran',
+    'ace/mode/fsharp' => 'FSharp',
+    'ace/mode/fsl' => 'FSL',
+    'ace/mode/ftl' => 'FreeMarker',
+    'ace/mode/gcode' => 'Gcode',
+    'ace/mode/gherkin' => 'Gherkin',
+    'ace/mode/gitignore' => 'Gitignore',
+    'ace/mode/glsl' => 'Glsl',
+    'ace/mode/gobstones' => 'Gobstones',
+    'ace/mode/golang' => 'Go',
+    'ace/mode/graphqlschema' => 'GraphQLSchema',
+    'ace/mode/groovy' => 'Groovy',
+    'ace/mode/haml' => 'HAML',
+    'ace/mode/handlebars' => 'Handlebars',
+    'ace/mode/haskell' => 'Haskell',
+    'ace/mode/haskell_cabal' => 'Haskell Cabal',
+    'ace/mode/haxe' => 'haXe',
+    'ace/mode/hjson' => 'Hjson',
+    'ace/mode/html' => 'HTML',
+    'ace/mode/html_elixir' => 'HTML (Elixir)',
+    'ace/mode/html_ruby' => 'HTML (Ruby)',
+    'ace/mode/ini' => 'INI',
+    'ace/mode/io' => 'Io',
+    'ace/mode/jack' => 'Jack',
+    'ace/mode/jade' => 'Jade',
+    'ace/mode/java' => 'Java',
+    'ace/mode/javascript' => 'JavaScript',
+    'ace/mode/json' => 'JSON',
+    'ace/mode/jsoniq' => 'JSONiq',
+    'ace/mode/jsp' => 'JSP',
+    'ace/mode/jssm' => 'JSSM',
+    'ace/mode/jsx' => 'JSX',
+    'ace/mode/julia' => 'Julia',
+    'ace/mode/kotlin' => 'Kotlin',
+    'ace/mode/latex' => 'LaTeX',
+    'ace/mode/less' => 'LESS',
+    'ace/mode/liquid' => 'Liquid',
+    'ace/mode/lisp' => 'Lisp',
+    'ace/mode/livescript' => 'LiveScript',
+    'ace/mode/logiql' => 'LogiQL',
+    'ace/mode/lsl' => 'LSL',
+    'ace/mode/lua' => 'Lua',
+    'ace/mode/luapage' => 'LuaPage',
+    'ace/mode/lucene' => 'Lucene',
+    'ace/mode/makefile' => 'Makefile',
+    'ace/mode/markdown' => 'Markdown',
+    'ace/mode/mask' => 'Mask',
+    'ace/mode/matlab' => 'MATLAB',
+    'ace/mode/maze' => 'Maze',
+    'ace/mode/mel' => 'MEL',
+    'ace/mode/mixal' => 'MIXAL',
+    'ace/mode/mushcode' => 'MUSHCode',
+    'ace/mode/mysql' => 'MySQL',
+    'ace/mode/nix' => 'Nix',
+    'ace/mode/nsis' => 'NSIS',
+    'ace/mode/objectivec' => 'Objective-C',
+    'ace/mode/ocaml' => 'OCaml',
+    'ace/mode/pascal' => 'Pascal',
+    'ace/mode/perl' => 'Perl',
+    'ace/mode/perl6' => 'Perl 6',
+    'ace/mode/pgsql' => 'pgSQL',
+    'ace/mode/php_laravel_blade' => 'PHP (Blade Template)',
+    'ace/mode/php' => 'PHP',
+    'ace/mode/puppet' => 'Puppet',
+    'ace/mode/pig' => 'Pig',
+    'ace/mode/powershell' => 'Powershell',
+    'ace/mode/praat' => 'Praat',
+    'ace/mode/prolog' => 'Prolog',
+    'ace/mode/properties' => 'Properties',
+    'ace/mode/protobuf' => 'Protobuf',
+    'ace/mode/python' => 'Python',
+    'ace/mode/r' => 'R',
+    'ace/mode/razor' => 'Razor',
+    'ace/mode/rdoc' => 'RDoc',
+    'ace/mode/red' => 'Red',
+    'ace/mode/rhtml' => 'RHTML',
+    'ace/mode/rst' => 'RST',
+    'ace/mode/ruby' => 'Ruby',
+    'ace/mode/rust' => 'Rust',
+    'ace/mode/sass' => 'SASS',
+    'ace/mode/scad' => 'SCAD',
+    'ace/mode/scala' => 'Scala',
+    'ace/mode/scheme' => 'Scheme',
+    'ace/mode/scss' => 'SCSS',
+    'ace/mode/sh' => 'SH',
+    'ace/mode/sjs' => 'SJS',
+    'ace/mode/slim' => 'Slim',
+    'ace/mode/smarty' => 'Smarty',
+    'ace/mode/snippets' => 'snippets',
+    'ace/mode/soy_template' => 'Soy Template',
+    'ace/mode/space' => 'Space',
+    'ace/mode/sql' => 'SQL',
+    'ace/mode/sqlserver' => 'SQLServer',
+    'ace/mode/stylus' => 'Stylus',
+    'ace/mode/svg' => 'SVG',
+    'ace/mode/swift' => 'Swift',
+    'ace/mode/tcl' => 'Tcl',
+    'ace/mode/terraform' => 'Terraform',
+    'ace/mode/tex' => 'Tex',
+    'ace/mode/text' => 'Text',
+    'ace/mode/textile' => 'Textile',
+    'ace/mode/toml' => 'Toml',
+    'ace/mode/tsx' => 'TSX',
+    'ace/mode/twig' => 'Twig',
+    'ace/mode/typescript' => 'Typescript',
+    'ace/mode/vala' => 'Vala',
+    'ace/mode/vbscript' => 'VBScript',
+    'ace/mode/velocity' => 'Velocity',
+    'ace/mode/verilog' => 'Verilog',
+    'ace/mode/vhdl' => 'VHDL',
+    'ace/mode/visualforce' => 'Visualforce',
+    'ace/mode/wollok' => 'Wollok',
+    'ace/mode/xml' => 'XML',
+    'ace/mode/xquery' => 'XQuery',
+    'ace/mode/yaml' => 'YAML',
+    'ace/mode/django' => 'Django',
+  ]);
+  $config->save();
+  \Drupal::messenger()->addMessage('Configuration for inline_formatter_field was successfully updated.');
+}
+
+/**
+ * Update all inline formatter fields to use entity type in view display.
+ */
+function inline_formatter_field_update_8002() {
+  if ($field_storage_configs = \Drupal::entityTypeManager()->getStorage('field_storage_config')->loadByProperties(['type' => 'inline_formatter_field'])) {
+    foreach ($field_storage_configs as $field_storage) {
+      $field_name = $field_storage->getName();
+      if ($fields = \Drupal::entityTypeManager()->getStorage('field_config')->loadByProperties(['field_name' => $field_name])) {
+        foreach ($fields as $field) {
+          $entityType = $field->getTargetEntityTypeId();
+          $bundle = $field->getTargetBundle();
+          $properties = [
+            'targetEntityType' => $entityType,
+            'bundle' => $bundle,
+          ];
+          if ($view_displays = \Drupal::entityTypeManager()->getStorage('entity_view_display')->loadByProperties($properties)) {
+            foreach ($view_displays as $view_display) {
+              if ($component = $view_display->getComponent($field_name)) {
+                $component['settings']['formatted_field'] = preg_replace('/(\bnode)(\.[\w\d]+)/', $entityType . '$2', $component['settings']['formatted_field']);
+                $view_display->setComponent($field_name, $component)->save();
+                \Drupal::messenger()->addMessage('Updated view display for ' . $bundle . ' ' . $field->getTargetEntityTypeId() . ' type on the field ' . $field_name);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

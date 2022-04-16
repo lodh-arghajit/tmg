@@ -1,0 +1,12 @@
+name: Inline Formatter Display
+description: "Use an inline formatter to determine the display for entities."
+type: module
+package: display
+core_version_requirement: ^8 || ^9
+dependencies:
+  - inline_formatter_field
+
+# Information added by Drupal.org packaging script on 2020-05-09
+version: '8.x-2.1'
+project: 'inline_formatter_field'
+datestamp: 1589044668

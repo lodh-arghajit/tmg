@@ -1,0 +1,17 @@
+name: 'Webform Demo: Group'
+type: module
+description: 'Demonstrates how to integrate the Webform module with the Group module.'
+package: 'Webform Demo'
+core_version_requirement: ^9.2
+dependencies:
+  - 'drupal:path'
+  - 'group:group'
+  - 'group:gnode'
+  - 'webform:webform'
+  - 'webform:webform_node'
+  - 'webform:webform_group'
+
+# Information added by Drupal.org packaging script on 2022-02-15
+version: '6.2.0-beta2'
+project: 'webform'
+datestamp: 1644940978

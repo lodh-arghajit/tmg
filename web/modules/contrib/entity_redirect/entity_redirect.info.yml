@@ -1,0 +1,11 @@
+name: 'Entity Redirect'
+type: module
+description: 'Redirect after entity creation or edit - per content or user.'
+core: 8.x
+core_version_requirement: ^8 || ^9
+package: entity
+
+# Information added by Drupal.org packaging script on 2020-11-23
+version: '8.x-2.0'
+project: 'entity_redirect'
+datestamp: 1606093885

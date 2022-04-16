@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Uses the PHPMailer library to send emails via SMTP.
+ */
+
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function phpmailer_smtp_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.phpmailer_smtp':
+      $text = file_get_contents(__DIR__ . '/README.txt');
+      return '<pre>' . Html::escape($text) . '</pre>';
+
+    default:
+  }
+}

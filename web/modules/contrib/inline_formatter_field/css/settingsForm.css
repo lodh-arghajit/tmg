@@ -1,0 +1,10 @@
+details {
+  overflow-x: auto;
+}
+details input[type="text"] {
+  max-width: 250px;
+}
+details .tabledrag-handle {
+  margin-top: 0.75em;
+  margin-bottom: 0.75em;
+}

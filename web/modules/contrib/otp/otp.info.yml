@@ -1,0 +1,10 @@
+name: OTP for account creation
+description: Allows user email verification via Email
+type: module
+core_version_requirement: ^8 || ^9
+configure: otp.settings
+
+# Information added by Drupal.org packaging script on 2021-02-19
+version: '8.x-1.0-alpha5'
+project: 'otp'
+datestamp: 1613755156

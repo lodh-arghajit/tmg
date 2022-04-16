@@ -1,0 +1,42 @@
+
+field.formatter.settings.inline_formatter_field_formatter:
+  type: mapping
+  label: 'The Formatted Field Format'
+  mapping:
+    formatted_field:
+      type: string
+      label: 'Formatted Field'
+inline_formatter_field.settings:
+  type: config_object
+  label: 'Inline formatter field settings'
+  mapping:
+    ace_source:
+      type: string
+      label: 'Source of the ace editor'
+    fa_source:
+      type: string
+      label: 'Source of the font awesome'
+    ace_theme:
+      type: string
+      label: 'The name of the theme ace editor should use'
+    ace_mode:
+      type: string
+      label: 'The name of the mode ace editor should use'
+    available_themes:
+      type: sequence
+      label: 'Available Themes'
+      sequence:
+        type: string
+        label: 'Theme'
+    available_modes:
+      type: sequence
+      label: 'Available Modes'
+      sequence:
+        type: string
+        label: 'Mode'
+    extra_options:
+      type: sequence
+      label: 'Extra Options'
+      sequence:
+        type: string
+        label: 'Option'

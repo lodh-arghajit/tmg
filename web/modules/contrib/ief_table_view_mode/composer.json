@@ -1,0 +1,10 @@
+{
+    "name": "drupal/ief_table_view_mode",
+    "description": "Defines a view mode to set up the columns of the table for the Inline Entity Form widget.",
+    "type": "drupal-module",
+    "license": "GPL-2.0+",
+    "minimum-stability": "dev",
+    "require": {
+        "drupal/core": "^8.7.7 || ^9"
+    }
+}

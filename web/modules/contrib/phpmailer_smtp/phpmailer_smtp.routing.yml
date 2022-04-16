@@ -1,0 +1,7 @@
+phpmailer_smtp.settings:
+  path: '/admin/config/system/phpmailer-smtp'
+  defaults:
+    _form: '\Drupal\phpmailer_smtp\Form\SettingsForm'
+    _title: 'Configure the PHPMailer SMTP module'
+  requirements:
+    _permission: 'administer phpmailer smtp settings'

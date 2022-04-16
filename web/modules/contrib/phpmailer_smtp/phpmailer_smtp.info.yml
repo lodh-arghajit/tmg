@@ -1,0 +1,11 @@
+name: PHPMailer SMTP
+description: Uses the PHPMailer library to send emails via SMTP.
+type: module
+package: Mail
+configure: phpmailer_smtp.settings
+core_version_requirement: ^8.8 || ^9
+
+# Information added by Drupal.org packaging script on 2022-01-19
+version: '2.0.3'
+project: 'phpmailer_smtp'
+datestamp: 1642551351

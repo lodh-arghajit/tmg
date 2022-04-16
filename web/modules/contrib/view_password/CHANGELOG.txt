@@ -1,0 +1,15 @@
+Version 8.x-5.1 - Changes from 8.x-5.0
+
+- Issue #3192132 by anacolautti: Must update the Readme maintainer information
+- Issue #3191545 by anacolautti: No title on the configuration page of the module
+
+
+Version 8.x-5.x - Changes from 8.x-4.x
+
+- Issue #3129644 by matthiasm11: Permissions -- Applied patch permissions-3129644-4.patch
+- Add Drupal 9 core_version_requirement to info file
+- Issue #2971264 by kiruba karan, riddhi.addweb: Missing configure button in module list page -- Applied patch 2971264-2.patch
+- Issue #3129645 by matthiasm11: Typo in url of settings form -- Applied patch typo_in_url_of_settings_form-3129645-2.patch
+- Issue #2974241 by mr.york, xaiwant, matthiasm11: Uncaught ReferenceError: Drupal is not defined -- Applied patch issue-2974241-4.patch
+- Issue #2977110 by mr.york, sorlov, andypost: Issue when trying to import config settings -- Applied patch 2977110-7.patch
+- Issue #2957375 by volkswagenchick: README configs and useful links -- Applied patch view_password-d8-README-2957375-2.patch

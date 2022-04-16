@@ -1,0 +1,26 @@
+otp.settings:
+  path: 'admin/config/people/otp'
+  defaults:
+    _form: '\Drupal\otp\Form\OTPSettingsForm'
+    _title: 'OTP for account creation'
+  requirements:
+    _permission: 'administer site configuration'
+
+otp.user_register_otp:
+  path: 'user/register/otp'
+  defaults:
+    _form: '\Drupal\otp\Form\OTPVerifyForm'
+    _title: 'Verify Your Email Address'
+  requirements:
+    _access: 'TRUE'
+
+otp.user_register_otp_resend:
+  path: 'user/register/otp/resend/{uuid}'
+  defaults:
+    _controller: '\Drupal\otp\Controller\OTPResend::sendOtp'
+  requirements:
+    _access: 'TRUE'
+  options:
+    parameters:
+      uuid:
+        type: string

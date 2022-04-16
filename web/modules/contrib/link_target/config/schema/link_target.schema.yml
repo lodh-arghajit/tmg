@@ -1,0 +1,12 @@
+# Schema for the configuration files of the Link Target formatter.
+
+field.formatter.settings.link_target_field_widget:
+  type: field.formatter.settings.link_target_field_widget
+  label: 'Link with target'
+  mapping:
+    available_targets:
+      type: sequence
+      label: 'Available targets'
+      sequence:
+        type: string
+        label: 'Target'

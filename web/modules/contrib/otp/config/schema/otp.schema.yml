@@ -1,0 +1,25 @@
+otp.settings:
+  type: config_object
+  label: 'OTP settings'
+  mapping:
+    otp_no_of_digits:
+      type: int
+      label: 'Number of digits in OTP'
+    otp_otp_mail_subject:
+      type: text
+      label: 'OTP Email Subject'
+    otp_otp_mail_body:
+      type: text
+      label: 'OTP Email Body'
+    user_otp_generate_threshold:
+      type: int
+      label: 'Number of times one can generate otp'
+    user_otp_generate_time_window:
+      type: int
+      label: 'Time period for restricting regeneration of otp'
+    user_otp_submit_threshold:
+      type: int
+      label: 'Number of times one can submit verify otp form'
+    user_otp_submit_time_window:
+      type: int
+      label: 'Time period for restricting submitting verify otp form'

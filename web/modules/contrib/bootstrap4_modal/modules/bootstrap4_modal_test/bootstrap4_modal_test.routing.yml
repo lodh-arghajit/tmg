@@ -1,0 +1,14 @@
+bootstrap4_modal_test.test_bootstrap4_modal_footer_buttons:
+  path: '/bs4-modal-test-footer-buttons'
+  defaults:
+    _form: 'Drupal\bootstrap4_modal_test\Form\Bootstrap4ModalTestForm'
+  requirements:
+    _permission: 'access content'
+
+bootstrap4_modal_test.test_bootstrap4_modal_page:
+  path: '/bs4-modal-test'
+  defaults:
+    _controller: 'Drupal\bootstrap4_modal_test\Controller\Bootstrap4ModalTestController::render'
+    _title: 'Bootstrap 4 Modal test'
+  requirements:
+    _permission: 'access content'

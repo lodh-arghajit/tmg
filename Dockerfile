@@ -17,11 +17,12 @@ RUN docker-php-ext-configure gd --with-jpeg=/usr/include/ &&\
 
 COPY composer.json /var/www/html
 COPY composer.lock /var/www/html
-COPY composer.phar /var/www/html
+COPY vendor /var/www/html/vendor
+COPY web /var/www/html/web
+
+
 WORKDIR /var/www/html
-RUN php composer.phar --version
-COPY web/modules/custom /var/www/html/web/modules/custom
-COPY web/themes/custom /var/www/html/web/themes/custom
-RUN php composer.phar install
-COPY web/sites/default/settings.php /var/www/html/web/sites/default
-COPY web/sites/default/settings.local.php /var/www/html/web/sites/default
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/web
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+

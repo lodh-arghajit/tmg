@@ -1,0 +1,10 @@
+name: 'Mega Menu for Drupal 8/9'
+type: module
+description: 'This powerful Drupal module helps you create custom menu, video and Drupal Blocks.'
+package: 'WeMegaMenu'
+core_version_requirement: ^8 || ^9
+
+# Information added by Drupal.org packaging script on 2021-06-29
+version: '8.x-1.13'
+project: 'we_megamenu'
+datestamp: 1624951528

@@ -1,0 +1,10 @@
+<?php
+
+/**
+ * Implements hook_link_alter().
+ */
+function bootstrap4_modal_test_link_alter(&$variables) {
+  if (($variables['options']['attributes']['data-dialog-type'] ?? '') == 'modal') {
+    $variables['options']['attributes']['data-dialog-type'] = 'bootstrap4_modal';
+  }
+}

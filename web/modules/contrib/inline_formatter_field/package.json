@@ -1,0 +1,19 @@
+{
+  "name": "inline_formatter_field",
+  "description": "Creates javascript for the drupal 8 inline formatter field module.",
+  "main": "index.js",
+  "repository": "git@git.drupal.org:project/inline_formatter_field.git",
+  "author": "Bobby Saul <bobby.saul@yahoo.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "babel js/src -d js/dist",
+    "watch": "babel --watch js/src -d js/dist",
+    "prod": "babel js/src -d js/dist --presets=@babel/preset-env,minify --no-comments"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "babel-preset-minify": "^0.5.1"
+  }
+}

@@ -1,0 +1,5 @@
+otp.settings:
+  title: 'OTP for account creation'
+  parent: user.admin_index
+  description: 'Configure OTP configurations'
+  route_name: otp.settings

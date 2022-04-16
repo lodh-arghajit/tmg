@@ -1,0 +1,186 @@
+<?php
+
+/**
+ * @file
+ * Contains inline_formatter_display.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\field_ui\Form\EntityViewDisplayEditForm;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Implements hook_help().
+ */
+function inline_formatter_display_help($route_name, RouteMatchInterface $route_match) {
+  $output = '';
+  switch ($route_name) {
+    // Help for the inline formatter display module.
+    case 'help.page.inline_formatter_display':
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t("The Inline Formatter Display module allows for templating and styling of entities by replacing an entity's manage display form with an editor field for writing an inline format.") . '</p>';
+      break;
+  }
+  return $output;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function inline_formatter_display_form_entity_view_display_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form_object = $form_state->getformObject();
+  if ($form_object instanceof EntityViewDisplayEditForm) {
+    // Get view mode entity.
+    $entity = $form_object->getEntity();
+    // Get use value.
+    $use_value = $entity->getThirdPartySetting('inline_formatter_display', 'use', 0);
+    // Add save function for inline formatter fields on save.
+    array_unshift($form['actions']['submit']['#submit'], 'inline_formatter_display_save');
+    // If field is checked, add inline formatter field and library.
+    if ($use_value) {
+      // Get inline formatter field configuration settings.
+      $config = Drupal::service('config.factory')->get('inline_formatter_field.settings');
+      // Get previous value.
+      $display_value = $entity->getThirdPartySetting('inline_formatter_display', 'formatted_display', '<h1>Hello World!</h1>');
+      // Hide fields form.
+      $form['fields']['#prefix'] = "<div class='display-none'>";
+      $form['fields']['#suffix'] = "</div>";
+      // Move inline formmatter fields to the top.
+      $form['inline_formatter_display']['#weight'] = -100;
+      // Add inline formatter library.
+      $form['#attached']['library'][] = 'inline_formatter_field/inline_formatter_display';
+      // Add the ace editor settings to drupalsettings.
+      $form['#attached']['drupalSettings']['inline_formatter_field']['ace_editor']['setting'] = [
+        'ace_source' => $config->get('ace_source'),
+        'theme' => $config->get('ace_theme'),
+        'mode' => $config->get('ace_mode'),
+        'options' => $config->get('extra_options'),
+      ];
+      // Ace Editor settings wrapper.
+      $form['inline_formatter_display']['#prefix'] = '<div class="AceEditorFormatterSettings">';
+      $form['inline_formatter_display']['#suffix'] = '</div>';
+      $form['inline_formatter_display']['ace_options'] = [
+        '#type' => 'details',
+        '#title' => t("Ace Editor Options"),
+      ];
+      // Ace Editor theme.
+      $form['inline_formatter_display']['ace_options']['theme'] = [
+        '#type' => 'select',
+        '#title' => t('Theme'),
+        '#options' => $config->get('available_themes'),
+        '#default_value' => $config->get('ace_theme'),
+        '#attributes' => [
+          'class' => ['ace-theme-select'],
+        ],
+      ];
+      // Ace Editor mode.
+      $form['inline_formatter_display']['ace_options']['mode'] = [
+        '#type' => 'select',
+        '#title' => t('Mode'),
+        '#options' => $config->get('available_modes'),
+        '#default_value' => $config->get('ace_mode'),
+        '#attributes' => [
+          'class' => ['ace-mode-select'],
+        ],
+      ];
+      // Ace Editor extra settings.
+      $form['inline_formatter_display']['ace_options']['extra'] = [
+        '#type' => 'fieldset',
+        '#title' => t("Extra Options"),
+      ];
+      $form['inline_formatter_display']['ace_options']['extra']['help'] = [
+        '#markup' => t('Options can be found on <a href=":url">Configuring Ace</a>.<br>Booleans should be entered "true" for true and "false" for false.', [
+          ':url' => 'https://github.com/ajaxorg/ace/wiki/Configuring-Ace',
+        ]),
+      ];
+      foreach ($config->get('extra_options') as $option => $value) {
+        $form['inline_formatter_display']['ace_options']['extra'][$option] = [
+          '#type' => 'textfield',
+          '#title' => $option,
+          '#default_value' => $value,
+          '#attributes' => [
+            'class' => ['ace-option-field'],
+            'data-option-name' => $option,
+          ],
+        ];
+      }
+      // The actual textarea field.
+      $form['inline_formatter_display']['inline_formatter_display_formatted_display'] = [
+        '#title' => t('HTML or Twig Format'),
+        '#type' => 'textarea',
+        '#default_value' => $display_value,
+        '#description' => t("Enter any HTML or Twig here along with token patterns.<br>Use 'opt + tab' and 'opt + shift + tab' to navigate through and back through the editor."),
+        '#attributes' => [
+          'class' => ['AceEditorTextarea'],
+        ],
+      ];
+      // Ace Editor wrapper.
+      $form['inline_formatter_display']['ace_editor'] = [
+        '#type' => 'inline_template',
+        '#template' => "<div class='EditorWrapper'><div id='AceEditor'></div><button class='fa fa-window-maximize ButtonSize'></button></div>",
+      ];
+      // If tokens module is added, add the browse button.
+      if (Drupal::service('module_handler')->moduleExists('token')) {
+        $form['inline_formatter_display']['token_help'] = [
+          '#theme' => 'token_tree_link',
+          '#token_types' => 'all',
+          '#global_types' => FALSE,
+          '#dialog' => TRUE,
+        ];
+      }
+    }
+    // Button for toggling whether to use the formatter display.
+    $form['inline_formatter_display']['inline_formatter_display_use'] = [
+      '#type' => 'checkbox',
+      '#title' => t('Use Inline Formatter Display'),
+      '#default_value' => $use_value,
+    ];
+  }
+}
+
+/**
+ * Saves the inline formatter display settings for the entity.
+ */
+function inline_formatter_display_save(&$form, FormStateInterface $form_state) {
+  // Save the fields.
+  $entity = $form_state->getformObject()->getEntity();
+  $use_value = $form_state->getValue("inline_formatter_display_use");
+  $display_value = $form_state->getValue("inline_formatter_display_formatted_display");
+  $entity->setThirdPartySetting("inline_formatter_display", 'use', $use_value);
+  if ($display_value) {
+    $entity->setThirdPartySetting("inline_formatter_display", 'formatted_display', $display_value);
+  }
+}
+
+/**
+ * Implements hook_entity_view_alter().
+ */
+function inline_formatter_display_entity_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+  if ($display->getThirdPartySetting('inline_formatter_display', 'use', 0)) {
+    $display_value = $display->getThirdPartySetting('inline_formatter_display', 'formatted_display', '<h1>Hello World!</h1>');
+    // If the token module is enabled then do token replacement.
+    if (Drupal::service('module_handler')->moduleExists('token')) {
+      $token_data = [
+        $entity->getEntityTypeId() => $entity,
+      ];
+      $display_value = Drupal::service('token')->replace($display_value, $token_data, ['clear' => FALSE]);
+    }
+    // Remove all properties that are not entity attributes.
+    foreach ($build as $key => $item) {
+      if (substr($key, 0, 1) !== '#' && $key !== 'title') {
+        unset($build[$key]);
+      }
+    }
+    // Add inline template.
+    $build['inline_formatter_display'] = [
+      '#type' => 'inline_template',
+      '#template' => $display_value,
+      '#context' => [
+        $entity->getEntityTypeId() => $entity,
+        'current_user' => Drupal::service('current_user'),
+      ],
+    ];
+  }
+}

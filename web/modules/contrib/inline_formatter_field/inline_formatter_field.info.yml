@@ -1,0 +1,13 @@
+name: Inline Formatter Field
+description: "Creates a field type that allowed any HTML or Twig to be entered and is displayed by a boolean"
+type: module
+package: field types
+core_version_requirement: ^8 || ^9
+configure: inline_formatter_field.settings_form
+dependencies:
+  - drupal:field
+
+# Information added by Drupal.org packaging script on 2020-05-09
+version: '8.x-2.1'
+project: 'inline_formatter_field'
+datestamp: 1589044668

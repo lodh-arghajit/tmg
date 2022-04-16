@@ -1,0 +1,6 @@
+services:
+  recaptcha.config_subscriber:
+    class: Drupal\recaptcha\EventSubscriber\RecaptchaSettingsConfigSubscriber
+    arguments: ['@cache_tags.invalidator']
+    tags:
+      - { name: event_subscriber }

@@ -1,0 +1,14 @@
+{
+  "name": "drupal/password_eye",
+  "type": "drupal-module",
+  "description": "A Utility Module to view password on password fields",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/password_eye",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/password_eye",
+    "source": "http://cgit.drupalcode.org/password_eye"
+  },
+  "require": { }
+}

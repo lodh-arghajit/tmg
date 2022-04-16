@@ -1,0 +1,22 @@
+<?php
+/**
+ * @file
+ * Install and uninstall functions for OTP module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function otp_install() {
+  // Disabling drupal core require email verification
+  Drupal::configFactory()->getEditable('user.settings')->set('verify_mail', FALSE)->save();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function otp_uninstall() {
+  // Enabling drupal core require email verification
+  Drupal::configFactory()->getEditable('user.settings')->set('verify_mail', TRUE)->save();
+  Drupal::messenger()->addMessage('Drupal core email verification is now turned on instead of OTP verification, Please review settings.');
+}

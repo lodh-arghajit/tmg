@@ -1,0 +1,7 @@
+otp_no_of_digits: ""
+otp_otp_mail_subject: ""
+otp_otp_mail_body: ""
+user_otp_generate_threshold: ""
+user_otp_generate_time_window: ""
+user_otp_submit_threshold: ""
+user_otp_submit_time_window: ""

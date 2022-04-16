@@ -1,0 +1,17 @@
+# Attach Ace Editor to inline field display setting form.
+inline_formatter_display:
+  css:
+    theme:
+      css/inlineFormatterDisplay.css: {}
+  js:
+    js/dist/inlineFormatterDisplay.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+settings_form:
+  css:
+    theme:
+      css/settingsForm.css: {}
+  dependencies:
+    - core/drupal.dropbutton
