@@ -11,7 +11,7 @@ metadata:
 spec:
   rules:
   - host: tmwselfcare.devin.kubix.tm
-    https:
+    http:
       paths:
       - backend:
           serviceName: drupal
