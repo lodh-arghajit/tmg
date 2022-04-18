@@ -8,6 +8,7 @@ RUN apt-get install libjpeg-dev -y
 RUN apt-get install libzip-dev -y
 RUN apt-get install unzip -y
 RUN apt-get install curl -y
+RUN apt-get install mariadb-client -y
 
 RUN docker-php-ext-install zip
 
