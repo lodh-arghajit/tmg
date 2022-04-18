@@ -1127,11 +1127,14 @@ class Request
      */
     public function isSecure()
     {
+        var_dump(self::HEADER_X_FORWARDED_PROTO);
         if ($this->isFromTrustedProxy() && $proto = $this->getTrustedValues(self::HEADER_X_FORWARDED_PROTO)) {
             return \in_array(strtolower($proto[0]), ['https', 'on', 'ssl', '1'], true);
         }
 
         $https = $this->server->get('HTTPS');
+        var_dump($https);
+        exit();
 
         return !empty($https) && 'off' !== strtolower($https);
     }
