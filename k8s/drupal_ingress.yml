@@ -11,11 +11,11 @@ metadata:
 spec:
   rules:
   - host: tmwselfcare.devin.kubix.tm
-    http:
+    https:
       paths:
       - backend:
           serviceName: drupal
-          servicePort: 80
+          servicePort: 443
   tls:
   - hosts:
     - tmwselfcare.devin.kubix.tm
