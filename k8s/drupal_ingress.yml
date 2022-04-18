@@ -7,6 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-next-upstream-timeout: '200'
     nginx.ingress.kubernetes.io/proxy-read-timeout: '200'
     nginx.ingress.kubernetes.io/proxy-send-timeout: '200'
+    kubernetes.io/ingress.allow-http: "false"
   name: tmw-customer-nginx-ingress
 spec:
   rules:
@@ -15,7 +16,7 @@ spec:
       paths:
       - backend:
           serviceName: drupal
-          servicePort: 443
+          servicePort: 80
   tls:
   - hosts:
     - tmwselfcare.devin.kubix.tm
