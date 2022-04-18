@@ -16,6 +16,7 @@ RUN docker-php-ext-configure gd --with-jpeg=/usr/include/ &&\
     docker-php-ext-install gd
 
 COPY composer.json /var/www/html
+COPY db.sql /var/www/html
 COPY composer.lock /var/www/html
 COPY vendor /var/www/html/vendor
 COPY web /var/www/html/web
