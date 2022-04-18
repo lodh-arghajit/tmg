@@ -8,6 +8,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-read-timeout: '200'
     nginx.ingress.kubernetes.io/proxy-send-timeout: '200'
     kubernetes.io/ingress.allow-http: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
   name: tmw-customer-nginx-ingress
 spec:
   rules:
