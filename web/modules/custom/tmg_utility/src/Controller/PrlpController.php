@@ -13,6 +13,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Drupal\encrypt\Entity\EncryptionProfile;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Component\Utility\UrlHelper;
+use Symfony\Component\HttpFoundation\Response;
 
 
 /**
@@ -20,6 +21,20 @@ use Drupal\Component\Utility\UrlHelper;
  */
 class PrlpController extends UserController {
 
+  /**
+   * Override resetPassLogin() to redirect to the configured path.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The request.
+   *
+   * @return RedirectResponse
+   *    Array of page elements to render.
+   */
+  public function pageLoadUrl(Request $request) {
+    $content = "Page is still loading";
+
+    return new Response($content);
+  }
 
   /**
    * Override resetPassLogin() to redirect to the configured path.

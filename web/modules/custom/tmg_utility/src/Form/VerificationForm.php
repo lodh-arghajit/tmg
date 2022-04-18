@@ -167,6 +167,7 @@ class VerificationForm {
         $user_data_save['status'] = 0;
         $user_data_save['field_admin_approved'] = 0;
         $user_data_save['name'] = $user_data_save['mail'];
+        $user_data_save['roles'][]["target_id"] = "tm_user";
         $user = User::create($user_data_save);
         $user->save();
       }

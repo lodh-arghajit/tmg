@@ -96,6 +96,8 @@ class LoginFormPopup extends BlockBase implements ContainerFactoryPluginInterfac
           'class' => [
             'use-ajax',
             'login-popup-form',
+            'url-show-after-page-load',
+            'js-hide',
           ],
           'data-dialog-type' => 'bootstrap4_modal',
           'data-dialog-options' => json_encode($options),

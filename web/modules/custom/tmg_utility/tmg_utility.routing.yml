@@ -64,3 +64,13 @@ tmg_utility.user_profile_edit:
         type: 'entity:user'
   requirements:
     _permission: 'TMW admin'
+tmg_utility.page_load_url:
+  path: '/page-load-url'
+  defaults:
+    _controller: '\Drupal\tmg_utility\Controller\PrlpController::pageLoadUrl'
+    _title: 'Page is loading....'
+  requirements:
+    _access: 'TRUE'
+  options:
+    _maintenance_access: TRUE
+    no_cache: TRUE

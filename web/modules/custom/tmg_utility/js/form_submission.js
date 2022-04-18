@@ -7,6 +7,12 @@
   'use strict';
   Drupal.behaviors.webformRequiredErrorForClientSideValidation = {
     attach: function (context) {
+
+      $(context).find('.url-show-after-page-load').once('js-show').each(function() {
+        if ( $(this).hasClass("js-hide")) {
+          $(this).removeClass("js-hide");
+        }
+      });
       $(context).find(':input[data-webform-required-error]').once('webform-required-error').each(function() {
 
         $(this).attr("required", "required");
