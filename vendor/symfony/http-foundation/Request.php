@@ -340,6 +340,9 @@ class Request
         $server['REQUEST_METHOD'] = strtoupper($method);
 
         $components = parse_url($uri);
+        echo "<pre>";
+        var_dump($components);
+        exit();
         if (isset($components['host'])) {
             $server['SERVER_NAME'] = $components['host'];
             $server['HTTP_HOST'] = $components['host'];
@@ -1127,14 +1130,11 @@ class Request
      */
     public function isSecure()
     {
-        var_dump(self::HEADER_X_FORWARDED_PROTO);
         if ($this->isFromTrustedProxy() && $proto = $this->getTrustedValues(self::HEADER_X_FORWARDED_PROTO)) {
             return \in_array(strtolower($proto[0]), ['https', 'on', 'ssl', '1'], true);
         }
 
         $https = $this->server->get('HTTPS');
-        var_dump($https);
-        exit();
 
         return !empty($https) && 'off' !== strtolower($https);
     }
