@@ -22,6 +22,7 @@ COPY db.sql /var/www/html
 COPY composer.lock /var/www/html
 COPY vendor /var/www/html/vendor
 COPY web /var/www/html/web
+COPY inline-images /var/www/html/web/sites/default/files
 COPY load.environment.php /var/www/html
 
 

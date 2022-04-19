@@ -24,19 +24,7 @@ $local_settings = __DIR__ . "/settings.local.php";
 if (file_exists($local_settings)) {
   include $local_settings;
 }
-$databases['default']['default'] = array (
-  'database' => 'lamp',
-  'username' => 'lamp',
-  'password' => 'lamp',
-  'prefix' => '',
-  'host' => 'database',
-  'port' => '3306',
-  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
-  'driver' => 'mysql',
-);
-
 $settings['config_sync_directory'] = dirname(DRUPAL_ROOT) . '/config';
-
 $settings['reverse_proxy'] = TRUE;
 $settings['reverse_proxy_addresses'] = [$_SERVER["REMOTE_ADDR"]];
 
