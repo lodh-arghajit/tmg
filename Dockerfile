@@ -1,12 +1,12 @@
 FROM drupal:latest
 
-COPY composer.json /var/www/html
-COPY db.sql /var/www/html
-COPY composer.lock /var/www/html
-COPY vendor /var/www/html/vendor
-COPY web /var/www/html/web
-COPY load.environment.php /var/www/html
-COPY inline-images/ /var/www/html/web/sites/default/files/
+COPY composer.json /opt/drupal
+COPY db.sql /opt/drupal
+COPY composer.lock /opt/drupal
+COPY vendor /opt/drupal
+COPY web /opt/drupal
+COPY load.environment.php /opt/drupal
+COPY inline-images/ /opt/drupal/web/sites/default/files/
 
 # RUN chown -R www-data:www-data /opt/drupal
 RUN chown -R www-data:www-data /var/www
