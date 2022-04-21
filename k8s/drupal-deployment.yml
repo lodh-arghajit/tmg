@@ -65,7 +65,7 @@ spec:
             #- mountPath: /var/www/html/profiles
             # name: web
             #subPath: profiles
-            - mountPath: /var/www/html
+            - mountPath: /var/www/html/web/sites/default/files
               name: web
               subPath: html
               #- mountPath: /var/www/html/themes

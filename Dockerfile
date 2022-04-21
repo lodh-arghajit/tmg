@@ -15,7 +15,7 @@ RUN composer install
 COPY web/sites/default/settings.php /var/www/html/web/sites/default/settings.php
 COPY web/sites/default/settings.local.php /var/www/html/web/sites/default/settings.local.php
 
-ENV APACHE_DOCUMENT_ROOT=/var/www/html/web
+ENV APACHE_DOCUMENT_ROOT /var/www/html/web
 ENV PHP_INI_PATH /usr/local/etc/php/php.ini
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
