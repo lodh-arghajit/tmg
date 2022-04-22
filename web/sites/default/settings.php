@@ -25,6 +25,11 @@ if (file_exists($local_settings)) {
   include $local_settings;
 }
 $settings['config_sync_directory'] = dirname(DRUPAL_ROOT) . '/config';
-$settings['reverse_proxy'] = TRUE;
-$settings['reverse_proxy_addresses'] = [$_SERVER["REMOTE_ADDR"]];
+if (isset($_SERVER['KUBERNETES_SERVICE_PORT_HTTPS'])) {
+  $settings['reverse_proxy'] = TRUE;
+  $settings['reverse_proxy_addresses'] = [$_SERVER["REMOTE_ADDR"]];
+}
+
+
+
 
