@@ -5,6 +5,7 @@ COPY composer.lock /var/www/html
 COPY vendor /var/www/html/vendor
 COPY web /var/www/html/web
 COPY load.environment.php /var/www/html
+COPY inline-images /var/www/html/web/sites/default/files/inline-images
 
 WORKDIR /var/www/html
 
