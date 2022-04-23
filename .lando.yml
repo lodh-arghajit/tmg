@@ -5,7 +5,7 @@ config:
   webroot: web
   php: 7.4
   database: mariadb
-  xdebug: false
+  xdebug: true
   config:
     php: app/php.ini
 services:

@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: '200'
+    nginx.ingress.kubernetes.io/proxy-next-upstream-timeout: '200'
+    nginx.ingress.kubernetes.io/proxy-read-timeout: '200'
+    nginx.ingress.kubernetes.io/proxy-send-timeout: '200'
+    nginx.org/client-max-body-size: "600m"
+    nginx.ingress.kubernetes.io/proxy-body-size: "600m"
+  name: fb-ingress
+spec:
+  rules:
+  - host: fbrowser.tmwselfcare.devin.kubix.tm
+    http:
+      paths:
+      - backend:
+          serviceName: fbrowser-deployment
+          servicePort: 80
+  tls:
+  - hosts:
+    - fbrowser.tmwselfcare.devin.kubix.tm

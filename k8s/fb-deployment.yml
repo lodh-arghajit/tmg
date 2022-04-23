@@ -1,0 +1,27 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: fbrowser-deployment
+spec:
+  selector:
+    matchLabels:
+      app: fbrowser
+  replicas: 1 # Update the replicas from 2 to 4
+  template:
+    metadata:
+      labels:
+        app: fbrowser
+    spec:
+      containers:
+      - name: fbrowser
+        image: harbor.dev.kubix.tm.com.my/unifi/filebrowser/filebrowser:v2
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: nfs
+          mountPath: /srv
+      volumes:
+        - name: nfs
+          nfs:
+            server: 172.20.94.11
+            path: /VOL_BF7DEV_NFS_TMW
