@@ -31,8 +31,8 @@ deploy-dev:
     - sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" k8s/drupal-deployment.yml
     - kubectl apply -f k8s/drupal-deployment.yml
     - kubectl apply -f k8s/drupal_ingress.yml
-    - kubectl apply –f k8s/fb-deployment.yml
-    - kubectl apply –f k8s/fb-ingress.yml
+    - kubectl apply -f k8s/fb-deployment.yml
+    - kubectl apply -f k8s/fb-ingress.yml
   environment:
     name: development
   tags:
