@@ -1,0 +1,12 @@
+name: Redirect 404 to Home Page
+type: module
+description: This module will redirect all 404 pages to home page.
+core: 8.x
+core_version_requirement: ^8 || ^9
+package: SEO
+configure: redirect404_home.settings
+
+# Information added by Drupal.org packaging script on 2021-12-07
+version: '8.x-1.0'
+project: 'redirect404_home'
+datestamp: 1638891635

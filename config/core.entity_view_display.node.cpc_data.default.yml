@@ -1,0 +1,48 @@
+uuid: 746e7f91-18e5-4538-9cf7-be7826b8b0de
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.cpc_data.feeds_item
+    - field.field.node.cpc_data.field_company_name
+    - field.field.node.cpc_data.field_cpc_id
+    - field.field.node.cpc_data.field_cpc_id_num
+    - field.field.node.cpc_data.field_cpc_id_type
+    - field.field.node.cpc_data.field_customer_creation_data
+    - field.field.node.cpc_data.field_customer_status
+    - field.field.node.cpc_data.field_ext_source
+    - field.field.node.cpc_data.field_ind
+    - field.field.node.cpc_data.field_seg
+    - field.field.node.cpc_data.field_seg_grp
+    - field.field.node.cpc_data.field_seg_sub_grp
+    - field.field.node.cpc_data.field_vbbs
+    - field.field.node.cpc_data.field_wholesale_id
+    - node.type.cpc_data
+  module:
+    - inline_formatter_display
+    - user
+third_party_settings:
+  inline_formatter_display:
+    use: 1
+    formatted_display: '[node:field_company_name] ([node:field_wholesale_id])'
+id: node.cpc_data.default
+targetEntityType: node
+bundle: cpc_data
+mode: default
+content: {  }
+hidden:
+  feeds_item: true
+  field_company_name: true
+  field_cpc_id: true
+  field_cpc_id_num: true
+  field_cpc_id_type: true
+  field_customer_creation_data: true
+  field_customer_status: true
+  field_ext_source: true
+  field_ind: true
+  field_seg: true
+  field_seg_grp: true
+  field_seg_sub_grp: true
+  field_vbbs: true
+  field_wholesale_id: true
+  links: true

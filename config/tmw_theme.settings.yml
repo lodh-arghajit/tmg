@@ -1,0 +1,17 @@
+favicon:
+  mimetype: image/vnd.microsoft.icon
+  path: ''
+  url: 'https://tmg.lndo.site/themes/contrib/bootstrap/favicon.ico'
+  use_default: true
+features:
+  comment_user_picture: true
+  comment_user_verification: true
+  favicon: true
+  node_user_picture: true
+logo:
+  path: 'public://tm-one-logo.png'
+  url: ''
+  use_default: false
+schemas:
+  bootstrap: 8000
+  tmw_theme: 8000

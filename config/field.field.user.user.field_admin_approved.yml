@@ -1,0 +1,21 @@
+uuid: 69b6aed2-bcac-4161-b4e1-a96dff854ea7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_admin_approved
+  module:
+    - options
+    - user
+id: user.user.field_admin_approved
+field_name: field_admin_approved
+entity_type: user
+bundle: user
+label: 'Admin approved'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_integer

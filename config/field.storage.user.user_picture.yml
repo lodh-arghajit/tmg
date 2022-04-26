@@ -3,9 +3,13 @@ langcode: en
 status: true
 dependencies:
   module:
+    - field_permissions
     - file
     - image
     - user
+third_party_settings:
+  field_permissions:
+    permission_type: custom
 _core:
   default_config_hash: 0q8-mw8y-Ls5I578sIPQFLp4ljpH7WvVYpzY-I9O-8E
 id: user.user_picture

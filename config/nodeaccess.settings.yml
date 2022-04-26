@@ -1,0 +1,189 @@
+_core:
+  default_config_hash: Zno4MMkbreZeJZgnY0DXCPksXkuYye3MyIFlVuh-xLc
+grants:
+  view: 1
+  edit: 1
+  delete: 1
+priority: 1
+preserve: 1
+article:
+  anonymous:
+    grant_view: '1'
+    grant_update: 0
+    grant_delete: 0
+  authenticated:
+    grant_view: '1'
+    grant_update: 0
+    grant_delete: 0
+  content_editor:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  administrator:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  approver:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  tm_super_admin:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  tm_user:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  author:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+cpc_data:
+  administrator:
+    grant_view: '1'
+    grant_update: '1'
+    grant_delete: '1'
+  anonymous:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  authenticated:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  content_editor:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  approver:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  tm_super_admin:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  tm_user:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  author:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+landing_page:
+  anonymous:
+    grant_view: '1'
+    grant_update: 0
+    grant_delete: 0
+  authenticated:
+    grant_view: '1'
+    grant_update: 0
+    grant_delete: 0
+  content_editor:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  administrator:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  approver:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  tm_super_admin:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  tm_user:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  author:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+page:
+  authenticated:
+    grant_view: '1'
+    grant_update: 0
+    grant_delete: 0
+  anonymous:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  content_editor:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  administrator:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  approver:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  tm_super_admin:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  tm_user:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+  author:
+    grant_view: 0
+    grant_update: 0
+    grant_delete: 0
+role_alias:
+  anonymous:
+    alias: 'Anonymous user'
+    weight: '0'
+    name: 'Anonymous user'
+    allow: 0
+  authenticated:
+    alias: 'Authenticated user'
+    weight: '0'
+    name: 'Authenticated user'
+    allow: 0
+  content_editor:
+    alias: 'Content editor'
+    weight: '0'
+    name: 'Content editor'
+    allow: 0
+  administrator:
+    alias: Administrator
+    weight: '0'
+    name: Administrator
+    allow: 0
+  approver:
+    alias: Approver
+    weight: '0'
+    name: Approver
+    allow: 0
+  tm_super_admin:
+    alias: 'TM super admin'
+    weight: '0'
+    name: 'TM super admin'
+    allow: 0
+  tm_user:
+    alias: 'TM user'
+    weight: '0'
+    name: 'TM user'
+    allow: 0
+role_map:
+  anonymous: 1
+  authenticated: 2
+  content_editor: 3
+  administrator: 4
+  approver: 5
+  tm_super_admin: 6
+  tm_user: 7
+allowed_types:
+  article: 0
+  cpc_data: 0
+  landing_page: 0
+  page: 0

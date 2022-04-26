@@ -1,0 +1,234 @@
+uuid: 981635fb-b9a5-4fe1-8a2a-cd60f3ed3f60
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.cpc_data.field_company_name
+    - field.field.node.cpc_data.field_cpc_id
+    - field.field.node.cpc_data.field_cpc_id_num
+    - field.field.node.cpc_data.field_cpc_id_type
+    - field.field.node.cpc_data.field_customer_creation_data
+    - field.field.node.cpc_data.field_customer_status
+    - field.field.node.cpc_data.field_ext_source
+    - field.field.node.cpc_data.field_ind
+    - field.field.node.cpc_data.field_seg
+    - field.field.node.cpc_data.field_seg_grp
+    - field.field.node.cpc_data.field_seg_sub_grp
+    - field.field.node.cpc_data.field_vbbs
+    - field.field.node.cpc_data.field_wholesale_id
+    - node.type.cpc_data
+  module:
+    - entity_redirect
+    - feeds_tamper
+    - node
+third_party_settings:
+  feeds_tamper:
+    tampers:
+      90274d73-bc95-460b-a203-dae810420223:
+        uuid: 90274d73-bc95-460b-a203-dae810420223
+        plugin: convert_boolean_modified
+        source: cust_stat_cd
+        weight: 0
+        label: 'Convert to Boolean modified'
+        true_value_text: Active
+      96c30fb3-b4ea-48af-b1d4-af97e588e4c6:
+        invert: false
+        uuid: 96c30fb3-b4ea-48af-b1d4-af97e588e4c6
+        plugin: required
+        source: x_wholesale_id
+        weight: 0
+        label: Required
+  entity_redirect:
+    redirect: null
+label: 'CPC import'
+id: cpc_import
+description: 'Import CPC data'
+help: ''
+import_period: -1
+fetcher: upload
+fetcher_configuration:
+  allowed_extensions: csv
+  directory: 'public://feeds'
+parser: csv
+parser_configuration:
+  delimiter: ','
+  no_headers: false
+  line_limit: 100
+processor: 'entity:node'
+processor_configuration:
+  values:
+    type: cpc_data
+  langcode: en
+  insert_new: 1
+  update_existing: 2
+  update_non_existent: _keep
+  skip_hash_check: false
+  authorize: true
+  expire: -1
+  owner_feed_author: true
+  owner_id: 0
+custom_sources:
+  cpc2_id:
+    value: CPC2_ID
+    label: CPC2_ID
+    machine_name: cpc2_id
+    type: csv
+  x_wholesale_id:
+    value: X_WHOLESALE_ID
+    label: X_WHOLESALE_ID
+    machine_name: x_wholesale_id
+    type: csv
+  customer_name:
+    value: CUSTOMER_NAME
+    label: CUSTOMER_NAME
+    machine_name: customer_name
+    type: csv
+  cpc2_id_type:
+    value: CPC2_ID_TYPE
+    label: CPC2_ID_TYPE
+    machine_name: cpc2_id_type
+    type: csv
+  cpc2_id_num:
+    value: CPC2_ID_NUM
+    label: CPC2_ID_NUM
+    machine_name: cpc2_id_num
+    type: csv
+  seg_grp:
+    value: SEG_GRP
+    label: SEG_GRP
+    machine_name: seg_grp
+    type: csv
+  seg_sub_grp:
+    value: SEG_SUB_GRP
+    label: SEG_SUB_GRP
+    machine_name: seg_sub_grp
+    type: csv
+  seg:
+    value: SEG
+    label: SEG
+    machine_name: seg
+    type: csv
+  ind:
+    value: IND
+    label: IND
+    machine_name: ind
+    type: csv
+  x_ext_source:
+    value: X_EXT_SOURCE
+    label: X_EXT_SOURCE
+    machine_name: x_ext_source
+    type: csv
+  vbbs:
+    value: VBBS
+    label: VBBS
+    machine_name: vbbs
+    type: csv
+  cust_since_dt:
+    value: CUST_SINCE_DT
+    label: CUST_SINCE_DT
+    machine_name: cust_since_dt
+    type: csv
+  cust_stat_cd:
+    value: CUST_STAT_CD
+    label: CUST_STAT_CD
+    machine_name: cust_stat_cd
+    type: csv
+mappings:
+  -
+    target: field_cpc_id
+    map:
+      value: cpc2_id
+    settings:
+      language: ''
+    unique: {  }
+  -
+    target: field_wholesale_id
+    map:
+      value: x_wholesale_id
+    settings:
+      language: null
+    unique:
+      value: '1'
+  -
+    target: field_company_name
+    map:
+      value: customer_name
+    settings:
+      language: null
+    unique: {  }
+  -
+    target: field_cpc_id_type
+    map:
+      value: cpc2_id_type
+    settings:
+      language: null
+    unique: {  }
+  -
+    target: field_cpc_id_num
+    map:
+      value: cpc2_id_num
+    settings:
+      language: null
+    unique: {  }
+  -
+    target: field_seg_grp
+    map:
+      value: seg_grp
+    settings:
+      language: null
+    unique: {  }
+  -
+    target: field_seg_sub_grp
+    map:
+      value: seg_sub_grp
+    settings:
+      language: null
+    unique: {  }
+  -
+    target: field_seg
+    map:
+      value: seg
+    settings:
+      language: null
+    unique: {  }
+  -
+    target: field_ind
+    map:
+      value: ind
+    settings:
+      language: null
+    unique: {  }
+  -
+    target: field_ext_source
+    map:
+      value: x_ext_source
+    settings:
+      language: null
+    unique: {  }
+  -
+    target: field_vbbs
+    map:
+      value: vbbs
+    settings:
+      language: null
+    unique: {  }
+  -
+    target: field_customer_creation_data
+    map:
+      value: cust_since_dt
+    settings:
+      language: null
+      timezone: UTC
+  -
+    target: title
+    map:
+      value: cpc2_id
+    settings:
+      language: null
+    unique: {  }
+  -
+    target: field_customer_status
+    map:
+      value: cust_stat_cd
+    settings:
+      language: null

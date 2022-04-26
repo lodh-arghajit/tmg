@@ -7,6 +7,8 @@ dependencies:
   module:
     - comment
     - contact
+    - devel
+    - field_permissions
     - filter
     - media
     - search
@@ -21,10 +23,18 @@ is_admin: false
 permissions:
   - 'access comments'
   - 'access content'
+  - 'access devel information'
   - 'access shortcuts'
   - 'access site-wide contact form'
+  - 'create field_company'
+  - 'create field_first_name'
+  - 'edit field_company'
+  - 'edit own field_company'
+  - 'edit own field_first_name'
   - 'post comments'
   - 'search content'
   - 'skip comment approval'
   - 'use text format basic_html'
+  - 'view field_company'
   - 'view media'
+  - 'view own field_company'

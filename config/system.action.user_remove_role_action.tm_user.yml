@@ -1,0 +1,14 @@
+uuid: 78b35587-86a9-4aa8-b7d5-d4212ea49d3d
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.tm_user
+  module:
+    - user
+id: user_remove_role_action.tm_user
+label: 'Remove the TM user role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: tm_user

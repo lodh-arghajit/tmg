@@ -1,0 +1,22 @@
+uuid: 4c0ccc8c-81bf-4178-b601-c22339b49be2
+langcode: en
+status: true
+dependencies:
+  config:
+    - feeds.feed_type.cpc_import
+  module:
+    - inline_formatter_display
+    - user
+third_party_settings:
+  inline_formatter_display:
+    use: 1
+    formatted_display: '<h1>CPC data has been imported successfully.</h1>'
+id: feeds_feed.cpc_import.default
+targetEntityType: feeds_feed
+bundle: cpc_import
+mode: default
+content: {  }
+hidden:
+  imported: true
+  next: true
+  source: true

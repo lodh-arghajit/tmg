@@ -6,14 +6,8 @@ _core:
   default_config_hash: NIKBt6kw_uPhNI0qtR2DnRf7mSOgAQdx7Q94SKMjXbQ
 name: 'Plain text'
 format: plain_text
-weight: -7
+weight: 10
 filters:
-  filter_html_escape:
-    id: filter_html_escape
-    provider: filter
-    status: true
-    weight: -10
-    settings: {  }
   filter_url:
     id: filter_url
     provider: filter
@@ -26,4 +20,10 @@ filters:
     provider: filter
     status: true
     weight: 0
+    settings: {  }
+  filter_html_escape:
+    id: filter_html_escape
+    provider: filter
+    status: true
+    weight: -10
     settings: {  }

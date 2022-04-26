@@ -6,23 +6,22 @@ dependencies:
     - field.field.node.page.body
     - node.type.page
   module:
-    - text
+    - inline_formatter_display
+    - layout_builder
     - user
+third_party_settings:
+  layout_builder:
+    enabled: true
+    allow_custom: true
+  inline_formatter_display:
+    use: 0
 _core:
   default_config_hash: M_Y8L5tfmhx7DR143E05YyZSpvgil6VFvqcfBWykalg
 id: node.page.default
 targetEntityType: node
 bundle: page
 mode: default
-content:
-  body:
-    type: text_default
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 100
-    region: content
-  links:
-    weight: 101
-    region: content
-hidden: {  }
+content: {  }
+hidden:
+  body: true
+  links: true

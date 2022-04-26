@@ -1,0 +1,21 @@
+uuid: 030b1c5e-e8ef-4647-b8ff-5531d3245a63
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_svg_html
+    - paragraphs.paragraphs_type.landing_page
+  module:
+    - text
+id: paragraph.landing_page.field_svg_html
+field_name: field_svg_html
+entity_type: paragraph
+bundle: landing_page
+label: 'SVG Html'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

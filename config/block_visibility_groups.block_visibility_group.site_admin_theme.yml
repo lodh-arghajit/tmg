@@ -1,0 +1,26 @@
+uuid: c3eff467-ff0a-428c-9a9f-6709cc6d78fa
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - system
+id: site_admin_theme
+label: 'Site admin theme'
+logic: or
+conditions:
+  20070089-8fc5-4322-95fa-f6737280d3f8:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: 20070089-8fc5-4322-95fa-f6737280d3f8
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      page: page
+  49b2f481-25aa-431c-96a6-bd1ccdb90f4f:
+    id: request_path
+    negate: false
+    uuid: 49b2f481-25aa-431c-96a6-bd1ccdb90f4f
+    context_mapping: {  }
+    pages: "/admin/structure/taxonomy/manage/*/overview\r\n/taxonomy/term/*/edit\r\n/taxonomy/term/*/delete\r\n/admin/structure/taxonomy/manage/*/reset\r\n/admin/structure/taxonomy/manage/*/add\r\n/myprofile\r\n/add/user\r\n/edit/profile/*\r\n/batch\r\n/manage/support/*"
+allow_other_conditions: false

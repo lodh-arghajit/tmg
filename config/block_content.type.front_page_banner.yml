@@ -1,8 +1,0 @@
-uuid: 8fc144e2-d565-43b0-888c-1fa55b955ce9
-langcode: en
-status: true
-dependencies: {  }
-id: front_page_banner
-label: 'Front Page Banner'
-revision: 0
-description: ''

@@ -11,8 +11,8 @@ features:
   favicon: true
   node_user_picture: true
 logo:
-  path: ''
+  path: 'public://tm-one-logo.png'
   url: ''
-  use_default: true
+  use_default: false
 schemas:
   bootstrap: 8000

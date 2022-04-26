@@ -1,0 +1,14 @@
+uuid: eb9ae7fc-deac-491c-b61e-4fbb45a0b2b0
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.tm_super_admin
+  module:
+    - user
+id: user_add_role_action.tm_super_admin
+label: 'Add the TM super admin role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: tm_super_admin

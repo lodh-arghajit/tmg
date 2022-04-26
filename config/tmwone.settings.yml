@@ -9,7 +9,7 @@ features:
   favicon: true
   node_user_picture: true
 logo:
-  path: 'public://logo.jpg'
+  path: 'public://tm-one-logo_0.png'
   url: ''
   use_default: false
 schemas:

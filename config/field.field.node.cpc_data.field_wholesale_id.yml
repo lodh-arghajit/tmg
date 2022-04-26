@@ -1,0 +1,23 @@
+uuid: aebb81fc-d1ef-4b07-b494-491afad1a253
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_wholesale_id
+    - node.type.cpc_data
+id: node.cpc_data.field_wholesale_id
+field_name: field_wholesale_id
+entity_type: node
+bundle: cpc_data
+label: 'Wholesale ID'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

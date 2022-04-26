@@ -1,0 +1,14 @@
+uuid: 8e8a2470-ecab-4de2-9101-cbad68d3037a
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.approver
+  module:
+    - user
+id: user_add_role_action.approver
+label: 'Add the Approver role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: approver

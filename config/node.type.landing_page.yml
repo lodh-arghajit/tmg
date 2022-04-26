@@ -9,9 +9,9 @@ third_party_settings:
     available_menus:
       - main
     parent: 'main:'
-name: 'Landing Page'
+name: 'Site general pages'
 type: landing_page
-description: 'Landing Page Content Type'
+description: ''
 help: ''
 new_revision: false
 preview_mode: 0

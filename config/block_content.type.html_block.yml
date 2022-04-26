@@ -1,8 +1,8 @@
-uuid: a639362f-9c60-49e1-8f04-f992c11358fb
+uuid: 1dd57bd9-d4fb-4967-951d-6ef7df118a17
 langcode: en
 status: true
 dependencies: {  }
 id: html_block
-label: 'HTML Block'
+label: 'HTML block'
 revision: 0
-description: 'Block with markup'
+description: ''

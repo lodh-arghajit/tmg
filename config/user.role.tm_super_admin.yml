@@ -1,0 +1,51 @@
+uuid: 77421ed2-bf0e-4d5c-88e7-064d80b4c94e
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.cpc_data
+    - taxonomy.vocabulary.industry
+    - taxonomy.vocabulary.product
+  module:
+    - feeds
+    - field_permissions
+    - node
+    - taxonomy
+    - tmg_utility
+    - webform
+id: tm_super_admin
+label: 'TM super admin'
+weight: 5
+is_admin: null
+permissions:
+  - 'TMW admin'
+  - 'access taxonomy overview'
+  - 'access user profiles'
+  - 'administer taxonomy'
+  - 'create cpc_data content'
+  - 'create cpc_import feeds'
+  - 'create field_company'
+  - 'create terms in industry'
+  - 'create terms in product'
+  - 'delete any cpc_data content'
+  - 'delete own cpc_data content'
+  - 'delete terms in industry'
+  - 'delete terms in product'
+  - 'edit any cpc_data content'
+  - 'edit field_company'
+  - 'edit field_first_name'
+  - 'edit own cpc_data content'
+  - 'edit own field_company'
+  - 'edit terms in industry'
+  - 'edit terms in product'
+  - 'import cpc_import feeds'
+  - 'import own cpc_import feeds'
+  - 'schedule_import cpc_import feeds'
+  - 'schedule_import own cpc_import feeds'
+  - 'view any webform submission'
+  - 'view field_company'
+  - 'view field_first_name'
+  - 'view own cpc_import feeds'
+  - 'view own field_company'
+  - 'view own field_first_name'
+  - 'view user email addresses'

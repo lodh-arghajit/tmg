@@ -1,0 +1,29 @@
+uuid: 092c11e7-7c3e-4106-ad6c-35f3ac8b39a7
+langcode: en
+status: true
+dependencies:
+  config:
+    - feeds.feed_type.cpc_import
+id: feeds_feed.cpc_import.default
+targetEntityType: feeds_feed
+bundle: cpc_import
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 0
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  title: true

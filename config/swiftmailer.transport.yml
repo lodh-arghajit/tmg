@@ -1,0 +1,14 @@
+_core:
+  default_config_hash: RSNbRD3ekSaZoE19f3eHhm93gKOcD2PtmaAVmV3XMes
+transport: smtp
+smtp_host: smtp.gmail.com
+smtp_port: 465
+smtp_encryption: ssl
+sendmail_path: /usr/sbin/sendmail
+sendmail_mode: bs
+smtp_credential_provider: swiftmailer
+smtp_credentials:
+  swiftmailer:
+    username: lodh.arghajit@gmail.com
+    password: Poiqwe@123
+spool_directory: ''

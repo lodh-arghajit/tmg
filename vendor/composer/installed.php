@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '997fde8c4382833b7cf54a6d94556aa8c658b799',
+        'reference' => 'e97f96db71479f4f422386962839e7cae71d292d',
         'name' => 'pantheon-upstreams/drupal-project',
         'dev' => true,
     ),
@@ -898,6 +898,15 @@
                 0 => '9.3.2',
             ),
         ),
+        'drupal/field_validation' => array(
+            'pretty_version' => '1.0.0-beta3',
+            'version' => '1.0.0.0-beta3',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/field_validation',
+            'aliases' => array(),
+            'reference' => '8.x-1.0-beta3',
+            'dev_requirement' => false,
+        ),
         'drupal/file' => array(
             'dev_requirement' => false,
             'replaced' => array(
@@ -1210,6 +1219,15 @@
                 0 => '9.3.2',
             ),
         ),
+        'drupal/nodeaccess' => array(
+            'pretty_version' => '1.1.0',
+            'version' => '1.1.0.0',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/nodeaccess',
+            'aliases' => array(),
+            'reference' => '8.x-1.1',
+            'dev_requirement' => false,
+        ),
         'drupal/olivero' => array(
             'dev_requirement' => false,
             'replaced' => array(
@@ -1291,6 +1309,15 @@
                 0 => '9.3.2',
             ),
         ),
+        'drupal/r4032login' => array(
+            'pretty_version' => '2.2.0',
+            'version' => '2.2.0.0',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/r4032login',
+            'aliases' => array(),
+            'reference' => '2.2.0',
+            'dev_requirement' => false,
+        ),
         'drupal/rdf' => array(
             'dev_requirement' => false,
             'replaced' => array(
@@ -1313,6 +1340,15 @@
             'install_path' => __DIR__ . '/../../web/modules/contrib/recaptcha',
             'aliases' => array(),
             'reference' => '8.x-3.0',
+            'dev_requirement' => false,
+        ),
+        'drupal/redirect404_home' => array(
+            'pretty_version' => '1.0.0',
+            'version' => '1.0.0.0',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/redirect404_home',
+            'aliases' => array(),
+            'reference' => '8.x-1.0',
             'dev_requirement' => false,
         ),
         'drupal/redirect_after_login' => array(
@@ -1849,7 +1885,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '997fde8c4382833b7cf54a6d94556aa8c658b799',
+            'reference' => 'e97f96db71479f4f422386962839e7cae71d292d',
             'dev_requirement' => false,
         ),
         'paragonie/random_compat' => array(

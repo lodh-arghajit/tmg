@@ -1,0 +1,6 @@
+feeds_feed:
+  cpc_import: {  }
+global:
+  use_on:
+    - front
+    - backoffice

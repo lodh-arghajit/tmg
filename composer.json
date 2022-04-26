@@ -44,6 +44,7 @@
         "drupal/feeds": "^3.0@alpha",
         "drupal/feeds_tamper": "^2.0@beta",
         "drupal/field_permissions": "^1.1",
+        "drupal/field_validation": "^1.0@beta",
         "drupal/form_mode_control": "^2.0",
         "drupal/ief_table_view_mode": "^2.2",
         "drupal/inline_entity_form": "^1.0@RC",
@@ -56,13 +57,16 @@
         "drupal/menu_per_role": "^1.4",
         "drupal/menus_attribute": "^1.2",
         "drupal/modules_weight": "^1.9",
+        "drupal/nodeaccess": "^1.1",
         "drupal/otp": "^1.0@alpha",
         "drupal/paragraphs": "^1.12",
         "drupal/password_eye": "^2.0",
         "drupal/password_policy": "^3.1",
         "drupal/phpmailer_smtp": "^2.0",
+        "drupal/r4032login": "^2.2",
         "drupal/real_aes": "^2.4",
         "drupal/recaptcha": "^3.0",
+        "drupal/redirect404_home": "^1.0",
         "drupal/redirect_after_login": "^2.7",
         "drupal/swiftmailer": "^2.2",
         "drupal/tamper": "^1.0@alpha",
@@ -144,7 +148,13 @@
             "drupal/swiftmailer": {
                 "3189973: Support HTML in email body.": "https://www.drupal.org/files/issues/2020-12-26/support_html_in_message_body-3189973.patch"
 
+            },
+            "drupal/clientside_validation": {
+                "3200530: clientside_validation.": "https://www.drupal.org/files/issues/2021-10-28/3200530-9_17.patch"
+
             }
+
+
         }
     },
     "config": {

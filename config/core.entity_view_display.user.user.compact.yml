@@ -4,7 +4,19 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.user.compact
-    - field.field.user.user.field_wholesale_id
+    - field.field.user.user.field_admin_approved
+    - field.field.user.user.field_approved_by
+    - field.field.user.user.field_approved_rejected_
+    - field.field.user.user.field_company
+    - field.field.user.user.field_first_name
+    - field.field.user.user.field_inline_field
+    - field.field.user.user.field_job_title
+    - field.field.user.user.field_landline_no
+    - field.field.user.user.field_last_name
+    - field.field.user.user.field_last_password_reset
+    - field.field.user.user.field_mobile_no
+    - field.field.user.user.field_password_expiration
+    - field.field.user.user.field_pending_expire_sent
     - field.field.user.user.user_picture
     - image.style.thumbnail
   module:
@@ -27,5 +39,17 @@ content:
     weight: 0
     region: content
 hidden:
-  field_wholesale_id: true
+  field_admin_approved: true
+  field_approved_by: true
+  field_approved_rejected_: true
+  field_company: true
+  field_first_name: true
+  field_inline_field: true
+  field_job_title: true
+  field_landline_no: true
+  field_last_name: true
+  field_last_password_reset: true
+  field_mobile_no: true
+  field_password_expiration: true
+  field_pending_expire_sent: true
   member_for: true

@@ -14,7 +14,6 @@ dependencies:
     - path
     - system
     - taxonomy
-    - toolbar
     - tour
 _core:
   default_config_hash: Wur9kcEOwY1Jal81NssKnz3RhVJxAvBwyWQBGcA_1Go
@@ -27,7 +26,6 @@ permissions:
   - 'access content overview'
   - 'access contextual links'
   - 'access files overview'
-  - 'access toolbar'
   - 'access tour'
   - 'administer url aliases'
   - 'create article content'

@@ -1,0 +1,14 @@
+uuid: 4cfb8e33-0004-4fe4-8d91-eefbe7afc60f
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.tm_user
+  module:
+    - user
+id: user_add_role_action.tm_user
+label: 'Add the TM user role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: tm_user

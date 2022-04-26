@@ -1,0 +1,181 @@
+uuid: a80297b6-979f-44f9-9e78-a0a80a4ddab0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.cpc_data.feeds_item
+    - field.field.node.cpc_data.field_company_name
+    - field.field.node.cpc_data.field_cpc_id
+    - field.field.node.cpc_data.field_cpc_id_num
+    - field.field.node.cpc_data.field_cpc_id_type
+    - field.field.node.cpc_data.field_customer_creation_data
+    - field.field.node.cpc_data.field_customer_status
+    - field.field.node.cpc_data.field_ext_source
+    - field.field.node.cpc_data.field_ind
+    - field.field.node.cpc_data.field_seg
+    - field.field.node.cpc_data.field_seg_grp
+    - field.field.node.cpc_data.field_seg_sub_grp
+    - field.field.node.cpc_data.field_vbbs
+    - field.field.node.cpc_data.field_wholesale_id
+    - node.type.cpc_data
+  module:
+    - datetime
+    - path
+id: node.cpc_data.default
+targetEntityType: node
+bundle: cpc_data
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_company_name:
+    type: string_textfield
+    weight: 123
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_cpc_id:
+    type: string_textfield
+    weight: 121
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_cpc_id_num:
+    type: string_textfield
+    weight: 126
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_cpc_id_type:
+    type: string_textfield
+    weight: 125
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_customer_creation_data:
+    type: datetime_default
+    weight: 133
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_customer_status:
+    type: boolean_checkbox
+    weight: 124
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_ext_source:
+    type: string_textfield
+    weight: 131
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ind:
+    type: string_textfield
+    weight: 130
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_seg:
+    type: string_textfield
+    weight: 129
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_seg_grp:
+    type: string_textfield
+    weight: 127
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_seg_sub_grp:
+    type: string_textfield
+    weight: 128
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_vbbs:
+    type: string_textfield
+    weight: 132
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_wholesale_id:
+    type: number
+    weight: 122
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    weight: 15
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 120
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    weight: 16
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  feeds_item: true

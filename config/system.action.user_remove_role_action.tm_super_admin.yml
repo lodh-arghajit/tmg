@@ -1,0 +1,14 @@
+uuid: b24dd780-a199-4d1b-b950-4a155f26d32e
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.tm_super_admin
+  module:
+    - user
+id: user_remove_role_action.tm_super_admin
+label: 'Remove the TM super admin role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: tm_super_admin

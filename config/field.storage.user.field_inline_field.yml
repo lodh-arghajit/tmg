@@ -1,0 +1,19 @@
+uuid: c5478f39-86c0-41f2-9421-6c38e1c150e9
+langcode: en
+status: true
+dependencies:
+  module:
+    - inline_formatter_field
+    - user
+id: user.field_inline_field
+field_name: field_inline_field
+entity_type: user
+type: inline_formatter_field
+settings: {  }
+module: inline_formatter_field
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

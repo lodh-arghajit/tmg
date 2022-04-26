@@ -1,0 +1,19 @@
+uuid: eb3c6209-a37d-4012-a6cf-0e6c2d234b6b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_cpc_id
+    - node.type.cpc_data
+id: node.cpc_data.field_cpc_id
+field_name: field_cpc_id
+entity_type: node
+bundle: cpc_data
+label: 'CPC ID'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

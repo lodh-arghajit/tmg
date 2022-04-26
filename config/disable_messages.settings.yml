@@ -1,0 +1,14 @@
+disable_messages_enable: '1'
+disable_messages_exclude_users: ''
+disable_messages_filter_by_page: 0
+disable_messages_page_filter_paths: ''
+disable_messages_enable_debug: '0'
+disable_messages_debug_visible_div: '0'
+disable_messages_ignore_patterns: "The answer you entered for the CAPTCHA was not correct.\r\n(.*)There are no new CPC data items.\r\n(.*)has been created(.*)"
+disable_messages_ignore_case: '1'
+_core:
+  default_config_hash: 1KtMq77r11Up8xB2acdeDhrNIlFzu-Edepx453c20Ws
+disable_messages_ignore_regex:
+  - '/^The answer you entered for the CAPTCHA was not correct.$/i'
+  - '/^(.*)There are no new CPC data items.$/i'
+  - '/^(.*)has been created(.*)$/i'

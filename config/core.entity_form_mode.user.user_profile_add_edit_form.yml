@@ -1,0 +1,10 @@
+uuid: 14463be2-bb42-48fb-9077-d293b1dcfc19
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.user_profile_add_edit_form
+label: 'User profile add / edit form'
+targetEntityType: user
+cache: true

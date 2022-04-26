@@ -1,0 +1,36 @@
+uuid: 77a538c3-db9a-4930-bd60-1f91b1e5963c
+langcode: en
+status: true
+dependencies:
+  module:
+    - entity_redirect
+third_party_settings:
+  entity_redirect:
+    redirect:
+      anonymous:
+        active: false
+        destination: default
+        url: ''
+        external: ''
+      add:
+        active: false
+        destination: default
+        url: ''
+        external: ''
+        personalizable: true
+      edit:
+        active: false
+        destination: default
+        url: ''
+        external: ''
+        personalizable: true
+      delete:
+        active: false
+        destination: default
+        url: ''
+        external: ''
+        personalizable: true
+name: Product
+vid: product
+description: ''
+weight: 0

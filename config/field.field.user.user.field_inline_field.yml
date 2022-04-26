@@ -1,0 +1,21 @@
+uuid: 7be2d361-cd34-4755-b74b-011f9d2310dd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_inline_field
+  module:
+    - inline_formatter_field
+    - user
+id: user.user.field_inline_field
+field_name: field_inline_field
+entity_type: user
+bundle: user
+label: 'Inline field'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: inline_formatter_field

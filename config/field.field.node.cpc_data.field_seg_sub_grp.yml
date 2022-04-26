@@ -1,0 +1,19 @@
+uuid: 12e3508f-34de-4500-bfca-cbfbb576a830
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_seg_sub_grp
+    - node.type.cpc_data
+id: node.cpc_data.field_seg_sub_grp
+field_name: field_seg_sub_grp
+entity_type: node
+bundle: cpc_data
+label: 'SEG SUB GRP'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

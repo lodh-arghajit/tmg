@@ -1,0 +1,30 @@
+uuid: f1dd34f3-de35-4ecf-aaf8-8bca8ced2d22
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_company
+    - node.type.cpc_data
+  module:
+    - user
+id: user.user.field_company
+field_name: field_company
+entity_type: user
+bundle: user
+label: Company
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      cpc_data: cpc_data
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

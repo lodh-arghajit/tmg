@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - block_content.type.basic
+    - field.field.block_content.basic.body
     - field.field.block_content.basic.field_landing_page_items
   module:
     - entity_reference_revisions
@@ -23,4 +24,5 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
-hidden: {  }
+hidden:
+  body: true

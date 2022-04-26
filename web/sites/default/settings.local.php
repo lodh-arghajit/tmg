@@ -1,7 +1,7 @@
 <?php
 
 // Prepare a LANDO_INFO constant.
-define('LANDO_INFO', json_decode($_ENV['LANDO_INFO'], TRUE));
+define('LANDO_INFO', json_decode(getenv('LANDO_INFO'), TRUE));
 if (file_exists(dirname(DRUPAL_ROOT) . '/load.environment.php')) {
   include dirname(DRUPAL_ROOT) . '/load.environment.php';
 }
@@ -63,5 +63,4 @@ else {
 
 }
 // Trusted host patterns.
-
 

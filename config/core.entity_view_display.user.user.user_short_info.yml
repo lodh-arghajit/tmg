@@ -1,0 +1,62 @@
+uuid: 7d3264b0-17f1-4711-bc1b-2b3671ebc408
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.user.user_short_info
+    - field.field.user.user.field_admin_approved
+    - field.field.user.user.field_approved_by
+    - field.field.user.user.field_approved_rejected_
+    - field.field.user.user.field_company
+    - field.field.user.user.field_first_name
+    - field.field.user.user.field_inline_field
+    - field.field.user.user.field_job_title
+    - field.field.user.user.field_landline_no
+    - field.field.user.user.field_last_name
+    - field.field.user.user.field_last_password_reset
+    - field.field.user.user.field_mobile_no
+    - field.field.user.user.field_password_expiration
+    - field.field.user.user.field_pending_expire_sent
+    - field.field.user.user.user_picture
+  module:
+    - inline_formatter_display
+    - inline_formatter_field
+    - layout_builder
+    - user
+third_party_settings:
+  layout_builder:
+    enabled: false
+    allow_custom: false
+  inline_formatter_display:
+    use: 1
+    formatted_display: '[user:field_first_name] [user:field_last_name]'
+_core:
+  default_config_hash: E1qmUI2SlozLlJ308jfMMFKT67l1p6PywE2LTRbeYS4
+id: user.user.user_short_info
+targetEntityType: user
+bundle: user
+mode: user_short_info
+content:
+  field_inline_field:
+    type: inline_formatter_field_formatter
+    label: above
+    settings:
+      formatted_field: "<div>\r\n[user:account-name]   \r\n</div>"
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_admin_approved: true
+  field_approved_by: true
+  field_approved_rejected_: true
+  field_company: true
+  field_first_name: true
+  field_job_title: true
+  field_landline_no: true
+  field_last_name: true
+  field_last_password_reset: true
+  field_mobile_no: true
+  field_password_expiration: true
+  field_pending_expire_sent: true
+  member_for: true
+  user_picture: true

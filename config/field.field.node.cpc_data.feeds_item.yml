@@ -1,0 +1,23 @@
+uuid: f6e5ff17-d0ee-4b60-9a78-5cec712002b2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.feeds_item
+    - node.type.cpc_data
+  module:
+    - feeds
+id: node.cpc_data.feeds_item
+field_name: feeds_item
+entity_type: node
+bundle: cpc_data
+label: 'Feeds item'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:feeds_feed'
+  handler_settings: {  }
+field_type: feeds_item

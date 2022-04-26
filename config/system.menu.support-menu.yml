@@ -1,8 +1,0 @@
-uuid: 982326d6-e756-499b-a329-e5e258b6daa3
-langcode: en
-status: true
-dependencies: {  }
-id: support-menu
-label: 'Support Menu'
-description: ''
-locked: false

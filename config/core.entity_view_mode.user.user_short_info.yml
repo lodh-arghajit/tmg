@@ -1,0 +1,10 @@
+uuid: 60b7fb11-d0c5-4aec-a75f-7e7067fa11ef
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.user_short_info
+label: 'User short info'
+targetEntityType: user
+cache: true

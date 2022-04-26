@@ -1,0 +1,13 @@
+uuid: 7078415f-88df-4fa3-8468-4f60e80b76f3
+langcode: en
+status: true
+dependencies:
+  config:
+    - key.key.site_key
+  module:
+    - real_aes
+id: site_encrypt_decrypt_profile
+label: 'Site encrypt/decrypt profile'
+encryption_method: real_aes
+encryption_method_configuration: {  }
+encryption_key: site_key

@@ -1,7 +1,40 @@
 uuid: 2165746e-5c4b-4647-8331-0125879455bd
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - entity_redirect
+    - menu_ui
+third_party_settings:
+  entity_redirect:
+    redirect:
+      anonymous:
+        active: false
+        destination: default
+        url: ''
+        external: ''
+      add:
+        active: true
+        destination: add_form
+        url: ''
+        external: ''
+        personalizable: false
+      edit:
+        active: false
+        destination: default
+        url: ''
+        external: ''
+        personalizable: true
+      delete:
+        active: false
+        destination: default
+        url: ''
+        external: ''
+        personalizable: true
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
 _core:
   default_config_hash: AeW1SEDgb1OTQACAWGhzvMknMYAJlcZu0jljfeU3oso
 name: Article

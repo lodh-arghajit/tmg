@@ -1,0 +1,13 @@
+_core:
+  default_config_hash: IhwTepsVwtbtbcT5GzQKhCXDCRvbk3MNkWqPiuiZ10s
+theme: tmw_theme
+defaults:
+  sender: swiftmailer
+  formatter: swiftmailer
+modules:
+  swiftmailer: {  }
+  user: {  }
+  webform:
+    none:
+      sender: swiftmailer
+      formatter: swiftmailer

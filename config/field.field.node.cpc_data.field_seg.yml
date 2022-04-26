@@ -1,0 +1,19 @@
+uuid: 5cd57564-468a-4210-bfa9-ff976436a7f9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_seg
+    - node.type.cpc_data
+id: node.cpc_data.field_seg
+field_name: field_seg
+entity_type: node
+bundle: cpc_data
+label: SEG
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

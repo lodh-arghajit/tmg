@@ -1,0 +1,29 @@
+uuid: a752352d-f889-4ba6-aa7e-a080505c65b4
+langcode: en
+status: true
+dependencies: {  }
+name: user_user
+label: 'user user validation'
+entity_type: user
+bundle: user
+field_validation_rules:
+  ba40e241-2f3c-4e72-8229-8939c103b1d4:
+    id: regex_field_validation_rule
+    title: 'Mobile validation'
+    data:
+      setting: '/^\d{2,3}\d{7}$/'
+    weight: 1
+    uuid: ba40e241-2f3c-4e72-8229-8939c103b1d4
+    field_name: field_mobile_no
+    column: value
+    error_message: 'Please enter valid mobile no.'
+  0f5a4106-14e2-4190-91e5-fa36939a03e1:
+    id: regex_field_validation_rule
+    title: 'Landline no validation'
+    data:
+      setting: '/^\d{1,2}\d{8}$/'
+    weight: 2
+    uuid: 0f5a4106-14e2-4190-91e5-fa36939a03e1
+    field_name: field_landline_no
+    column: value
+    error_message: 'Please enter valid landline no.'

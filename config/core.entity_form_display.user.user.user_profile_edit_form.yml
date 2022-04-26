@@ -1,0 +1,83 @@
+uuid: 3a5155ae-5846-4d9f-8fbe-a4183d26f8a4
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.user.user_profile_edit_form
+    - field.field.user.user.field_admin_approved
+    - field.field.user.user.field_approved_by
+    - field.field.user.user.field_approved_rejected_
+    - field.field.user.user.field_company
+    - field.field.user.user.field_first_name
+    - field.field.user.user.field_inline_field
+    - field.field.user.user.field_job_title
+    - field.field.user.user.field_landline_no
+    - field.field.user.user.field_last_name
+    - field.field.user.user.field_last_password_reset
+    - field.field.user.user.field_mobile_no
+    - field.field.user.user.field_password_expiration
+    - field.field.user.user.field_pending_expire_sent
+    - field.field.user.user.user_picture
+  module:
+    - user
+_core:
+  default_config_hash: FaQ9Ptcpxpg30AtiqRDtl_8zbJArHP1LPfug_s59TOA
+id: user.user.user_profile_edit_form
+targetEntityType: user
+bundle: user
+mode: user_profile_edit_form
+content:
+  field_first_name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_job_title:
+    type: string_textfield
+    weight: 4
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_landline_no:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_last_name:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_mobile_no:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  account: true
+  contact: true
+  field_admin_approved: true
+  field_approved_by: true
+  field_approved_rejected_: true
+  field_company: true
+  field_inline_field: true
+  field_last_password_reset: true
+  field_password_expiration: true
+  field_pending_expire_sent: true
+  language: true
+  timezone: true
+  user_picture: true

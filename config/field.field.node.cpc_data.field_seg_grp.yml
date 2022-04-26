@@ -1,0 +1,19 @@
+uuid: 77f4e621-e01a-453e-8f70-f6190c367db5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_seg_grp
+    - node.type.cpc_data
+id: node.cpc_data.field_seg_grp
+field_name: field_seg_grp
+entity_type: node
+bundle: cpc_data
+label: 'SEG GRP'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

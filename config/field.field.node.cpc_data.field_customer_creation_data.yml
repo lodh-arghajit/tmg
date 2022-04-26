@@ -1,0 +1,21 @@
+uuid: 6e8a51af-9e6e-4dbf-ab39-aca10773bf25
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_customer_creation_data
+    - node.type.cpc_data
+  module:
+    - datetime
+id: node.cpc_data.field_customer_creation_data
+field_name: field_customer_creation_data
+entity_type: node
+bundle: cpc_data
+label: 'Customer creation data'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

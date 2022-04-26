@@ -1,0 +1,19 @@
+uuid: 95e04bb2-8c59-4665-893e-37ae2609b445
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_vbbs
+    - node.type.cpc_data
+id: node.cpc_data.field_vbbs
+field_name: field_vbbs
+entity_type: node
+bundle: cpc_data
+label: VBBS
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

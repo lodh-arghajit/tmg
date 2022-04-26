@@ -1,10 +1,10 @@
-uuid: 2379688a-90e2-438f-91f2-90512f18e53f
+uuid: 62df230d-41e5-4aaa-8803-e5b7c680c7d2
 langcode: en
 status: true
 dependencies:
   config:
     - block_content.type.html_block
-    - field.field.block_content.html_block.field_markup_body
+    - field.field.block_content.html_block.field_body
   module:
     - text
 id: block_content.html_block.default
@@ -12,12 +12,12 @@ targetEntityType: block_content
 bundle: html_block
 mode: default
 content:
-  field_markup_body:
-    type: text_textfield
+  field_body:
+    type: text_textarea
     weight: 26
     region: content
     settings:
-      size: 60
+      rows: 5
       placeholder: ''
     third_party_settings: {  }
   info:

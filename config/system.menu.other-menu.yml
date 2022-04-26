@@ -1,8 +1,0 @@
-uuid: 198d0db6-9d44-480e-ad36-cd12775780be
-langcode: en
-status: true
-dependencies: {  }
-id: other-menu
-label: 'Other Menu'
-description: ''
-locked: false
