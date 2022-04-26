@@ -7,3 +7,4 @@ ignored_config_entities:
   - 'google_tag.container.*'
   - core.entity_view_display.user.user.default
   - system.site
+  - swiftmailer.transport
