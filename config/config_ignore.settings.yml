@@ -8,3 +8,6 @@ ignored_config_entities:
   - core.entity_view_display.user.user.default
   - system.site
   - swiftmailer.transport
+  - system.performance
+  - automated_cron.settings
+  - captcha.settings
