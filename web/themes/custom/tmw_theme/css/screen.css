@@ -707,57 +707,6 @@ label.error {color: #ed0000;font-size: 14px; font-weight: 400;}
 }
 
 /*Dashboard*/
-.card {
-    position: relative;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 0 solid #f6f6f6;
-    border-radius: 0.25rem;
-}
-.card {
-    margin-bottom: 24px;
-    -webkit-box-shadow: 0 0.75rem 1.5rem rgb(18 38 63 / 3%);
-    box-shadow: 0 0.75rem 1.5rem rgb(18 38 63 / 3%);
-}
-.avatar-sm {height:55px; width: 55px;}
-.avatar-title{background-color:#F58200;}
-.card.mini-stats-wid{font-family: 'interfaceregular';}
-.db-product-link{color: #74788d;}
-.db-product-link:hover, .db-product-link:active, .db-product-link:focus{color: #F58200;}
-.db-product-link:hover svg path, .db-product-link:active svg path, .db-product-link:focus svg path{stroke: #F58200;}
-#db-banner.owl-carousel .owl-nav button.owl-next, #db-banner.owl-carousel .owl-nav button.owl-prev{
-	position: absolute;
-    width: 32px;
-    height: 32px;
-    background: #F3F6F9;
-    border-radius: 50%;
-}
-#db-banner.owl-carousel .owl-nav button.owl-next span, #db-banner.owl-carousel .owl-nav button.owl-prev span{
-	font-size: 24px;
-    line-height: 24px;
-    color: #7E8299;
-}
-#db-banner.owl-carousel .owl-nav button.owl-next{right:0;}
-#db-banner.owl-carousel .owl-nav button.owl-prev{left:0;}
-#db-banner.owl-carousel button.owl-dot{background:#dcdee3; width:8px; height:8px; border-radius:50%;margin: 0 4px;}
-#db-banner.owl-carousel button.owl-dot.active{background:#A6B0CF;}
-#db-banner.owl-carousel .owl-dots{text-align:center;}
-.news-img{width:80px; height:80px;overflow: hidden;}
-.news-img img{min-height:80px;}
-.news-heading{font-size:18px; color:#3F4254;}
-.news-subheading{font-size:14px; color:#B5B5C3;}
-.news-link{font-size:14px; color: #74788d;align-items: center; display: flex; justify-content: flex-end;}
-.news-link:hover{color: #F58200;}
-.news-link:hover svg path, .news-link:active svg path, .news-link:focus svg path{stroke: #F58200;}
 .db-pro-heading{font-size:18px; color:#3F4254;}
 .card-title {font-size: 15px; margin: 0 0 7px 0; font-weight: 600;}
 .border-top {border-top: 1px solid #eff2f7!important;}

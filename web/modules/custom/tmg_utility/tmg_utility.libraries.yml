@@ -14,3 +14,10 @@ auto_submit_form:
     - core/jquery
     - core/jquery.once
     - core/drupal
+dashboard_css_and_js:
+  css:
+    theme:
+      css/dashboard.css: {}
+  js:
+    js/owl.carousel.min.js: {}
+    js/dashboard.ui.js: {}

@@ -184,6 +184,11 @@ class WebServiceData extends BlockBase implements ContainerFactoryPluginInterfac
       '#theme' => 'web_service_integration',
       "#remote_url" => $base_url,
       '#news' => $news,
+      '#attached' => [
+        'library' => [
+          'tmg_utility/dashboard_css_and_js',
+        ],
+      ],
       '#services' => $services,
       '#images' => $images,
       '#cache' => [

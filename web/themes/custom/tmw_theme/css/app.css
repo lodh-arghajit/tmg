@@ -624,7 +624,8 @@ body[data-layout="horizontal"] .footer {
     color: #fff;
 }
 .vertical-collpsed {
-    min-height: 1760px;
+   /* min-height: 1760px;*/
+   min-height: 900px;
 }
 .vertical-collpsed .vertical-menu #sidebar-menu > ul > li:hover > a {
     background: #2e3548;
