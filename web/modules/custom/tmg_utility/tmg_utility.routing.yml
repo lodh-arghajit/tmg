@@ -74,3 +74,10 @@ tmg_utility.page_load_url:
   options:
     _maintenance_access: TRUE
     no_cache: TRUE
+tmg_utility.web_pull_setting:
+  path: '/admin/config/web-pull-setting'
+  defaults:
+    _title: 'Web pull setting'
+    _form: 'Drupal\tmg_utility\Form\SettingsForm'
+  requirements:
+    _permission: 'administer site configuration'

@@ -1,0 +1,38 @@
+uuid: 63845b04-5b96-4c0b-8319-9ba125e230da
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_image
+    - node.type.services
+  module:
+    - image
+id: node.services.field_service_image
+field_name: field_service_image
+entity_type: node
+bundle: services
+label: Image
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'png gif jpg jpeg'
+  max_filesize: ''
+  max_resolution: 40x40
+  min_resolution: ''
+  alt_field: false
+  alt_field_required: true
+  title_field: false
+  title_field_required: false
+  default_image:
+    uuid: ''
+    alt: ''
+    title: ''
+    width: null
+    height: null
+field_type: image

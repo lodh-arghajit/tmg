@@ -1,0 +1,37 @@
+uuid: ff5f5300-af1a-43c1-b92c-661e13a6b94f
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.media.media_library
+    - field.field.media.service_image.field_media_image_1
+    - image.style.thumbnail
+    - media.type.service_image
+  module:
+    - image
+id: media.service_image.media_library
+targetEntityType: media
+bundle: service_image
+mode: media_library
+content:
+  field_media_image_1:
+    type: image_image
+    weight: 5
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  path: true
+  status: true
+  uid: true

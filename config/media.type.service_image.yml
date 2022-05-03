@@ -1,0 +1,41 @@
+uuid: 196075b8-6f07-42be-932b-c5d35e210d37
+langcode: en
+status: true
+dependencies:
+  module:
+    - entity_redirect
+third_party_settings:
+  entity_redirect:
+    redirect:
+      anonymous:
+        active: false
+        destination: default
+        url: ''
+        external: ''
+      add:
+        active: false
+        destination: default
+        url: ''
+        external: ''
+        personalizable: true
+      edit:
+        active: false
+        destination: default
+        url: ''
+        external: ''
+        personalizable: true
+      delete:
+        active: false
+        destination: default
+        url: ''
+        external: ''
+        personalizable: true
+id: service_image
+label: 'Service image'
+description: ''
+source: image
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: field_media_image_1
+field_map: {  }

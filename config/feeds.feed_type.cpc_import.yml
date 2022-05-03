@@ -4,11 +4,9 @@ status: true
 dependencies:
   config:
     - field.field.node.cpc_data.field_company_name
-    - field.field.node.cpc_data.field_cpc_id
     - field.field.node.cpc_data.field_cpc_id_num
     - field.field.node.cpc_data.field_cpc_id_type
     - field.field.node.cpc_data.field_customer_creation_data
-    - field.field.node.cpc_data.field_customer_status
     - field.field.node.cpc_data.field_ext_source
     - field.field.node.cpc_data.field_ind
     - field.field.node.cpc_data.field_seg
@@ -135,18 +133,11 @@ custom_sources:
     type: csv
 mappings:
   -
-    target: field_cpc_id
-    map:
-      value: cpc2_id
-    settings:
-      language: ''
-    unique: {  }
-  -
     target: field_wholesale_id
     map:
       value: x_wholesale_id
     settings:
-      language: null
+      language: ''
     unique:
       value: '1'
   -
@@ -222,7 +213,7 @@ mappings:
   -
     target: title
     map:
-      value: cpc2_id
+      value: x_wholesale_id
     settings:
       language: null
     unique: {  }

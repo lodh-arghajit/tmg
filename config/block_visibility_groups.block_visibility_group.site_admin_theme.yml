@@ -22,5 +22,5 @@ conditions:
     negate: false
     uuid: 49b2f481-25aa-431c-96a6-bd1ccdb90f4f
     context_mapping: {  }
-    pages: "/admin/structure/taxonomy/manage/*/overview\r\n/taxonomy/term/*/edit\r\n/taxonomy/term/*/delete\r\n/admin/structure/taxonomy/manage/*/reset\r\n/admin/structure/taxonomy/manage/*/add\r\n/myprofile\r\n/add/user\r\n/edit/profile/*\r\n/batch\r\n/manage/support/*"
+    pages: "/admin/structure/taxonomy/manage/*/overview\r\n/taxonomy/term/*/edit\r\n/taxonomy/term/*/delete\r\n/admin/structure/taxonomy/manage/*/reset\r\n/admin/structure/taxonomy/manage/*/add\r\n/myprofile\r\n/add/user\r\n/edit/profile/*\r\n/batch\r\n/manage/support/*\r\n/node/*/edit\r\n/node/add/services"
 allow_other_conditions: false

@@ -23,3 +23,6 @@
 'use  The form mode default linked to  user entity( user )': user.user.default
 'use  The form mode user_profile_edit_form linked to  user entity( user )': user.user.user_profile_edit_form
 'use  The form mode user_profile_add_edit_form linked to  user entity( user )': user.user.user_profile_add_edit_form
+'use  The form mode default linked to  node entity( services )': node.services.default
+'use  The form mode default linked to  media entity( service_image )': media.service_image.default
+'use  The form mode media_library linked to  media entity( service_image )': media.service_image.media_library

@@ -1,4 +1,4 @@
-uuid: dada78ea-38a6-48dc-bc4c-2eae80a64559
+uuid: 3deafd35-a18b-413f-bafd-0cd128ba87cc
 langcode: en
 status: true
 dependencies:
@@ -8,14 +8,13 @@ dependencies:
 third_party_settings:
   field_permissions:
     permission_type: public
-id: node.field_cpc_id
-field_name: field_cpc_id
+id: node.field_weight
+field_name: field_weight
 entity_type: node
-type: string
+type: integer
 settings:
-  max_length: 255
-  case_sensitive: false
-  is_ascii: false
+  unsigned: false
+  size: normal
 module: core
 locked: false
 cardinality: 1

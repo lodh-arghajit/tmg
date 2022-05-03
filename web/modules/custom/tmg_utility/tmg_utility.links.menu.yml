@@ -1,0 +1,10 @@
+tmg_utility.general:
+  route_name: tmg_utility.web_pull_setting
+  title: TMW
+  description: 'Controls settings for TMW'
+  parent: system.admin_config
+tmg_utility.settings:
+  title: Web pull settings
+  parent: tmg_utility.general
+  route_name: tmg_utility.web_pull_setting
+  weight: 30

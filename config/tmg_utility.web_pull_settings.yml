@@ -1,0 +1,7 @@
+api_base_url: 'https://tmwholesale.tm.com.my'
+show_specific_promotional_images: 0
+specific_promotional_image_ids: ''
+show_specific_marketing_tools: 1
+specific_marketing_tool_ids: '519'
+show_specific_news: 1
+specific_news_ids: '177,171,173'

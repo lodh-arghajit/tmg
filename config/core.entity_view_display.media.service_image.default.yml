@@ -1,0 +1,29 @@
+uuid: 326e6fb6-347f-4203-9067-9824e861b06f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.service_image.field_media_image_1
+    - image.style.large
+    - media.type.service_image
+  module:
+    - image
+id: media.service_image.default
+targetEntityType: media
+bundle: service_image
+mode: default
+content:
+  field_media_image_1:
+    type: image
+    label: visually_hidden
+    settings:
+      image_link: ''
+      image_style: large
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  created: true
+  name: true
+  thumbnail: true
+  uid: true

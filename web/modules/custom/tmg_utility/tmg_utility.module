@@ -12,6 +12,15 @@ use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Component\Render\PlainTextOutput;
 use Drupal\Core\Access\AccessResult;
 use Drupal\tmg_utility\PhoneToCountryConverter;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Promise\Utils;
+use GuzzleHttp\RequestOptions;
+use Drupal\Component\Serialization\Json;
+use Drupal\Core\Cache\Cache;
+
+
+const WEB_SERVICE_DATA = "web_service_data";
+const KEY_VALUE_EXPIRE_IN_SECONDS_FOR_SERVICE = "172800";
 
 
 /**
@@ -46,6 +55,9 @@ function tmg_utility_theme($existing, $type, $theme, $path) {
   return [
     'sales_force_submission' => [
       'variables' => ['hidden' => [], 'url' => ''],
+    ],
+    'web_service_integration' => [
+      'variables' => ['remote_url' => '', 'services' => [], 'news' => [], 'images' => []],
     ],
   ];
 }
@@ -272,6 +284,64 @@ function tmg_utility_entity_type_build(array &$entity_types) {
 
 function tmg_utility_entity_type_alter(array &$entity_types) {
   $entity_types['user']->setAccessClass('Drupal\tmg_utility\access\UserAccessControlHandler');
+}
+
+/**
+ * Implements hook_cron().
+ */
+function tmg_utility_cron() {
+  $config = \Drupal::config("tmg_utility.web_pull_settings");
+  $base_url = $config->get("api_base_url") ?? "";
+  if (empty($base_url)) {
+    return;
+  }
+  $http_client = \Drupal::httpClient();
+  $timeout = 30;
+  try {
+    $banner_id = "all";
+    $show_specific_promotional_images = $config->get('show_specific_promotional_images') ?? FALSE;
+    $specific_promotional_image_ids = $config->get('specific_promotional_image_ids') ?? "";
+    if ($show_specific_promotional_images && $specific_promotional_image_ids) {
+      $banner_id = $specific_promotional_image_ids;
+    }
+    $marketing_id = "all";
+    $show_specific_marketing_tools = $config->get('show_specific_marketing_tools') ?? FALSE;
+    $specific_marketing_tool_ids = $config->get('specific_marketing_tool_ids') ?? "";
+    if ($show_specific_marketing_tools && $specific_marketing_tool_ids) {
+      $marketing_id = $specific_marketing_tool_ids;
+    }
+
+    $news_id = "all";
+    $show_specific_news = $config->get('show_specific_news') ?? FALSE;
+    $specific_news_ids = $config->get('specific_news_ids') ?? "";
+    if ($show_specific_news && $specific_news_ids) {
+      $news_id = $specific_news_ids;
+    }
+
+    $promises = [
+      'banners' => $http_client->getAsync("$base_url/api/banner?id=$banner_id", ['verify' => false, RequestOptions::TIMEOUT => $timeout]),
+      'news' => $http_client->getAsync("$base_url/api/news?id=$news_id", ['verify' => false, RequestOptions::TIMEOUT => $timeout]),
+      'marketing_tools' => $http_client->getAsync("$base_url/api/marketing?id=$marketing_id", ['verify' => false, RequestOptions::TIMEOUT => $timeout]),
+    ];
+
+    $results = Utils::unwrap($promises);
+    $data = [];
+    if ($results["banners"]->getStatusCode() == "200") {
+      $data["banner"] = json_decode($results["banners"]->getBody()->getContents(), TRUE);
+    }
+    if ($results["news"]->getStatusCode() == "200") {
+      $data["news"] = json_decode($results["news"]->getBody()->getContents(), TRUE);
+    }
+    if ($results["banners"]->getStatusCode() == "200") {
+      $data["marketing_tools"] = json_decode($results["marketing_tools"]->getBody()->getContents(), TRUE);
+    }
+    $key_value_factory = \Drupal::keyValue("tmg_utility");
+    $key_value_factory->set(WEB_SERVICE_DATA, $data);
+    Cache::invalidateTags(['key_value_factory:' . WEB_SERVICE_DATA]);
+  }
+  catch(\Exception $e) {
+
+  }
 }
 
 

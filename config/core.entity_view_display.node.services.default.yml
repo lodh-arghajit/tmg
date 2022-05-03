@@ -1,0 +1,54 @@
+uuid: 1985f3b5-d3be-43ac-adee-7f3887d38a30
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.services.field_more_link
+    - field.field.node.services.field_service_image
+    - field.field.node.services.field_weight
+    - node.type.services
+  module:
+    - image
+    - link
+    - user
+id: node.services.default
+targetEntityType: node
+bundle: services
+mode: default
+content:
+  field_more_link:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_service_image:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_weight:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

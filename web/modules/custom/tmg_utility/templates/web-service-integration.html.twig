@@ -1,0 +1,79 @@
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title mb-3">Promotional Images</h4>
+
+        <div>
+          <div class="owl-carousel owl-theme" id="db-banner">
+            {% for item in images %}
+              <div class="item"><img alt="Promotional Images" src="{{ remote_url ~ item.field_image }}" />
+                <h4 class="font-size-16 mt-3">{{ item.title }}</h4>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div>
+      <div class="row">
+        {% for item in services %}
+        <div class="col-lg-6">
+          <div class="card mini-stats-wid">
+            <div class="card-body">
+              <div class="d-flex">
+                <div class="flex-grow-1">
+                  <h4 class="mb-3 db-pro-heading">{{ item.title }}</h4>
+                  <a class="db-product-link fw-medium mb-0 font-size-14 align-items-center d-flex" href="{{ item.url }}" target="{{ item.target }}">More Details <svg fill="none" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"> <path d="M13 17L18 12L13 7" stroke="#495057" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.7" stroke-width="2"></path> <path d="M6 17L11 12L6 7" stroke="#495057" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.7" stroke-width="2"></path> </svg> </a></div>
+
+                <div class="flex-shrink-0 align-self-center ">
+                  <div class="avatar-sm rounded-circle mini-stat-icon"><span class="avatar-title rounded-circle"><img alt="" src="{{ item.image_uri }}" /> </span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% endfor %}
+
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-12">
+    <h4 class="card-title mb-3">Latest News</h4>
+
+    <div class="row news-db-hld">
+      {% for item in news %}
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="news-img rounded-circle"><img src="{{ remote_url ~ item.field_image }}" /></div>
+              </div>
+
+              <div class="col-lg-8 d-flex flex-column justify-content-center">
+                <h4 class="news-heading mb-2">{{ item.title }}</h4>
+
+                <p class="news-subheading mb-0"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer bg-transparent border-top">
+            <div class="text-right"><a class="news-link" href="{{ remote_url ~ item.view_node }}" target="_blank">Read More <svg fill="none" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"> <path d="M13 17L18 12L13 7" stroke="#495057" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.7" stroke-width="2"></path> <path d="M6 17L11 12L6 7" stroke="#495057" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.7" stroke-width="2"></path> </svg> </a></div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+<!-- end row -->
+

@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - node.type.cpc_data
+    - node.type.services
     - taxonomy.vocabulary.industry
     - taxonomy.vocabulary.product
   module:
@@ -22,16 +23,20 @@ permissions:
   - 'access taxonomy overview'
   - 'access user profiles'
   - 'administer taxonomy'
+  - 'bypass node access'
   - 'create cpc_data content'
   - 'create cpc_import feeds'
   - 'create field_company'
+  - 'create services content'
   - 'create terms in industry'
   - 'create terms in product'
   - 'delete any cpc_data content'
+  - 'delete any services content'
   - 'delete own cpc_data content'
   - 'delete terms in industry'
   - 'delete terms in product'
   - 'edit any cpc_data content'
+  - 'edit any services content'
   - 'edit field_company'
   - 'edit field_first_name'
   - 'edit own cpc_data content'
