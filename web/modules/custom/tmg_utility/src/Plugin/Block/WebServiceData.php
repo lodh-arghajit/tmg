@@ -164,7 +164,7 @@ class WebServiceData extends BlockBase implements ContainerFactoryPluginInterfac
     $query = \Drupal::entityQuery('node')
       ->condition('status', 1)
       ->condition('type', 'services')
-      ->sort('field_weight', DESC)
+      ->sort('field_weight', "DESC")
       ->range(0, 6);
     $results = $query->execute();
     foreach ($results as $result) {
