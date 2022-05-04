@@ -7,6 +7,7 @@ dependencies:
     - field.field.node.cpc_data.field_cpc_id_num
     - field.field.node.cpc_data.field_cpc_id_type
     - field.field.node.cpc_data.field_customer_creation_data
+    - field.field.node.cpc_data.field_customer_status
     - field.field.node.cpc_data.field_ext_source
     - field.field.node.cpc_data.field_ind
     - field.field.node.cpc_data.field_seg
@@ -29,13 +30,29 @@ third_party_settings:
         weight: 0
         label: 'Convert to Boolean modified'
         true_value_text: Active
-      96c30fb3-b4ea-48af-b1d4-af97e588e4c6:
-        invert: false
-        uuid: 96c30fb3-b4ea-48af-b1d4-af97e588e4c6
-        plugin: required
+      db90daaf-101b-4dc7-a90d-352e714b3560:
+        character: '"'
+        side: trim
+        uuid: db90daaf-101b-4dc7-a90d-352e714b3560
+        plugin: trim
+        source: cpc2_id_num
+        weight: 0
+        label: 'Characters to trim'
+      6940442b-1bda-4c14-a92d-c9cdb80bf15a:
+        uuid: 6940442b-1bda-4c14-a92d-c9cdb80bf15a
+        plugin: empty_value_replace_with_other_property
         source: x_wholesale_id
         weight: 0
-        label: Required
+        label: 'Empty value replace with other property'
+        property_name: cpc2_id_num
+      bdb258e4-f394-4e9c-b643-4ff3676686b6:
+        character: '"'
+        side: trim
+        uuid: bdb258e4-f394-4e9c-b643-4ff3676686b6
+        plugin: trim
+        source: x_wholesale_id
+        weight: 1
+        label: 'Characters to trim'
   entity_redirect:
     redirect: null
 label: 'CPC import'
