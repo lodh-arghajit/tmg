@@ -38,13 +38,6 @@ third_party_settings:
         source: cpc2_id_num
         weight: 0
         label: 'Characters to trim'
-      6940442b-1bda-4c14-a92d-c9cdb80bf15a:
-        uuid: 6940442b-1bda-4c14-a92d-c9cdb80bf15a
-        plugin: empty_value_replace_with_other_property
-        source: x_wholesale_id
-        weight: 0
-        label: 'Empty value replace with other property'
-        property_name: cpc2_id_num
       bdb258e4-f394-4e9c-b643-4ff3676686b6:
         character: '"'
         side: trim
@@ -53,6 +46,21 @@ third_party_settings:
         source: x_wholesale_id
         weight: 1
         label: 'Characters to trim'
+      f2a906eb-89d3-41e7-aa17-25f0c3abc604:
+        uuid: f2a906eb-89d3-41e7-aa17-25f0c3abc604
+        plugin: empty_value_replace_with_other_property
+        source: cpc_id
+        weight: 0
+        label: 'Empty value replace with other property'
+        property_primary: x_wholesale_id
+        property_secondary: cpc2_id_num
+      0f8a2d67-6160-4bf4-9bc6-45f2ef3b8915:
+        invert: false
+        uuid: 0f8a2d67-6160-4bf4-9bc6-45f2ef3b8915
+        plugin: required
+        source: cpc_id
+        weight: 1
+        label: Required
   entity_redirect:
     redirect: null
 label: 'CPC import'
@@ -148,6 +156,11 @@ custom_sources:
     label: CUST_STAT_CD
     machine_name: cust_stat_cd
     type: csv
+  cpc_id:
+    value: CPC_ID
+    label: CPC_ID
+    machine_name: cpc_id
+    type: csv
 mappings:
   -
     target: field_wholesale_id
@@ -155,8 +168,7 @@ mappings:
       value: x_wholesale_id
     settings:
       language: ''
-    unique:
-      value: '1'
+    unique: {  }
   -
     target: field_company_name
     map:
@@ -228,15 +240,16 @@ mappings:
       language: null
       timezone: UTC
   -
-    target: title
-    map:
-      value: x_wholesale_id
-    settings:
-      language: null
-    unique: {  }
-  -
     target: field_customer_status
     map:
       value: cust_stat_cd
     settings:
       language: null
+  -
+    target: title
+    map:
+      value: cpc_id
+    settings:
+      language: null
+    unique:
+      value: '1'
