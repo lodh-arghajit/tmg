@@ -15,6 +15,10 @@ article:
     grant_view: '1'
     grant_update: 0
     grant_delete: 0
+  tm_super_admin:
+    grant_view: '1'
+    grant_update: '1'
+    grant_delete: '1'
   content_editor:
     grant_view: 0
     grant_update: 0
@@ -27,10 +31,6 @@ article:
     grant_view: 0
     grant_update: 0
     grant_delete: 0
-  tm_super_admin:
-    grant_view: 0
-    grant_update: 0
-    grant_delete: 0
   tm_user:
     grant_view: 0
     grant_update: 0
@@ -40,18 +40,18 @@ article:
     grant_update: 0
     grant_delete: 0
 cpc_data:
+  anonymous:
+    grant_view: '1'
+    grant_update: 0
+    grant_delete: 0
+  authenticated:
+    grant_view: '1'
+    grant_update: 0
+    grant_delete: 0
   administrator:
     grant_view: '1'
     grant_update: '1'
     grant_delete: '1'
-  anonymous:
-    grant_view: 0
-    grant_update: 0
-    grant_delete: 0
-  authenticated:
-    grant_view: 0
-    grant_update: 0
-    grant_delete: 0
   content_editor:
     grant_view: 0
     grant_update: 0
@@ -81,6 +81,10 @@ landing_page:
     grant_view: '1'
     grant_update: 0
     grant_delete: 0
+  tm_super_admin:
+    grant_view: '1'
+    grant_update: '1'
+    grant_delete: '1'
   content_editor:
     grant_view: 0
     grant_update: 0
@@ -90,10 +94,6 @@ landing_page:
     grant_update: 0
     grant_delete: 0
   approver:
-    grant_view: 0
-    grant_update: 0
-    grant_delete: 0
-  tm_super_admin:
     grant_view: 0
     grant_update: 0
     grant_delete: 0
@@ -110,6 +110,10 @@ page:
     grant_view: '1'
     grant_update: 0
     grant_delete: 0
+  tm_super_admin:
+    grant_view: '1'
+    grant_update: '1'
+    grant_delete: '1'
   anonymous:
     grant_view: 0
     grant_update: 0
@@ -123,10 +127,6 @@ page:
     grant_update: 0
     grant_delete: 0
   approver:
-    grant_view: 0
-    grant_update: 0
-    grant_delete: 0
-  tm_super_admin:
     grant_view: 0
     grant_update: 0
     grant_delete: 0
