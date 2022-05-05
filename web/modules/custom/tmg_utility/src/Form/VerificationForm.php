@@ -347,16 +347,16 @@ class VerificationForm {
           $form_state->setErrorByName('select_company', 'Please select valid company.');
         }
 
-        $data_load = FALSE;
-        if ($brn_length == static::BRN_ROC && preg_match(static::BRN_REGULAR_EXPRESSION, $brn_id) ) {
-          $data_load = TRUE;
-        }
-        if ($brn_length == static::BRN_ROB_1_OR_2 && (preg_match(static::BRN_ROB_1_REGULAR_EXPRESSION, $brn_id) ||  preg_match(static::BRN_ROB_2_REGULAR_EXPRESSION, $brn_id))) {
-          $data_load = TRUE;
-        }
-        if (preg_match(static::BRN_OTHER_REGULAR_EXPRESSION, $brn_id)) {
-          $data_load = TRUE;
-        }
+        $data_load = TRUE;
+//        if ($brn_length == static::BRN_ROC && preg_match(static::BRN_REGULAR_EXPRESSION, $brn_id) ) {
+//          $data_load = TRUE;
+//        }
+//        if ($brn_length == static::BRN_ROB_1_OR_2 && (preg_match(static::BRN_ROB_1_REGULAR_EXPRESSION, $brn_id) ||  preg_match(static::BRN_ROB_2_REGULAR_EXPRESSION, $brn_id))) {
+//          $data_load = TRUE;
+//        }
+//        if (preg_match(static::BRN_OTHER_REGULAR_EXPRESSION, $brn_id)) {
+//          $data_load = TRUE;
+//        }
         if ($data_load) {
           $cpc_nodes = static::searchCPCData($brn_id, 'field_cpc_id_num');
 
