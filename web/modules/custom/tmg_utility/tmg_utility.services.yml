@@ -3,3 +3,7 @@ services:
     class: Drupal\tmg_utility\Routing\RouteSubscriber
     tags:
       - { name: event_subscriber }
+  tmg_utility.views_event_subscriber:
+    class: Drupal\tmg_utility\EventSubscriber\ViewsRemoteDataSubscriber
+    tags:
+      - { name: event_subscriber }

@@ -59,6 +59,9 @@ function tmg_utility_theme($existing, $type, $theme, $path) {
     'web_service_integration' => [
       'variables' => ['remote_url' => '', 'services' => [], 'news' => [], 'images' => []],
     ],
+    'tm_partner_api' => [
+      'variables' => ['service' => '', 'availability' => [], 'diversity' => [],],
+    ],
   ];
 }
 
@@ -97,9 +100,29 @@ function tmg_utility_form_alter(&$form, FormStateInterface $form_state, $form_id
 
     case 'views_exposed_form':
       $view = $form_state->get('view');
+
+      if ($view->id() == "tmw_api_partner") {
+
+        $form['Address']['#attributes']['placeholder'] = "Address name/ Building name";
+        $form['Address']['#attributes']['class'] = ["form-control", "ssc-form-control"];
+        $form['Coordinates']['#attributes']['placeholder'] = "Coordinate (lat,long)";
+        $form['Coordinates']['#attributes']['class'] = ["form-control", "ssc-form-control"];
+        $form['actions']['submit']['#value'] = "Search";
+        $form["Address"]['#states'] = [
+          'disabled' => array(
+            array(':input[name="Coordinates"]' => array('filled' => TRUE)),
+          ),
+
+        ];
+        $form["Coordinates"]['#states'] = [
+          'disabled' => array(
+            array(':input[name="Address"]' => array('filled' => TRUE)),
+          ),
+
+        ];
+
+      }
       if ($view->id() == "cpc_data_list") {
-
-
         $form["field_cpc_id_num_value"]['#states'] = [
           'disabled' => array(
             array(':input[name="field_company_name_value"]' => array('filled' => TRUE)),
@@ -120,9 +143,7 @@ function tmg_utility_form_alter(&$form, FormStateInterface $form_state, $form_id
             array(':input[name="field_cpc_id_num_value"]' => array('filled' => TRUE)),
             array(':input[name="field_company_name_value"]' => array('filled' => TRUE)),
           ),
-
         ];
-
       }
 
   }

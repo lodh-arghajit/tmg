@@ -1,0 +1,23 @@
+{#
+/**
+ * @file
+ * Default theme implementation of a views exposed form.
+ *
+ * Available variables:
+ * - form: A render element representing the form.
+ *
+ * @see template_preprocess_views_exposed_form()
+ *
+ * @ingroup themeable
+ */
+#}
+
+<div class="ssc-hld">
+  <article class="ssc-form-hld">
+    <div class="ssc-form-top">{{ form["Address"]}} <span class="or-text">Or</span> {{ form["Coordinates"]}}</div>
+    {{ form["actions"]["submit"] }}
+    {{ form|without('Address', 'Coordinates', 'actions') }}
+
+  </article>
+</div>
+

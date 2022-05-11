@@ -1,0 +1,22 @@
+uuid: 84ce4408-0216-4707-b6fd-9491a8f664c7
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.tmw_api_partner
+id: node.tmw_api_partner.promote
+field_name: promote
+entity_type: node
+bundle: tmw_api_partner
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

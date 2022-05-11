@@ -1,0 +1,26 @@
+{
+  "services": [
+
+    {
+      "service": "WSE/GLOBAL ETHERNET",
+      "availability": "Yes",
+      "diversity": "Yes"
+    },
+    {
+      "service": "WIA/IP TRANSIT",
+      "availability": "Yes",
+      "diversity": "Yes"
+    },
+    {
+      "service": "OBW/IEPL",
+      "availability": "Yes",
+      "diversity": "Yes"
+    },
+    {
+      "service": "Unifi",
+      "url": "https://unifi.com.my/fibre-broadband/check-coverage",
+      "remarks": "For Unifi Service Check, please visit the given URL for latest offers."
+    }
+
+  ]
+}

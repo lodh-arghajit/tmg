@@ -1,0 +1,26 @@
+uuid: 70218e2f-69c4-49af-874b-9f5ea8b044ec
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.tmw_api_partner.field_company_name
+    - field.field.node.tmw_api_partner.field_cpc_id_type
+    - field.field.node.tmw_api_partner.field_ext_source
+    - node.type.tmw_api_partner
+  module:
+    - user
+id: node.tmw_api_partner.teaser
+targetEntityType: node
+bundle: tmw_api_partner
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_company_name: true
+  field_cpc_id_type: true
+  field_ext_source: true

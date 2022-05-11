@@ -1,0 +1,46 @@
+uuid: 397752f4-1f2d-4f84-8432-53f7c95c6c0f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.tmw_api_partner.field_company_name
+    - field.field.node.tmw_api_partner.field_cpc_id_type
+    - field.field.node.tmw_api_partner.field_ext_source
+    - node.type.tmw_api_partner
+  module:
+    - user
+id: node.tmw_api_partner.default
+targetEntityType: node
+bundle: tmw_api_partner
+mode: default
+content:
+  field_company_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_cpc_id_type:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_ext_source:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

@@ -26,3 +26,4 @@
 'use  The form mode default linked to  node entity( services )': node.services.default
 'use  The form mode default linked to  media entity( service_image )': media.service_image.default
 'use  The form mode media_library linked to  media entity( service_image )': media.service_image.media_library
+'use  The form mode default linked to  node entity( tmw_api_partner )': node.tmw_api_partner.default

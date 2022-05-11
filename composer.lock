@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "825e622e1dbece91ca7871fa1d14ee5e",
+    "content-hash": "5433c913931b8f3c29917e8c1363f78e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -6047,6 +6047,54 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/views_entity_form_field",
                 "issues": "https://www.drupal.org/project/issues/views_entity_form_field"
+            }
+        },
+        {
+            "name": "drupal/views_remote_data",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/views_remote_data.git",
+                "reference": "1.0.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/views_remote_data-1.0.1.zip",
+                "reference": "1.0.1",
+                "shasum": "861390e9d5388faa401cf2ab98aedf38af1bced1"
+            },
+            "require": {
+                "drupal/core": ">=9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.0.1",
+                    "datestamp": "1651583955",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "acquia",
+                    "homepage": "https://www.drupal.org/user/1231722"
+                },
+                {
+                    "name": "mglaman",
+                    "homepage": "https://www.drupal.org/user/2416470"
+                }
+            ],
+            "description": "Provide an API to integrate remote data with Views",
+            "homepage": "https://www.drupal.org/project/views_remote_data",
+            "support": {
+                "source": "https://git.drupalcode.org/project/views_remote_data"
             }
         },
         {
