@@ -3,13 +3,15 @@
     <div class="card">
       <div class="card-body">
         <h4 class="card-title mb-3">Promotional Images</h4>
-
         <div>
           <div class="owl-carousel owl-theme" id="db-banner">
             {% for item in images %}
-              <div class="item"><img alt="Promotional Images" src="{{ remote_url ~ item.field_image }}" />
+              {% set tags = item.field_image|split(",") %}
+              {% for tag in tags %}
+              <div class="item"><img alt="Promotional Images" src="{{ remote_url ~ tag }}" />
                 <h4 class="font-size-16 mt-3">{{ item.title }}</h4>
               </div>
+              {% endfor %}
             {% endfor %}
           </div>
         </div>
