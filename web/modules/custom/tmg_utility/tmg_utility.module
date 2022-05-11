@@ -311,6 +311,7 @@ function tmg_utility_entity_type_alter(array &$entity_types) {
  * Implements hook_cron().
  */
 function tmg_utility_cron() {
+  \Drupal::logger('tmg_utility')->notice("Cron Started");
   $config = \Drupal::config("tmg_utility.web_pull_settings");
   $base_url = $config->get("api_base_url") ?? "";
   if (empty($base_url)) {
@@ -319,6 +320,7 @@ function tmg_utility_cron() {
   $http_client = \Drupal::httpClient();
   $timeout = 30;
   try {
+    \Drupal::logger('tmg_utility')->notice("Cron in try block");
     $banner_id = "all";
     $show_specific_promotional_images = $config->get('show_specific_promotional_images') ?? FALSE;
     $specific_promotional_image_ids = $config->get('specific_promotional_image_ids') ?? "";
@@ -346,6 +348,7 @@ function tmg_utility_cron() {
     ];
 
     $results = Utils::unwrap($promises);
+    \Drupal::logger('tmg_utility')->notice("Cron after api call");
     $data = [];
     if ($results["banners"]->getStatusCode() == "200") {
       $data["banner"] = json_decode($results["banners"]->getBody()->getContents(), TRUE);
@@ -359,6 +362,7 @@ function tmg_utility_cron() {
     $key_value_factory = \Drupal::keyValue("tmg_utility");
     $key_value_factory->set(WEB_SERVICE_DATA, $data);
     Cache::invalidateTags(['key_value_factory:' . WEB_SERVICE_DATA]);
+    \Drupal::logger('tmg_utility')->notice("Cron after api call end");
   }
   catch(\Exception $e) {
     \Drupal::logger('tmg_utility')->error($e->getMessage());
