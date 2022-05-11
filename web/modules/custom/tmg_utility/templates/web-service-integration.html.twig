@@ -8,7 +8,7 @@
             {% for item in images %}
               {% set tags = item.field_image|split(",") %}
               {% for tag in tags %}
-              <div class="item"><img alt="Promotional Images" src="{{ remote_url ~ tag }}" />
+              <div class="item"><img alt="Promotional Images" src="{{ remote_url ~ tag|trim }}" />
                 <h4 class="font-size-16 mt-3">{{ item.title }}</h4>
               </div>
               {% endfor %}
