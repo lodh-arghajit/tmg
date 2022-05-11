@@ -318,7 +318,7 @@ function tmg_utility_cron() {
     return;
   }
   $http_client = \Drupal::httpClient();
-  $timeout = 30;
+  $timeout = 120;
   try {
     \Drupal::logger('tmg_utility')->notice("Cron in try block");
     $banner_id = "all";
