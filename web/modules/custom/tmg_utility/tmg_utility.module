@@ -361,6 +361,7 @@ function tmg_utility_cron() {
     Cache::invalidateTags(['key_value_factory:' . WEB_SERVICE_DATA]);
   }
   catch(\Exception $e) {
+    \Drupal::logger('tmg_utility')->error($e->getMessage());
 
   }
 }
