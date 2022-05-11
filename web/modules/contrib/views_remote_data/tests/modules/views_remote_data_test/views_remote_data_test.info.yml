@@ -1,0 +1,11 @@
+name: Views Remote Data test
+type: module
+core_version_requirement: ^9
+dependencies:
+  - entity_test:entity_test
+  - views_remote_data:views_remote_data
+
+# Information added by Drupal.org packaging script on 2022-05-03
+version: '1.0.1'
+project: 'views_remote_data'
+datestamp: 1651583957
