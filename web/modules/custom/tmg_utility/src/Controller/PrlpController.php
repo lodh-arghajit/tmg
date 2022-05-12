@@ -133,8 +133,8 @@ class PrlpController extends UserController {
       if (!empty($node_id)) {
         $routeName = 'entity.node.canonical';
         $routeParameters = ['node' => $node_id];
-        $url = \Drupal::url($routeName, $routeParameters);
-        return new RedirectResponse($url);
+        $url = Url::fromRoute($routeName, $routeParameters);
+        return new RedirectResponse($url->toString());
       }
       $destination = $this->getDestination($user);
     }
