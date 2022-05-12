@@ -5,6 +5,7 @@ namespace Drupal\tmg_utility\Controller;
 use Drupal\Core\Form\FormState;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Url;
+use Drupal\node\Entity\Node;
 use Drupal\user\Controller\UserController;
 use Drupal\tmg_utility\Form\UserPasswordResetForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -128,6 +129,13 @@ class PrlpController extends UserController {
       $user->activate();
       $user->save();
       user_login_finalize($user);
+      $node_id =  $this->config('tmg_utility.web_pull_settings')->get('user_activation_node_id') ?? NULL;
+      if (!empty($node_id)) {
+        $routeName = 'entity.node.canonical';
+        $routeParameters = ['node' => $node_id];
+        $url = \Drupal::url($routeName, $routeParameters);
+        return new RedirectResponse($url);
+      }
       $destination = $this->getDestination($user);
     }
     catch (\Exception $exception) {

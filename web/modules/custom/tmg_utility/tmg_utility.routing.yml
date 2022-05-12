@@ -80,4 +80,11 @@ tmg_utility.web_pull_setting:
     _title: 'Web pull setting'
     _form: 'Drupal\tmg_utility\Form\SettingsForm'
   requirements:
-    _permission: 'administer site configuration'
+    _permission: 'TMW admin'
+tmg_utility.web_pull:
+  path: '/admin/config/web-pull'
+  defaults:
+    _title: 'Run web pull'
+    _form: 'Drupal\tmg_utility\Form\RunWebPull'
+  requirements:
+    _permission: 'TMW admin'

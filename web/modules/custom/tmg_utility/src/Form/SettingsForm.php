@@ -112,7 +112,20 @@ class SettingsForm extends ConfigFormBase {
         ],
       ]
     ];
-
+    $node_id =  $this->config('tmg_utility.web_pull_settings')->get('user_activation_node_id') ?? NULL;
+    $node = $node_id ? Node::load($node_id) : NULL;
+    $form['user_activation_node_id'] = [
+      '#type' => 'entity_autocomplete',
+      '#target_type' => 'node',
+      '#selection_settings' => [
+        'target_bundles' => [
+          'page',
+        ],
+      ],
+      '#title' => $this->t('User activation URL'),
+      '#description' => $this->t('User activation URL'),
+      '#default_value' => $node,
+    ];
     return parent::buildForm($form, $form_state);
   }
 
@@ -136,6 +149,7 @@ class SettingsForm extends ConfigFormBase {
       ->set('specific_promotional_image_ids', $form_state->getValue('specific_promotional_image_ids'))
       ->set('show_specific_marketing_tools', $form_state->getValue('show_specific_marketing_tools') ?? FALSE)
       ->set('specific_marketing_tool_ids', $form_state->getValue('specific_marketing_tool_ids'))
+      ->set('user_activation_node_id', $form_state->getValue('user_activation_node_id') ?? NULL)
       ->save();
     parent::submitForm($form, $form_state);
   }
