@@ -3,18 +3,28 @@ langcode: en
 status: true
 dependencies:
   config:
-    - node.type.article
+    - core.entity_view_display.node.landing_page.default
+    - core.entity_view_display.node.page.default
+    - filter.format.basic_html
+    - filter.format.full_html
+    - node.type.landing_page
     - node.type.page
-    - taxonomy.vocabulary.tags
   module:
-    - comment
+    - block
+    - block_content
     - contextual
+    - field_ui
     - file
+    - filter
+    - layout_builder
+    - menu_per_role
     - node
+    - paragraphs
     - path
     - system
     - taxonomy
-    - tour
+    - tmg_utility
+    - toolbar
 _core:
   default_config_hash: Wur9kcEOwY1Jal81NssKnz3RhVJxAvBwyWQBGcA_1Go
 id: content_editor
@@ -22,25 +32,52 @@ label: 'Content editor'
 weight: 2
 is_admin: false
 permissions:
+  - 'TMW admin'
   - 'access administration pages'
+  - 'access content'
   - 'access content overview'
   - 'access contextual links'
   - 'access files overview'
-  - 'access tour'
+  - 'access toolbar'
+  - 'administer account settings'
+  - 'administer block_content display'
+  - 'administer blocks'
+  - 'administer menu'
+  - 'administer menu_per_role'
+  - 'administer node display'
+  - 'administer nodes'
+  - 'administer paragraph display'
+  - 'administer taxonomy_term display'
   - 'administer url aliases'
-  - 'create article content'
+  - 'bypass menu_per_role access admin'
+  - 'bypass menu_per_role access front'
+  - 'bypass node access'
+  - 'configure all landing_page node layout overrides'
+  - 'configure all page node layout overrides'
+  - 'configure any layout'
+  - 'configure editable landing_page node layout overrides'
+  - 'configure editable page node layout overrides'
+  - 'create and edit custom blocks'
+  - 'create landing_page content'
   - 'create page content'
-  - 'create terms in tags'
   - 'create url aliases'
-  - 'delete article revisions'
-  - 'delete own article content'
+  - 'delete any landing_page content'
+  - 'delete any page content'
+  - 'delete landing_page revisions'
+  - 'delete own landing_page content'
   - 'delete own page content'
   - 'delete page revisions'
-  - 'edit own article content'
-  - 'edit own comments'
+  - 'edit any landing_page content'
+  - 'edit any page content'
+  - 'edit own landing_page content'
   - 'edit own page content'
-  - 'edit terms in tags'
   - 'revert all revisions'
+  - 'revert landing_page revisions'
+  - 'revert page revisions'
+  - 'use text format basic_html'
+  - 'use text format full_html'
   - 'view all revisions'
+  - 'view landing_page revisions'
   - 'view own unpublished content'
+  - 'view page revisions'
   - 'view the administration theme'

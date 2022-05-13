@@ -1,0 +1,26 @@
+uuid: a7560fe9-f8ae-4f84-b75a-a132182b6270
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - system
+id: for_site_pages
+label: 'For site pages'
+logic: and
+conditions:
+  162865f3-f8ac-4dda-a7d7-6d45b940201f:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: 162865f3-f8ac-4dda-a7d7-6d45b940201f
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      landing_page: landing_page
+  f664ee73-1cac-4d95-b8fe-7acbb7a8cc1a:
+    id: request_path
+    negate: true
+    uuid: f664ee73-1cac-4d95-b8fe-7acbb7a8cc1a
+    context_mapping: {  }
+    pages: "/node/*/edit\r\n/node/add/*\r\nnode/*/layout"
+allow_other_conditions: false

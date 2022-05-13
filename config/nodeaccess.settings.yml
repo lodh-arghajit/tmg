@@ -6,39 +6,6 @@ grants:
   delete: 1
 priority: 1
 preserve: 1
-article:
-  anonymous:
-    grant_view: '1'
-    grant_update: 0
-    grant_delete: 0
-  authenticated:
-    grant_view: '1'
-    grant_update: 0
-    grant_delete: 0
-  tm_super_admin:
-    grant_view: '1'
-    grant_update: '1'
-    grant_delete: '1'
-  content_editor:
-    grant_view: 0
-    grant_update: 0
-    grant_delete: 0
-  administrator:
-    grant_view: 0
-    grant_update: 0
-    grant_delete: 0
-  approver:
-    grant_view: 0
-    grant_update: 0
-    grant_delete: 0
-  tm_user:
-    grant_view: 0
-    grant_update: 0
-    grant_delete: 0
-  author:
-    grant_view: 0
-    grant_update: 0
-    grant_delete: 0
 cpc_data:
   anonymous:
     grant_view: '1'
@@ -183,12 +150,10 @@ role_map:
   tm_super_admin: 6
   tm_user: 7
 allowed_types:
-  article: 0
   cpc_data: 0
   landing_page: 0
   page: 0
   services: 0
-  tmw_api_partner: 0
 services:
   anonymous:
     grant_view: '1'
@@ -216,19 +181,6 @@ services:
     grant_delete: 0
   tm_user:
     grant_view: 0
-    grant_update: 0
-    grant_delete: 0
-  author:
-    grant_view: 0
-    grant_update: 0
-    grant_delete: 0
-tmw_api_partner:
-  anonymous:
-    grant_view: 1
-    grant_update: 0
-    grant_delete: 0
-  authenticated:
-    grant_view: 1
     grant_update: 0
     grant_delete: 0
   author:

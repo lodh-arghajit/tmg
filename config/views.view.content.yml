@@ -2,9 +2,13 @@ uuid: 6fa6ad57-4f23-4148-84a5-37309d7e471f
 langcode: en
 status: true
 dependencies:
+  config:
+    - user.role.administrator
+    - user.role.content_editor
   module:
     - node
     - user
+    - views_autocomplete_filters
 _core:
   default_config_hash: vBKWYGGDoAX-tFd1JErB8tZLSxx3lJ0foouVsgpcbB4
 id: content
@@ -257,9 +261,11 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: perm
+        type: role
         options:
-          perm: 'access content overview'
+          role:
+            content_editor: content_editor
+            administrator: administrator
       cache:
         type: tag
       empty:
@@ -581,7 +587,7 @@ display:
         - url.query_args
         - user
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags: {  }
   page_1:
     id: page_1
@@ -613,5 +619,5 @@ display:
         - url.query_args
         - user
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags: {  }

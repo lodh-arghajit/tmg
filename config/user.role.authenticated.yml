@@ -28,6 +28,7 @@ permissions:
   - 'access site-wide contact form'
   - 'create field_company'
   - 'create field_first_name'
+  - 'create field_svg_html'
   - 'edit field_company'
   - 'edit own field_company'
   - 'edit own field_first_name'

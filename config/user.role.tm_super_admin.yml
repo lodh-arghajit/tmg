@@ -3,14 +3,28 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_display.node.landing_page.default
+    - core.entity_view_display.node.page.default
+    - filter.format.basic_html
+    - filter.format.full_html
     - node.type.cpc_data
+    - node.type.landing_page
+    - node.type.page
     - node.type.services
     - taxonomy.vocabulary.industry
     - taxonomy.vocabulary.product
   module:
+    - contextual
     - feeds
     - field_permissions
+    - field_ui
+    - filter
+    - layout_builder
+    - menu_per_role
     - node
+    - paragraphs
+    - path
+    - system
     - taxonomy
     - tmg_utility
     - webform
@@ -20,37 +34,85 @@ weight: 5
 is_admin: null
 permissions:
   - 'TMW admin'
+  - 'access content'
+  - 'access contextual links'
   - 'access taxonomy overview'
   - 'access user profiles'
+  - 'administer menu'
+  - 'administer menu_per_role'
+  - 'administer node display'
+  - 'administer paragraph display'
   - 'administer taxonomy'
+  - 'administer taxonomy_term display'
+  - 'bypass menu_per_role access admin'
+  - 'bypass menu_per_role access front'
   - 'bypass node access'
-  - 'create cpc_data content'
+  - 'configure all landing_page node layout overrides'
+  - 'configure all page node layout overrides'
+  - 'configure any layout'
+  - 'configure editable landing_page node layout overrides'
+  - 'configure editable page node layout overrides'
+  - 'create and edit custom blocks'
   - 'create cpc_import feeds'
   - 'create field_company'
+  - 'create landing_page content'
+  - 'create page content'
   - 'create services content'
   - 'create terms in industry'
   - 'create terms in product'
+  - 'create url aliases'
+  - 'delete all revisions'
   - 'delete any cpc_data content'
+  - 'delete any landing_page content'
+  - 'delete any page content'
   - 'delete any services content'
+  - 'delete landing_page revisions'
   - 'delete own cpc_data content'
+  - 'delete own landing_page content'
+  - 'delete own page content'
+  - 'delete own services content'
+  - 'delete page revisions'
+  - 'delete services revisions'
   - 'delete terms in industry'
   - 'delete terms in product'
   - 'edit any cpc_data content'
+  - 'edit any landing_page content'
+  - 'edit any page content'
   - 'edit any services content'
   - 'edit field_company'
   - 'edit field_first_name'
+  - 'edit field_svg_html'
   - 'edit own cpc_data content'
   - 'edit own field_company'
+  - 'edit own field_svg_html'
+  - 'edit own landing_page content'
+  - 'edit own page content'
+  - 'edit own services content'
   - 'edit terms in industry'
   - 'edit terms in product'
   - 'import cpc_import feeds'
   - 'import own cpc_import feeds'
+  - 'revert all revisions'
+  - 'revert landing_page revisions'
+  - 'revert page revisions'
+  - 'revert services revisions'
   - 'schedule_import cpc_import feeds'
   - 'schedule_import own cpc_import feeds'
+  - 'use text format basic_html'
+  - 'use text format full_html'
+  - 'view all revisions'
   - 'view any webform submission'
   - 'view field_company'
   - 'view field_first_name'
+  - 'view field_svg_html'
+  - 'view landing_page revisions'
   - 'view own cpc_import feeds'
   - 'view own field_company'
   - 'view own field_first_name'
+  - 'view own field_svg_html'
+  - 'view own unpublished content'
+  - 'view page revisions'
+  - 'view services revisions'
+  - 'view the administration theme'
+  - 'view unpublished paragraphs'
   - 'view user email addresses'

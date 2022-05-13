@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.page.body
+    - field.field.node.page.layout_builder__layout
     - node.type.page
   module:
     - inline_formatter_display
@@ -23,5 +23,5 @@ bundle: page
 mode: default
 content: {  }
 hidden:
-  body: true
+  layout_builder__layout: true
   links: true
