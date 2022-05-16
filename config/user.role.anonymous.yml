@@ -22,7 +22,7 @@ permissions:
   - 'access comments'
   - 'access content'
   - 'access site-wide contact form'
-  - 'create field_svg_html'
   - 'search content'
   - 'use text format restricted_html'
+  - 'view field_svg_html'
   - 'view media'

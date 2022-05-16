@@ -37,5 +37,7 @@ permissions:
   - 'skip comment approval'
   - 'use text format basic_html'
   - 'view field_company'
+  - 'view field_svg_html'
   - 'view media'
   - 'view own field_company'
+  - 'view own field_svg_html'
