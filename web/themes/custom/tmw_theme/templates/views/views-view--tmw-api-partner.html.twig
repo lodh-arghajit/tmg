@@ -44,7 +44,6 @@
 {% endif %}
 <div class="ssc-result-hld">
   {% if rows %}
-
    {% set names = rows[0]["#rows"][0]["#row"].service|split("/") %}
   <h3 class="ssc-result-heading">The first location is
     {% if names[1] %}
@@ -80,6 +79,10 @@
           <span class="ssc-icon not-support"><i class="fas fa-times">&nbsp;</i></span>
           {% endif %}
       </div>
+        {% if data["#row"].url  %}
+          <p>{{ data["#row"].remarks }}</p>
+          <a href="{{ data["#row"].url }}" target="_blank">{{ data["#row"].url }}</a>
+        {% endif %}
       </div>
     </li>
   {% endfor %}
@@ -90,5 +93,8 @@
     <div class="view-empty">
       {{ empty }}
     </div>
+  {% endif %}
+  {% if footer %}
+    {{ footer }}
   {% endif %}
 </div>

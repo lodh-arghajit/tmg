@@ -21,3 +21,11 @@ dashboard_css_and_js:
   js:
     js/owl.carousel.min.js: {}
     js/dashboard.ui.js: {}
+webform.element.telephone_extended:
+  version: VERSION
+  js:
+    js/webform.element.telephone_extended.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery.once
+    - webform/libraries.jquery.intl-tel-input

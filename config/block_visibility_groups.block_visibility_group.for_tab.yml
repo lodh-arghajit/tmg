@@ -1,0 +1,27 @@
+uuid: 6e0a5693-791b-4f99-8469-79f8c7085654
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+    - user
+id: for_tab
+label: 'For tab'
+logic: or
+conditions:
+  fe58aa34-1dff-44fb-8dd0-3155512979e3:
+    id: user_role
+    negate: false
+    uuid: fe58aa34-1dff-44fb-8dd0-3155512979e3
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      content_editor: content_editor
+      administrator: administrator
+  cfb62e11-0331-43de-b3ad-ace2beab3214:
+    id: request_path
+    negate: false
+    uuid: cfb62e11-0331-43de-b3ad-ace2beab3214
+    context_mapping: {  }
+    pages: '/node/2/*'
+allow_other_conditions: false

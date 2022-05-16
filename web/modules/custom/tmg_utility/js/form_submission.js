@@ -13,8 +13,19 @@
           $(this).removeClass("js-hide");
         }
       });
+      setTimeout(function(){
+        $(context).find('input.js-webform-telephone-international, input.js-webform-telephone-international-extended').once('webform-telephone-international-limit').each(function () {
+          var $telephone = $(this);
+          $($telephone).focus(function () {
+            if ($(this).val() == "") {
+              var $instance = $(this);
+              var prefil = "+" + $instance.intlTelInput('getSelectedCountryData').dialCode;
+              $instance.val(prefil);
+            }
+          });
+        });
+      }, 500);
       $(context).find(':input[data-webform-required-error]').once('webform-required-error').each(function() {
-
         $(this).attr("required", "required");
         var message = $(this).attr("data-webform-required-error");
         if (message) {

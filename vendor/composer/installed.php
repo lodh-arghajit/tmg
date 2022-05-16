@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '9f11b46962ed172b6e95aa10797674968a1b5360',
+        'reference' => '34335c954c370d3a962a70517926116ca5e69de7',
         'name' => 'pantheon-upstreams/drupal-project',
         'dev' => true,
     ),
@@ -1342,6 +1342,15 @@
             'reference' => '8.x-3.0',
             'dev_requirement' => false,
         ),
+        'drupal/redirect' => array(
+            'pretty_version' => '1.7.0',
+            'version' => '1.7.0.0',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/redirect',
+            'aliases' => array(),
+            'reference' => '8.x-1.7',
+            'dev_requirement' => false,
+        ),
         'drupal/redirect404_home' => array(
             'pretty_version' => '1.0.0',
             'version' => '1.0.0.0',
@@ -1894,7 +1903,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '9f11b46962ed172b6e95aa10797674968a1b5360',
+            'reference' => '34335c954c370d3a962a70517926116ca5e69de7',
             'dev_requirement' => false,
         ),
         'paragonie/random_compat' => array(

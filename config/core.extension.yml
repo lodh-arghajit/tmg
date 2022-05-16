@@ -85,6 +85,7 @@ module:
   rdf: 0
   real_aes: 0
   recaptcha: 0
+  redirect: 0
   redirect404_home: 0
   rest: 0
   search: 0

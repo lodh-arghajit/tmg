@@ -25,8 +25,6 @@ final class ViewsRemoteDataSubscriber implements EventSubscriberInterface {
     ];
   }
 
-
-
   /**
    * Subscribes to populate the view results.
    *
@@ -38,16 +36,25 @@ final class ViewsRemoteDataSubscriber implements EventSubscriberInterface {
       'views_remote_data_tmw_api_partner',
     ];
     $base_tables = array_keys($event->getView()->getBaseTables());
-    if (count(array_intersect($supported_bases, $base_tables)) > 0) {
+    $flag = FALSE;
+    foreach ($event->getView()->exposed_raw_input as $exposed_raw_input) {
+      if ($exposed_raw_input) {
+        $flag = TRUE;
+      }
+    }
+    if (count(array_intersect($supported_bases, $base_tables)) > 0 && $flag) {
       // Ensure cache tags can be bubbled.
       $event->addCacheTags(['views_remote_data_tmw_api_partner']);
       $module_handler = \Drupal::service('module_handler');
       $module_path = $module_handler->getModule('tmg_utility')->getPath();
+      $fixture = json_decode((string) file_get_contents($module_path . '/fixtures/simple.json'), TRUE);
 
-      $fixture = Json::decode((string) file_get_contents($module_path . '/fixtures/simple.json'));
-
-
+      $term_condition = "";
+      if ($fixture["terms & conditions"]) {
+        $term_condition = implode(" ", $fixture["terms & conditions"]);
+      }
       foreach ($fixture['services'] as $item) {
+        $item["term_condition"] = $term_condition;
         $event->addResult(new ResultRow($item));
       }
     }

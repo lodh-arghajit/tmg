@@ -66,6 +66,7 @@
         "drupal/r4032login": "^2.2",
         "drupal/real_aes": "^2.4",
         "drupal/recaptcha": "^3.0",
+        "drupal/redirect": "^1.7",
         "drupal/redirect404_home": "^1.0",
         "drupal/redirect_after_login": "^2.7",
         "drupal/swiftmailer": "^2.2",

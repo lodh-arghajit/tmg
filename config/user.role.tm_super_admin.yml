@@ -23,7 +23,6 @@ dependencies:
     - menu_per_role
     - node
     - paragraphs
-    - path
     - system
     - taxonomy
     - tmg_utility
@@ -38,7 +37,6 @@ permissions:
   - 'access contextual links'
   - 'access taxonomy overview'
   - 'access user profiles'
-  - 'administer menu'
   - 'administer menu_per_role'
   - 'administer node display'
   - 'administer paragraph display'
@@ -60,7 +58,6 @@ permissions:
   - 'create services content'
   - 'create terms in industry'
   - 'create terms in product'
-  - 'create url aliases'
   - 'delete all revisions'
   - 'delete any cpc_data content'
   - 'delete any landing_page content'
@@ -113,6 +110,5 @@ permissions:
   - 'view own unpublished content'
   - 'view page revisions'
   - 'view services revisions'
-  - 'view the administration theme'
   - 'view unpublished paragraphs'
   - 'view user email addresses'
