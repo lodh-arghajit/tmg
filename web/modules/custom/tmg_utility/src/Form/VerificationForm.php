@@ -57,6 +57,7 @@ class VerificationForm {
           "#description" => '<p class="text-right"><a class="btn-fp" href="#">Forgot Password ?</a></p>',
           "#attributes" => ['placeholder' => 'Password'],
         ];
+
         $form['actions']['wizard_next']['#validate'][] = [$class, 'validatePassword'];
         $submit_handlers = $form['actions']['wizard_next']['#submit'];
         $form['actions']['wizard_next']['#submit'] = [];
@@ -65,8 +66,7 @@ class VerificationForm {
           $form['actions']['wizard_next']['#submit'][] = $submit_handler;
         }
         $elements = &WebformFormHelper::flattenElements($form['elements']);
-        $mark_up = $elements['markup_01']['#markup'];
-        $elements['markup_01']['#markup'] = str_replace("[mail]", $form_state->getValues()['user_email'], $mark_up);
+        $elements["term_condition"]["#weight"] = 100;
         break;
       case static::EXISTING_CUSTOMER_STEP:
         $submit_handlers = $form['actions']['wizard_next']['#submit'];
@@ -120,7 +120,21 @@ class VerificationForm {
       default:
         break;
     }
-    $form['actions']['wizard_prev'] = [];
+    if ($form_step == static::VERIFICATION_PASSWORD_STEP) {
+      $form['actions']['wizard_prev']['#attributes']['class'][] = "hidden";
+    }
+    else {
+      $form['actions']['wizard_prev'] = [];
+    }
+    $elements = &WebformFormHelper::flattenElements($form['elements']);
+    foreach ($elements as &$element) {
+      if (isset($element['#markup']) ) {
+        $element['#markup'] = str_replace("[mail]", $form_state->getValues()['user_email'], $element['#markup']);
+      }
+      if (isset($element['#text']) ) {
+        $element['#text'] = str_replace("[mail]", $form_state->getValues()['user_email'], $element['#text']);
+      }
+    }
     return $form;
   }
 

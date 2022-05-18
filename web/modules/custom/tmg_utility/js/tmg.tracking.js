@@ -14,7 +14,11 @@
           $("input[name=\"step\"]").val('forget_password');
           $('.webform-button--next').trigger('click');
         });
-
+      $('.btn-login', context)
+        .once('back_to_login_step')
+        .on('click', function() {
+          $('.webform-button--previous').trigger('click');
+        });
       $('.search-element', context)
         .once('trigger_search')
         .on('change', function() {
