@@ -224,10 +224,10 @@ body[data-layout="horizontal"] .page-content {
     font-size: 16px !important;
 }
 .footer {
-    bottom: 0;
+   /* bottom: 0;*/
     padding: 20px calc(24px / 2);
-    position: absolute;
-    right: 0;
+    /*position: absolute;
+    right: 0;*/
     color: #74788d;
     left: 250px;
     height: 60px;
@@ -618,7 +618,7 @@ body[data-layout="horizontal"] .footer {
     color: #fff;
 }
 #sidebar-menu ul li ul.sub-menu li a {
-    color: #79829c;
+    color: #cdcdcf;
 }
 #sidebar-menu ul li ul.sub-menu li a:hover {
     color: #fff;
