@@ -34,7 +34,7 @@
 .avatar-sm {height:55px !important; width: 55px !important;}
 .avatar-title{background-color:#F58200 !important;}
 .card.mini-stats-wid{font-family: 'interfaceregular';}
-.db-product-link{color: #74788d;}
+.db-product-link{color: #0056b3;}
 .db-product-link:hover, .db-product-link:active, .db-product-link:focus{color: #F58200;}
 .db-product-link:hover svg path, .db-product-link:active svg path, .db-product-link:focus svg path{stroke: #F58200;}
 #db-banner.owl-carousel .owl-nav button.owl-next, #db-banner.owl-carousel .owl-nav button.owl-prev{

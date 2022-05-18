@@ -80,8 +80,8 @@
           {% endif %}
       </div>
         {% if data["#row"].url  %}
-          <p>{{ data["#row"].remarks }}</p>
-          <a href="{{ data["#row"].url }}" target="_blank">{{ data["#row"].url }}</a>
+          <p class="ssc-info">{{ data["#row"].remarks }}</p>
+          <a href="{{ data["#row"].url }}" target="_blank">Offer</a>
         {% endif %}
       </div>
     </li>
@@ -95,6 +95,8 @@
     </div>
   {% endif %}
   {% if footer %}
+  <div class="tc-msg">
     {{ footer }}
+  </div>
   {% endif %}
 </div>
